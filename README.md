@@ -25,4 +25,8 @@ Pour build le projet:
 npm run build
 ```
 
+## Pour récuperer les dernières mises à jour
+```bash
+git pull
+```
 
