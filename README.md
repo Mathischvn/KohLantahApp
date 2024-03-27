@@ -4,43 +4,6 @@
   </a>
 </p>
 
-# Vite ⚡
-
-> Outils Frontend de Nouvelle Génération
-
-- 💡 Démarrage Instantané du Serveur
-- ⚡️ HMR Ultra Rapide
-- 🛠️ Fonctionnalités Riches
-- 📦 Build Optimisé
-- 🔩 Interface de Plugin Universelle
-- 🔑 APIs Entièrement Typées
-
-
-
-## Structure du projet
-
-- 📁 `kohLantahApp/`
-    - 📁 `node_modules/` 
-    - 📁 `public/` 
-        - 📄 `vite.svg`
-    - 📁 `src/`
-        - 📁 `client/`
-          - 📁 `assets/`
-          - 📁 `components/`
-          - 📁 `utils/`
-          - 📄 `App.css`
-          - 📄 `App.jsx`
-          - 📄 `index.css`
-          - 📄 `main.jsx`
-        - 📁 `server/`
-          - 📄 `server.js`
-    - 📄 `.eslintrc.json` 
-    - 📄 `.gitignore`
-    - 📄 `index.html`
-    - 📄 `package.json`
-    - 📄 `README.md`
-    - 📄 `vite.config.js`
-
 
 ## Lancer le projet
 
@@ -55,6 +18,11 @@ npm run dev
 ```
 Le projet sera accessible sur [http://localhost:3000/](http://localhost:3000/)
 
+## Build le projet
 
+Pour build le projet:
+```bash
+npm run build
+```
 
 
