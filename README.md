@@ -24,13 +24,16 @@
     - 📁 `public/` 
         - 📄 `vite.svg`
     - 📁 `src/`
-        - 📁 `assets/`
-        - 📁 `components/`
-        - 📁 `utils/`
-        - 📄 `App.css`
-        - 📄 `App.jsx`
-        - 📄 `index.css`
-        - 📄 `main.jsx`
+        - 📁 `client/`
+          - 📁 `assets/`
+          - 📁 `components/`
+          - 📁 `utils/`
+          - 📄 `App.css`
+          - 📄 `App.jsx`
+          - 📄 `index.css`
+          - 📄 `main.jsx`
+        - 📁 `server/`
+          - 📄 `server.js`
     - 📄 `.eslintrc.json` 
     - 📄 `.gitignore`
     - 📄 `index.html`
