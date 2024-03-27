@@ -1,0 +1,42 @@
+version: '3'
+services:
+  web:
+    image: bigpapoo/r5a05-nginx
+    container_name: application
+    build: 
+      context: .
+      dockerfile: Dockerfile-web
+    ports:
+      - "3100:3100"
+    networks:
+      - rezo_api_web
+
+  db:
+    image: postgres
+    ports: 
+      - "5433:5433"
+    volumes:
+      - ./volumes:/var/www/html
+    networks:
+      - rezo_api_database
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=koh_lanta_db
+    
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile-api
+    ports: 
+    - "3200:3200"
+    networks:
+      - rezo_api_database
+      - rezo_api_web
+
+# volumes:
+#   - ./volumes:/var/www/html
+  
+networks:
+  rezo_api_database:
+  rezo_api_web:

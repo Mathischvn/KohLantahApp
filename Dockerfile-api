@@ -1,0 +1,10 @@
+FROM bigpapoo/r5a05-node:latest
+
+WORKDIR /work
+
+COPY package.json ./
+
+RUN npm install
+RUN npm install -g pm2
+
+CMD [“pm2-runtime”, “app.js”]
