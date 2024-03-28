@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile-web
     ports:
-      - "3100:3100"
+      - "3100:80"
     networks:
       - rezo_api_web
 
