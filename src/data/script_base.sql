@@ -2,6 +2,8 @@
 DROP TABLE if exists recompense;
 DROP TABLE if exists objet;
 DROP TABLE if exists section;
+DROP TABLE if exists entite;
+DROP TABLE if exists section_choix;
 
 CREATE TABLE IF NOT EXISTS entite (
     id SERIAL PRIMARY KEY, 
