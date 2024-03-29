@@ -392,7 +392,7 @@ VALUES ( 9, 10, null, 'Se préparer au combat');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 11, 12, null, 'Se préparer au combat');
+VALUES ( 11, 12, null, 'Examiner le livre');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
