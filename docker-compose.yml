@@ -1,15 +1,14 @@
 version: '3'
 services:
   web:
-    image: bigpapoo/r5a05-nginx
     container_name: application
     build: 
       context: .
       dockerfile: Dockerfile-web
     ports:
-      - "8080:80"
+      - "3100:80"
     networks:
-      - rezo_api_web
+      - frontend
 
   db:
     image: bigpapoo/r5a05-postgres
@@ -18,8 +17,9 @@ services:
       - "5601:5432"
     volumes:
       - data:/var/www/html
+      # - ./src/data/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - rezo_api_database
+      - backend
     environment:
       POSTGRES_PASSWORD: 'admin'
       POSTGRES_USER: 'admin'
@@ -31,16 +31,16 @@ services:
       dockerfile: Dockerfile-api
     container_name: api
     ports: 
-    - "8081:8000"
+    - "3200:8000"
     depends_on:
       - db
     networks:
-      - rezo_api_database
-      - rezo_api_web
+      - backend
+      - frontend
 
 volumes:
   data:
   
 networks:
-  rezo_api_database:
-  rezo_api_web:
+  backend:
+  frontend:
