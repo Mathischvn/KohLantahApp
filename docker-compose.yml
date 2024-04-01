@@ -7,35 +7,39 @@ services:
       context: .
       dockerfile: Dockerfile-web
     ports:
-      - "3100:80"
+      - "8080:80"
     networks:
       - rezo_api_web
 
   db:
-    image: postgres
+    image: bigpapoo/r5a05-postgres
+    container_name: database
     ports: 
-      - "5433:5433"
+      - "5601:5432"
     volumes:
-      - ./volumes:/var/www/html
+      - data:/var/www/html
     networks:
       - rezo_api_database
     environment:
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_USER=admin
-      - POSTGRES_DB=koh_lanta_db
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_USER: 'admin'
+      POSTGRES_DB: 'koh_lanta_db'
     
   api:
     build: 
       context: .
       dockerfile: Dockerfile-api
+    container_name: api
     ports: 
-    - "3200:3200"
+    - "8081:8000"
+    depends_on:
+      - db
     networks:
       - rezo_api_database
       - rezo_api_web
 
-# volumes:
-#   - ./volumes:/var/www/html
+volumes:
+  data:
   
 networks:
   rezo_api_database:
