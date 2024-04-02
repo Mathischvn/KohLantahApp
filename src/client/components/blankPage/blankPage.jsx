@@ -5,7 +5,7 @@ import DicePage from "../../dicePage/dicePage.jsx"
 import ChoicePage from "../../choicePage/choicePage.jsx"
 import InventoryPage from "../../choicePage/choicePage.jsx"
 import "./blankPage.css"
-export const BlankPage = () => {
+export const BlankPage = (section) => {
     return (
         <>
             <div className="blankPage">
