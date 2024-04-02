@@ -11,7 +11,7 @@ export const BlankPage = () => {
                 <h1 className="">section.libelle</h1>
                 { 
                     if section.combat != null {
-                        FightPage(section)
+                        FightPage(section.id)
                     }
                     if section.enigme != null {
                         EnigmaPage(section.id)
