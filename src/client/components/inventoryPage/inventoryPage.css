@@ -1,0 +1,13 @@
+.inventory {
+    background-color: "#BDAE97";
+}
+
+.inventory-slot {
+    opacity: 0.45;
+    background-color: "#D9D9D9";
+}
+
+.inventory-bag {
+    opacity: 0.40;
+    background-color: "#D9D9D9";
+}

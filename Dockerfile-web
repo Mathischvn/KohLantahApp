@@ -1,13 +1,12 @@
 FROM bigpapoo/r5a05-node:latest as build-stage
 
 WORKDIR /app
+COPY . /app
 
-COPY package.*json ./
 RUN npm install
-COPY . .
 RUN npm run build
 
 FROM bigpapoo/r5a05-nginx:latest
-RUN rm /usr/share/nginx/html/*.html
+RUN rm /usr/share/nginx/html/*
 
-COPY --from=build-stage build /usr/share/nginx/html
+COPY --from=build-stage /app/dist /usr/share/nginx/html/
