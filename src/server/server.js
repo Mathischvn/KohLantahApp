@@ -1,6 +1,7 @@
 import express from "express";
 import ViteExpress from "vite-express";
 import path from "path";
+import {resultatTestFN} from "../data/connection.js"
 
 const PORT=3000
 const app = express();
@@ -20,6 +21,9 @@ app.get('/', (req, res) => {
   
 });
 
+app.get('/select', (req, res)=> {
+  res.send(resultatTestFN);
+})
 
 
 app.listen(PORT,()=>{
