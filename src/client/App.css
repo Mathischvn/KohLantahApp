@@ -4,6 +4,7 @@
   font-size: calc(1rem + 0.25vw);
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   background-color: #BDAE97;
 }

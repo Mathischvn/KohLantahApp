@@ -22,6 +22,7 @@
     opacity: 0.40;
     background-color: #978262;
     padding: 1em;
+    min-width: 20em;
     border-radius: 20px;
 }
 
