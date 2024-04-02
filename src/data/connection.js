@@ -15,12 +15,13 @@ const pool = postgres(connectionString, {
 // il y aura toute la liste des fonctions contenant les requêtes SQL nécessaires avec les paramètres adéquats
 
 // Utiliser une promesse pour gérer les requêtes
-const queryDatabase = async () => {
+const queryEntity = async (name) => {
     try {
         const entites = await pool`
-        select
+        SELECT
           *
-        from entite
+        FROM entite
+        WHERE libelle=${name}
         `;
         return entites;
     } catch (error) {
@@ -28,4 +29,4 @@ const queryDatabase = async () => {
     }
 };
 
-export const resultatTestFN = await queryDatabase();
+export const resEntite = await queryEntity("Polus");

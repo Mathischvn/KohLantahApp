@@ -1,12 +1,10 @@
 import express from "express";
 import ViteExpress from "vite-express";
 import path from "path";
-import {resultatTestFN} from "../data/connection.js"
+import {resEntite} from "../data/connection.js"
 
 const PORT=3000
 const app = express();
-
-
 
 // Obtenir le chemin du répertoire actuel
 const currentDirectory = new URL('../..', import.meta.url).pathname;
@@ -18,13 +16,11 @@ const __dirname = path.resolve(path.dirname(''));
 app.get('/', (req, res) => {
   // Renvoyer le fichier HTML principal de l'application React
   res.sendFile('index.html', { root: __dirname+'/dist/' });
-  
 });
 
 app.get('/select', (req, res)=> {
-  res.send(resultatTestFN);
+  res.send(resEntite);
 })
-
 
 app.listen(PORT,()=>{
   console.log('le serveur est lancé sur le port : localhost:'+PORT)
