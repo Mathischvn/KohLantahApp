@@ -1,13 +1,11 @@
-import mysql from 'mysql2';
+import postgres from 'postgres'
 import dotenv from 'dotenv';
 dotenv.config()
 
-
-
-const pool = mysql.createPool({
+const pool = postgres('postgres://username:password@host:port/database',{     
     host    :process.env.SQL_HOST,
-    user    :process.env.SQL_USER,
-    password:process.env.SQL_PASSWORD,
+    username    :process.env.SQL_USER,
+    password:process.env.SQL_PASSWORD, 
 }).promise()
 
 /*

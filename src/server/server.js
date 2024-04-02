@@ -5,20 +5,22 @@ import path from "path";
 const PORT=3000
 const app = express();
 
+
+
 // Obtenir le chemin du répertoire actuel
 const currentDirectory = new URL('../..', import.meta.url).pathname;
 
 // Construire le chemin complet vers un fichier
 const cheminFichier = path.resolve(currentDirectory,'dist', 'index.html');
-
+const __dirname = path.resolve(path.dirname('')); 
 
 app.get('/', (req, res) => {
   // Renvoyer le fichier HTML principal de l'application React
-  
-  res.sendFile(path.join(currentDirectory,'dist','index.html'));
-  // res.sendFile('F:/cours2324/SAE/livre269/KohLantahApp/dist/index.html');
+  res.sendFile('index.html', { root: __dirname+'/dist/' });
   
 });
+
+
 
 app.listen(PORT,()=>{
   console.log('le serveur est lancé sur le port : localhost:'+PORT)
