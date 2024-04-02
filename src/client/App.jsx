@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { startTransition } from 'react'
 import './reset.css'
 import './App.css'
 import { TitlePage } from './components/mainPage/titlePage'
 import { InventoryPage } from './components/inventoryPage/inventoryPage'
+import { SideBar } from './components/sideBar/sideBar'
+import SlideIn from './components/slideIn/SlideIn'
 
 function App() {
-
   return (
-    // <TitlePage />
-      <InventoryPage />
+    <React.Fragment>
+      <TitlePage />
+      <SideBar />
+    </React.Fragment>
   )
 }
 

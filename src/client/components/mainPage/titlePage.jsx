@@ -3,8 +3,8 @@ import "./titlePage.css"
 export const TitlePage = () => {
     return (
         <>
-            <div className="titlePage">
-                <h1 className="">La quete du Livre 269</h1>
+            <div className="title-page">
+                <h1 className="">La quête du Livre 269</h1>
                 <div>
                     <button className="start-button">
                         Commencer

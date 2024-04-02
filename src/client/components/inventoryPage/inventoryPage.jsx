@@ -6,7 +6,6 @@ export const InventoryPage = () => {
     return (
         <>
             <div className="inventory">
-                <SideBar></SideBar>
                 <div className="inventory-left">
                     <h1 className="">Vos bijoux</h1>
                         <InventoryBag bagSize={4} icon={"fa-solid fa-gem"}></InventoryBag>
