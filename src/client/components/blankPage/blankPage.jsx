@@ -9,7 +9,7 @@ export const BlankPage = (section) => {
     return (
         <>
             <div className="blankPage">
-                <h1 className="">section.libelle</h1>
+                <h1 className="">{ section.libelle }</h1>
                 { 
                     if section.combat != null {
                         FightPage(section.id)
