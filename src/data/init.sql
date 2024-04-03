@@ -1,10 +1,18 @@
--- Active: 1711532157725@@127.0.0.1@5432@db_test
-DROP TABLE if exists recompense;
-DROP TABLE if exists objet;
-DROP TABLE if exists section;
-DROP TABLE if exists entite;
+-- Active: 1712062701963@@127.0.0.1@5432@db_livre
 DROP TABLE if exists section_choix;
 DROP TABLE if exists section_action;
+DROP TABLE if exists inventaire;
+DROP TABLE if exists personnage;
+DROP TABLE if exists recompense;
+DROP TABLE if exists section;
+DROP TABLE if exists objet;
+DROP TABLE if exists entite;
+
+CREATE TABLE IF NOT EXISTS personnage (
+    id SERIAL PRIMARY KEY, 
+	nom VARCHAR(255),
+	statistiques VARCHAR(255)
+);
 
 CREATE TABLE IF NOT EXISTS entite (
     id SERIAL PRIMARY KEY, 
@@ -18,7 +26,15 @@ CREATE TABLE IF NOT EXISTS objet (
 	booleen_equipable BOOLEAN, 
 	booleen_utilisation_unique BOOLEAN, 
 	statistiques VARCHAR(255), -- separateur ;
-    	emplacement VARCHAR(50) -- ex : bijoux, etc.
+    emplacement VARCHAR(50) -- ex : bijoux, etc.
+);
+
+CREATE TABLE IF NOT EXISTS inventaire (
+	id_objet INT,
+	id_personnage INT,
+	PRIMARY KEY (id_personnage, id_objet), 
+	FOREIGN KEY (id_objet) REFERENCES objet(id), 
+	FOREIGN KEY (id_personnage) REFERENCES personnage(id)
 );
 
 CREATE TABLE IF NOT EXISTS section (
@@ -70,6 +86,22 @@ INSERT INTO
 	entite (description_prompt, libelle, statistiques)
 VALUES (null, 'Polus', null);
 
+INSERT INTO
+	entite (description_prompt, libelle, statistiques)
+VALUES (null, 'L''oracle', null);
+
+INSERT INTO
+	entite (description_prompt, libelle, statistiques)
+VALUES (null, 'Fantome', 'force:2;pv:10;defense:1');
+
+INSERT INTO
+	entite (description_prompt, libelle, statistiques)
+VALUES (null, 'Fantome effrayant', 'force:2;pv:10;defense:1');
+
+INSERT INTO
+	entite (description_prompt, libelle, statistiques)
+VALUES (null, 'Fantome cauchemardesque', 'force:3;pv:10;defense:2');
+
 -- SECTIONS
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -105,7 +137,7 @@ INSERT INTO
 VALUES ('Rencontre avec une créature', 
 	'Alors que vous avancez, une silhouette sombre émerge des ombres. C''est une créature étrange, mi-humaine mi-bête. Elle grogne et se prépare à attaquer.
 Préparez-vous au combat ! Lancez un dé pour déterminer votre succès.',
-		null, 'entite à insérer');
+		null, 3);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -114,14 +146,14 @@ VALUES ('Couloir de droite',
 "Je suis l''Oracle de la bibliothèque. Répondez à cette énigme pour poursuivre votre quête : 
 	''Pour moi, l''accouchement est avant la grossesse, l''enfance avant la naissance, l''adolescence avant l''enfance, la mort avant la vie. Qui suis-je ?''"
 Quelle est votre réponse ?',
-		null,'insérer oracle');
+		null,2);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES ('Réponse à l''énigme', 
 	'Vous réfléchissez un moment avant de répondre : "un dictionnaire". 
 	L''Oracle hoche la tête, satisfait de votre réponse, et vous montre le chemin vers une nouvelle section de la bibliothèque.',
-		null, 'insérer oracle');
+		null, 2);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -149,7 +181,7 @@ INSERT INTO
 VALUES ('Combat contre une créature', 
 	'Une créature hideuse surgit de l''ombre, ses griffes acérées prêtes à vous déchirer. Vous prenez une profonde inspiration, prêt à défendre votre vie.
 Lancez le dé pour déterminer le résultat de votre combat.',
-		null, 'insérer créature ici');
+		null, 4);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -162,7 +194,7 @@ Arrivé en haut, vous découvrez une petite pièce cachée remplie de vieux manu
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES ('Découverte d''un livre utile',
-	'Vous examinez le livre et découvrez qu'il s'agit d''un guide sur les mystères de la bibliothèque. À l''intérieur se trouve une carte détaillée de l''emplacement du livre 269.
+	'Vous examinez le livre et découvrez qu''il s''agit d''un guide sur les mystères de la bibliothèque. À l''intérieur se trouve une carte détaillée de l''emplacement du livre 269.
 Vous prenez le livre avec vous, reconnaissant pour cette précieuse trouvaille.',
 		null, null);
 
@@ -180,8 +212,7 @@ Que choisissez-vous ?',
 		null, null);
 
 INSERT INTO
-    section (titre, libelle, description_fond_prompt, booleen_combat, entite, booleen_lancer_de, booleen_enigme, 
-	condition_reussite_action, libelle_action_reussie, libelle_action_ratee)
+    section (titre, libelle, description_fond_prompt, entite)
 VALUES ('Tenter de convaincre le gardien',
 	' Vous expliquez votre quête au gardien, montrant le livre que vous avez trouvé comme preuve de vos intentions pacifiques. Après un moment d''hésitation, le gardien acquiesce et vous laisse partir.
 Vous continuez votre exploration, reconnaissant d''avoir évité un conflit.',
@@ -230,7 +261,7 @@ INSERT INTO
 VALUES ('Combat contre une créature cachée dans les miroirs',
 	'Alors que vous avancez dans la salle des miroirs, une créature émerge soudainement d''un des reflets, prête à vous attaquer. Vous prenez une profonde inspiration et vous préparez à affronter votre ennemi.
 		Lancez le dé pour déterminer le résultat de votre combat.',
-		null, 'entite à mettre à là');
+		null, 4);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -246,7 +277,7 @@ INSERT INTO
 VALUES ('Combat contre une créature cachée dans les miroirs', 
 	'La créature surgit de l''un des miroirs, ses yeux luisant d''une lueur maléfique. 
 	Vous vous préparez à l''affronter, sachant que votre vie dépend de votre habileté au combat.',
-		null, 'entite à mettre à là');
+		null, 4);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -362,59 +393,55 @@ VALUES ( 24, 25, null, 'S''evader de la bibliothèque');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 24, 25, null, 'S''evader de la bibliothèque');
+VALUES ( 26, 1, null, 'Essayer de se réveiller');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 26, 1, null, 'Essayer de se réveiller');
+VALUES ( 25, 1, null, 'Vous mourrez');
 
 ----------------------------------------------------------------------------
-INSERT INTO
-    section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
-	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 3, 4, 2, 'reponse:une fourchette', "Bravo ! Vous avez trouvé la réponse !", "Vous avez échoué.", false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 5, 8, 26, 'intelligence>2', "Bravo ! Vous avez gagné le combat !", "Vous avez perdu.", true, false, false);
+VALUES ( 3, 4, 2, 'reponse:une fourchette', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 6, 7, 2, 'reponse: un dictionnaire', "Bravo ! Vous avez trouvé la réponse !", "Vous avez échoué.", false, false, true);
+VALUES ( 5, 8, 26, 'intelligence>2', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 10, 14, 26, 'intelligence>3', "Bravo ! Vous avez gagné le combat !", "Vous avez perdu.", true, false, false);
+VALUES ( 6, 7, 2, 'reponse: un dictionnaire', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 16, 17, 2, 'reponse: un miroir', "Bravo ! Vous avez trouvé la réponse !", "Vous avez échoué.", false, false, true);
+VALUES ( 10, 14, 26, 'intelligence>3', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 19, 20, 21, 'lancer>3', "Bravo ! Vous avez eu de la chance !", "Pas de bol.", false, true, false);
+VALUES ( 16, 17, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 19, 20, 21, 'lancer>3', "Bravo ! Vous avez eu de la chance !", "Pas de bol.", false, true, false);
+VALUES ( 19, 20, 21, 'lancer>3', 'Bravo ! Vous avez eu de la chance !', 'Pas de bol.', false, true, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 21, 24, 26, 'intelligence > 6', "Bravo ! Vous avez gagné le combat !", "Vous avez perdu.", true, false, false);
+VALUES ( 21, 24, 26, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 22, 24, 2, 'reponse : à définir', "Bravo ! Vous avez trouvé la réponse !", "Vous avez échoué.", false, false, true);
+VALUES ( 22, 24, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', "Bravo ! Vous avez gagné le combat !", "Vous avez perdu.", true, false, false);
+VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);

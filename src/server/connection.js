@@ -10,7 +10,7 @@ const pool = postgres(connectionString, {
     database : process.env.SQL_DB,
     username : process.env.SQL_USER,
     password : process.env.SQL_PASSWORD,
-});
+}); 
 
 // il y aura toute la liste des fonctions contenant les requêtes SQL nécessaires avec les paramètres adéquats
 
