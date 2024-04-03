@@ -424,24 +424,24 @@ VALUES ( 10, 14, 26, 'intelligence>3', 'Bravo ! Vous avez gagné le combat !', '
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 16, 17, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 17, 18, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 19, 20, 21, 'lancer>3', 'Bravo ! Vous avez eu de la chance !', 'Pas de bol.', false, true, false);
+VALUES ( 20, 21, 21, 'lancer>3', 'Bravo ! Vous avez eu de la chance !', 'Pas de bol.', false, true, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 21, 24, 26, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
+VALUES ( 22, 24, 27, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 22, 24, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 23, 25, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
+VALUES ( 24, 25, 27, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
