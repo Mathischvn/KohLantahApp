@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS entite (
 
 CREATE TABLE IF NOT EXISTS objet (
     id SERIAL PRIMARY KEY, 
+	nom VARCHAR(50),
 	booleen_equipable BOOLEAN, 
 	booleen_utilisation_unique BOOLEAN, 
 	statistiques VARCHAR(255), -- separateur ;
@@ -445,3 +446,7 @@ INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
 VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
+
+INSERT INTO 
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement)
+	VALUES ('Livre de force', true, false, 'force:3;', 'livre');

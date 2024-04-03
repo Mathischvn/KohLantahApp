@@ -28,7 +28,7 @@
 
 .inventory-left .inventory-right {
     display: flex;
-    flex: 1; 
+    flex: 1;
 }
 
 .inventory-right {
@@ -37,10 +37,21 @@
     width: 50%;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .main-bag {
     display: flex;
     flex-wrap: wrap;
-    width: 80%;
+}
+
+.character-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #978262;
+    opacity: 0.40;
+    padding: 1em;
+    border-radius: 20px;
 }

@@ -1,0 +1,16 @@
+.stat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stat-bar {
+  height: 1em;
+  border-radius: 20px;
+  margin-left: 1em;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}

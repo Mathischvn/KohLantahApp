@@ -1,5 +1,5 @@
 import express from "express";
-//import {resEntite} from "./connection.js"
+import {resEntite} from "./connection.js"
 import ViteExpress from "vite-express";
 
 const app = express();
