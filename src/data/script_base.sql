@@ -369,23 +369,6 @@ INSERT INTO
 VALUES ( 26, 1, null, 'Essayer de se réveiller');
 
 ----------------------------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS section_action (
-    id_section INT, 
-	id_section_reussite INT,
-	id_section_echec INT,
-	condition_reussite VARCHAR(255),
-	libelle_action_reussite VARCHAR(255), 
-	libelle_action_echec VARCHAR(255),
-	booleen_combat BOOLEAN,
-	booleen_lancer_de BOOLEAN,
-	booleen_enigme BOOLEAN,
-	PRIMARY KEY (id_section), 
-	FOREIGN KEY (id_section) REFERENCES section(id), 
-	FOREIGN KEY (id_section_reussite) REFERENCES section(id),
-	FOREIGN KEY (id_section_echec) REFERENCES section(id)
-);
-
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
