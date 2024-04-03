@@ -29,4 +29,31 @@ const queryEntity = async (name) => {
     }
 };
 
-export const resEntite = await queryEntity("Polus");
+const querySection = async (id) => {
+    try {
+        const section = await pool`
+        SELECT
+          *
+        FROM section
+        WHERE id=${id}
+        `;
+        const section_action = await pool`
+        SELECT
+          *
+        FROM section_action
+        WHERE id_section=${id}
+        `;
+        const section_choix = await pool`
+        SELECT
+          *
+        FROM section_choix
+        WHERE id_section=${id}
+        `;
+        return [section, section_action, section_choix];
+    } catch (error) {
+        console.error('Erreur lors de l\'exécution de la requête :', error);
+    }
+};
+const resEntite = await queryEntity("Polus");
+const resSection = await querySection("1");
+export {resEntite, resSection}
