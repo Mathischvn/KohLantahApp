@@ -1,0 +1,64 @@
+.diceContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.diceBlockNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.2em;
+    background-color: black;
+    padding: 0.5em;
+    color: white;
+    border: solid 1px white;
+    border-radius: 20px;
+    width: 50px;
+    height: 50px;
+}
+
+.rollDice {
+    background-color: rgba(0, 0, 0, 0.793);
+    border: solid 1px white;
+    color: white;
+    width: max-content;
+    padding: 0.5em 0.8em;
+    font-size: 1.4em;
+    border-radius: 20px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.rollDice:hover {
+    background-color: black;
+}
+
+@keyframes fadeKeyframe {
+    25% {
+        transform: rotate(5deg);
+        box-shadow: 0 0 2em black;
+    }
+
+    50% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+        box-shadow: none;
+    }
+}
+
+.fadeanime {
+    animation: fadeKeyframe 0.7s ease;
+}
+
+.answerDice {
+    font-size: 1.5em;
+}
