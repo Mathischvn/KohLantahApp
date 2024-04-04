@@ -50,10 +50,10 @@ export const querySection = async (id) => {
         WHERE id_section=${id}
         `;
         section.map((item) => {
-            item.action = section_action;
+            item.action = section_action[0];
             item.choix = section_choix;
         });
-        return section;
+        return section[0];
     } catch (error) {
         console.error('Erreur lors de l\'exécution de la requête :', error);
     }

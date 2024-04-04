@@ -14,23 +14,26 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         }
         fetchData();
     }, [sectionId]);
+    
     const isNotActionEmpty = section.action != [] && section.action != null  && section.action != undefined
     const isCombat = isNotActionEmpty ? (section.action.booleen_combat) :  false
     const isEnigme = isNotActionEmpty ? (section.action.booleen_enigme) :  false
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
-    const isChoix = section.choix != []
+    const isChoix = !(isNotActionEmpty)
 
     console.log("isCombat", isCombat)
     console.log("isEnigme", isEnigme)
     console.log("isDe", isDe)
     console.log("isChoix", isChoix)
+    console.log("choix", section.choix)
     
     console.log("section", section)
     
     return (
         <>
             <div className="blankPage">
-               
+                <p className="libelle">{ section.libelle }</p>
+                
                 {
                     isCombat ? <div>Combat</div> : ""
                 }
@@ -41,7 +44,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     isDe ? <div>De</div> : ""
                 }
                 {
-                    isChoix ? <div>Choix</div> : ""
+                    isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
                 }
                 <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button>
 
