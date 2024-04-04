@@ -3,6 +3,6 @@ import "./profilePicture.css"
 
 export const ProfilePicture = () => {
     return (
-        <img src="/public/images/profile-picture.jpg" alt="Photo de profil" />
+        <img src="/images/profile-picture.jpg" alt="Photo de profil" />
     )
 }
