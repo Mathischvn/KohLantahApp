@@ -2,6 +2,7 @@ import React from "react"
 import "./blankPage.css"
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
+import { DicePage } from "../dicePage/dicePage";
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
@@ -28,29 +29,30 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     console.log("choix", section.choix)
     
     console.log("section", section)
-    
-    return (
-        <>
-            <div className="blankPage">
-                <p className="libelle">{ section.libelle }</p>
-                
-                {
-                    isCombat ? <div>Combat</div> : ""
-                }
-                {
-                    isEnigme ? <div>Enigme</div> : ""
-                }
-                {
-                    isDe ? <div>De</div> : ""
-                }
-                {
-                    isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
-                }
-                <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button>
+    if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
+        return (
+            <>
+                <div className="blankPage">
+                    <p className="libelle">{ section.libelle }</p>
+                    
+                    {
+                        isCombat ? <div>Combat</div> : ""
+                    }
+                    {
+                        isEnigme ? <Enigme setSectionID={setSectionID} section_action={section.action}/> : ""
+                    }
+                    {
+                        isDe ? <DicePage/> : ""
+                    }
+                    {
+                        isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
+                    }
+                    <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button>
 
-                
-            </div>
-       
-        </>
-    )
+                    
+                </div>
+        
+            </>
+        )
+    }
 }

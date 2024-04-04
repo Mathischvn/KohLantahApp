@@ -2,15 +2,24 @@ import React from "react"
 import { FormElement } from "../formElement/formElement" 
 import "./enigme.css"
 
-export const Enigme = () => {
+export const Enigme = ({setSectionID, section_action}) => {
     const [state, setState] = React.useState({
-        question: "",
         answer: "",
         userAnswer: ""
     })
+    var compteur = 2
 
     const handleValidation = () => {
-        state.userAnswer.toLowerCase() === state.answer.toLowerCase() ? alert("Bonne réponse !") : alert("Mauvaise réponse. Réessayez !")
+        if (state.userAnswer.toLowerCase() === state.answer.toLowerCase()){ 
+            setSectionID(section_action.id_section_reussite)
+        }
+        else{
+            alert("Mauvaise réponse. Réessayez !")
+            compteur--
+            if (compteur == 0 ){
+                setSectionID(section_action.id_section_echec)
+            }
+        }
     }
     const handleUserAnswerChange = (e) => {
         setState({
@@ -20,18 +29,13 @@ export const Enigme = () => {
     }
     React.useEffect(() => {
         setState({
-            question: "Quel est le nom de la capitale de la France ?",
-            answer: "Paris",
+            answer: section_action.condition_reussite.replace("reponse:",""),
             userAnswer: state.userAnswer
         })        
     }, []) 
 
     return (
         <div className="enigme">
-            <h1>Enigme</h1>
-            <div>
-                <p>{state.question}</p>
-            </div>
             <div className="form-answer">
                 <div className="input-answer">
                     <FormElement 
