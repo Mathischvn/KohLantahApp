@@ -1,34 +1,53 @@
 import React from "react"
-import FightPage from "../../fightPage/fightPage.jsx"
-import EnigmaPage from "../../enigmaPage/enigmaPage.jsx"
-import DicePage from "../../dicePage/dicePage.jsx"
-import ChoicePage from "../../choicePage/choicePage.jsx"
-import InventoryPage from "../../choicePage/choicePage.jsx"
 import "./blankPage.css"
-export const BlankPage = (section) => {
+import { Enigme } from "../enigmePage/enigme";
+import { ChoicePage } from "../choicePage/choicePage";
+
+export const BlankPage = ({sectionId, setSectionID}) => {
+    const [section, setSection] = React.useState([])
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
+            const data = await response.json();
+            console.log("data", data)
+            setSection(data);
+        }
+        fetchData();
+    }, [sectionId]);
+    const isNotActionEmpty = section.action != [] && section.action != null  && section.action != undefined
+    const isCombat = isNotActionEmpty ? (section.action.booleen_combat) :  false
+    const isEnigme = isNotActionEmpty ? (section.action.booleen_enigme) :  false
+    const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
+    const isChoix = section.choix != []
+
+    console.log("isCombat", isCombat)
+    console.log("isEnigme", isEnigme)
+    console.log("isDe", isDe)
+    console.log("isChoix", isChoix)
+    
+    console.log("section", section)
+    
     return (
         <>
             <div className="blankPage">
-                <h1 className="">{ section.libelle }</h1>
-                { 
-                    if section.combat != null {
-                        FightPage(section.id)
-                    }
-                    if section.enigme != null {
-                        EnigmaPage(section.id)
-                    }
-                    if section.lancer_de != null {
-                        DicePage(section.id)
-                    }
-                    if section.choix != null {
-                        for(choix of section.choix){
-                            ChoicePage(choix.id) 
-                        }
-                    }
-                <InventoryPage/>
+               
+                {
+                    isCombat ? <div>Combat</div> : ""
                 }
+                {
+                    isEnigme ? <div>Enigme</div> : ""
+                }
+                {
+                    isDe ? <div>De</div> : ""
+                }
+                {
+                    isChoix ? <div>Choix</div> : ""
+                }
+                <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button>
+
+                
             </div>
-            <div><H1 className="">section.titre</H1></div>
+       
         </>
     )
 }

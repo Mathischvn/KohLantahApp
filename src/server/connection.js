@@ -29,7 +29,7 @@ const queryEntity = async (name) => {
     }
 };
 
-const querySection = async (id) => {
+export const querySection = async (id) => {
     try {
         const section = await pool`
         SELECT
@@ -49,11 +49,15 @@ const querySection = async (id) => {
         FROM section_choix
         WHERE id_section=${id}
         `;
-        return [section, section_action, section_choix];
+        section.map((item) => {
+            item.action = section_action;
+            item.choix = section_choix;
+        });
+        return section;
     } catch (error) {
         console.error('Erreur lors de l\'exécution de la requête :', error);
     }
 };
-const resEntite = await queryEntity("Polus");
-const resSection = await querySection("1");
-export {resEntite, resSection}
+
+export const resEntite = await queryEntity("Polus");
+export const resSection = await querySection("1");

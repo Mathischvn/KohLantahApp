@@ -8,25 +8,19 @@ import { DicePage } from './components/dicePage/dicePage'
 import { ChoicePage } from './components/choicePage/choicePage'
 import { BrowserRouter } from 'react-router-dom'
 import { Routes, Route} from 'react-router-dom'
+import { BlankPage } from './components/blankPage/blankPage'
+
 
 function App() {
+  const [sectionID, setSectionID] = React.useState(2)
+  console.log("sectionID", sectionID)
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <TitlePage />
-            <SideBar />
-          </>
-        } />
-        <Route path='/enigme' element={<Enigme />} />
-        <Route path='/des' element={<DicePage />} />
-        <Route path='/combat' element={""} />
-        <Route path='/choise' element={<ChoicePage />} />
-      </Routes>
+    <>
+
+      <BlankPage sectionId={sectionID} setSectionID={setSectionID} />
       
      
-    </BrowserRouter>
+    </>
   )
 }
 
