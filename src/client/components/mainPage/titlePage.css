@@ -13,3 +13,31 @@ h1 {
     font-size: 4rem;
     color: white;
 }
+
+.container-title-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.player_name_input {
+    padding: 0.7em 1em;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.354);
+    border: 1px solid white;
+    font-family: 'Irish Grover', cursive;
+    font-size: 1em;
+    color: white;
+}
+
+.already-existed {
+    font-size: 1.2em;
+    background-color: #ff000061;
+    color: rgb(253, 149, 149);
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+}

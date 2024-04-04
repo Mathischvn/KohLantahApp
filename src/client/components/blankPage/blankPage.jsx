@@ -22,6 +22,13 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
+    React.useEffect(() => {
+        const section_libelle = document.querySelector(".libelle");
+        if (section_libelle && document.cookie.includes("name")) {
+            section_libelle.textContent = section.libelle.replace(/#username/g, document.cookie.match(/(?<=name=)[^;]*/)[0]);
+        }
+    }, [section]);
+
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>

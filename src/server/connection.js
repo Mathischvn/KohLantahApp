@@ -59,5 +59,31 @@ export const querySection = async (id) => {
     }
 };
 
+export const getPlayer = async (name) => {
+  try {
+      const player = await pool`
+      SELECT
+        *
+      FROM personnage
+      WHERE nom=${name}
+      `;
+      return player;
+  } catch (error) {
+      console.error('Erreur lors de l\'insertion du personnage :', error);
+  }
+};
+
+export const insertPlayer = async (name) => {
+  try {
+      await pool`
+      INSERT INTO
+        personnage (nom, statistiques)
+      VALUES (${name}, 'intelligence:10;force:10;hp:10');
+      `;
+  } catch (error) {
+      console.error('Erreur lors de l\'insertion du personnage :', error);
+  }
+};
+
 export const resEntite = await queryEntity("Polus");
 export const resSection = await querySection("1");
