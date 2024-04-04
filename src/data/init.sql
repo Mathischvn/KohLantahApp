@@ -93,15 +93,15 @@ VALUES (null, 'L''oracle', null);
 
 INSERT INTO
 	entite (description_prompt, libelle, statistiques)
-VALUES (null, 'Fantome', 'force:2;pv:10;defense:1');
+VALUES (null, 'Fantôme', 'force:2;pv:10;defense:1');
 
 INSERT INTO
 	entite (description_prompt, libelle, statistiques)
-VALUES (null, 'Fantome effrayant', 'force:2;pv:10;defense:1');
+VALUES (null, 'Fantôme effrayant', 'force:2;pv:10;defense:1');
 
 INSERT INTO
 	entite (description_prompt, libelle, statistiques)
-VALUES (null, 'Fantome cauchemardesque', 'force:3;pv:10;defense:2');
+VALUES (null, 'Fantôme cauchemardesque', 'force:3;pv:10;defense:2');
 
 -- SECTIONS
 INSERT INTO
@@ -245,10 +245,9 @@ Le dé roule sur le sol et s''arrête sur un chiffre. Vous suivez cette directio
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES ('Résolution de l''énigme des réflexions',
-	'Vous observez attentivement les miroirs, cherchant des indices qui pourraient vous aider à trouver la sortie. Après un moment de réflexion, vous avez une idée.
-"La sortie se trouve là où votre reflet ne vous suit pas."
-Vous suivez vos instincts et vous dirigez vers l''endroit où votre reflet semble se comporter différemment.',
-		null, null);
+	'Vous observez attentivement les miroirs, cherchant des indices qui pourraient vous aider à trouver la sortie. Après un moment de réflexion, vous regardez en l''air.
+	Au plafond, une tablette contient les instructions suivantes : "Pour retrouver votre chemin, murmurez la réponse à cette énigme : "Je peux voyager autour du monde tout en restant dans mon coin. Qui suis-je ?""',
+	null, null);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -261,10 +260,10 @@ INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES ( 
 	'Résolution de l''énigme des réflexions', 'Vous méditez sur l''énigme, essayant de déchiffrer ses mystères.
-	Après un moment de réflexion, vous réalisez que votre reflet ne vous suit pas lorsque vous regardez dans une direction spécifique.
+	Après un moment de réflexion, vous murmurez "un timbre", et le plafond se met à s''illuminer, vous montrant le chemin à suivre.
 	Avec prudence, vous vous dirigez vers cette direction et découvrez une porte cachée derrière un faux mur de miroirs. 
 	Vous l''ouvrez et passez à travers, impatient de voir ce qui vous attend.',
-		null, null);
+	null, null);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
@@ -294,12 +293,12 @@ VALUES ('Évasion de la bibliothèque',
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES (
-	'Mort', 'Vous êtes mort. Vos souvenirs se troublent.', null, null);
+	'Évanouissement', 'Vous vous évanouissez. Vos souvenirs se troublent.', null, null);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES (
-	'Mort', 'Le gardien n''apprécie pas votre comportement. Il vous fait voler à travers la pièce. Vous êtes mort. Vos souvenirs se troublent.', null, null);
+	'Évanouissement', 'Le gardien n''apprécie pas votre comportement. Il vous fait voler à travers la pièce. Vous vous évanouissez. Vos souvenirs se troublent.', null, null);
 
 ----------------------------------------------------------------------------
 INSERT INTO
@@ -376,7 +375,7 @@ VALUES ( 18, 19, null, 'Utiliser un dé pour naviguer à travers les miroirs');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 18, 22, null, 'Tenter de résoudre l''énigme des réflexions pour trouver la sortie');
+VALUES ( 18, 20, null, 'Tenter de résoudre l''énigme des réflexions pour trouver la sortie');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
@@ -384,11 +383,15 @@ VALUES ( 18, 23, null, 'Préparez-vous au combat contre une créature cachée da
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 20, 24, null, 'Se diriger ver la sortie');
+VALUES ( 20, 22, null, 'Se diriger vers la sortie');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 24, 25, null, 'S''evader de la bibliothèque');
+VALUES ( 22, 24, null, 'Se diriger vers la sortie');
+
+INSERT INTO
+    section_choix (id_section, id_choix, condition_choix, libelle_choix)
+VALUES ( 24, 25, null, 'S''évader de la bibliothèque');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
@@ -417,7 +420,7 @@ VALUES ( 5, 8, 26, 'intelligence>2', 'Bravo ! Vous avez gagné le combat !', 'Vo
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 6, 7, 2, 'reponse: un dictionnaire', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 6, 7, 2, 'reponse:un dictionnaire', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
@@ -427,7 +430,7 @@ VALUES ( 10, 14, 26, 'intelligence>3', 'Bravo ! Vous avez gagné le combat !', '
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 16, 17, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 16, 17, 2, 'reponse:un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
@@ -442,7 +445,7 @@ VALUES ( 21, 24, 26, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !',
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 22, 24, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 20, 22, 2, 'reponse:un timbre', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
