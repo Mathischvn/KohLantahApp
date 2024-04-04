@@ -1,9 +1,9 @@
 import React from "react"
 import "./inventoryPage.css"
 import { InventoryBag } from './inventoryBag/inventoryBag'
-import { SideBar } from '../sideBar/sideBar'
 import { StatBar } from "./statBar/statBar"
 import { ProfilePicture } from "../profilePicture/profilePicture"
+
 export const InventoryPage = () => {
     return (
         <>
@@ -30,7 +30,6 @@ export const InventoryPage = () => {
                         <div className="main-bag">
                             <InventoryBag bagSize={16}></InventoryBag>
                         </div>
-                    
                 </div>
             </div>
         </>

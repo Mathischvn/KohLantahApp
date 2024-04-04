@@ -449,4 +449,7 @@ VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez
 
 INSERT INTO 
 	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement)
+	VALUES ('Collier du grand-père', true, false, 'intelligence:3;', 'bijoux');
+INSERT INTO 
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement)
 	VALUES ('Livre de force', true, false, 'force:3;', 'livre');

@@ -12,7 +12,7 @@ export const SideBar = () => {
                 <InventoryPage />
             </SlideIn>
             <div className="side-bar" onClick={() => setStartAnimation(!startAnimation)}></div>
-        </div>        
+        </div>
     )
     
 }

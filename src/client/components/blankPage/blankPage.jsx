@@ -3,6 +3,7 @@ import "./blankPage.css"
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
+import { SideBar } from "../sideBar/sideBar";
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
@@ -24,7 +25,8 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>
-                <div className="blankPage">
+                <SideBar></SideBar>
+                <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>
                     
                     {

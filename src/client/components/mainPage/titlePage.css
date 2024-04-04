@@ -9,14 +9,6 @@
     background-size: cover; 
     background-position: center;
 }
-
-.start-button {
-    width: 10rem;
-    height: 3rem;
-    background-color: white;
-    opacity: 0.8;
-}
-
 h1 {
     font-size: 4rem;
     color: white;
