@@ -42,7 +42,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                         isEnigme ? <Enigme setSectionID={setSectionID} section_action={section.action}/> : ""
                     }
                     {
-                        isDe ? <DicePage/> : ""
+                        isDe ? <DicePage setSectionID={setSectionID} section_action={section.action}/> : ""
                     }
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""

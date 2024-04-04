@@ -2,7 +2,10 @@ import React from "react"
 import "./dicePage.css"
 import { useState } from 'react';
 
-export const DicePage = ({conditionSuccess = 'lancer>3', libelle_action_reussite="gg mec", libelle_action_echec="gros boloss"}) => {
+// export const DicePage = ({conditionSuccess = 'lancer>3', libelle_action_reussite="gg mec", libelle_action_echec="gros boloss"}) => {
+
+export const DicePage = ({setSectionID, section_action}) => {
+    
     
     const [numberDice, setNumberDice] = useState("?");
     const [rolling, setRolling] = useState(false);
@@ -35,7 +38,7 @@ export const DicePage = ({conditionSuccess = 'lancer>3', libelle_action_reussite
     };
 
     const verifyConditionSuccess = (number) => {
-        conditionSuccess = conditionSuccess.replace("lancer", "");
+        let conditionSuccess = section_action.condition_reussite.replace("lancer", "");
         if(conditionSuccess.includes(">=")) {
             setSuccess(number>=parseInt(conditionSuccess.replace(">=", "")));
         }
@@ -55,7 +58,7 @@ export const DicePage = ({conditionSuccess = 'lancer>3', libelle_action_reussite
             <div className="diceContainer">
                 <div className="diceBlockNumber">{numberDice}</div>
                 {showButton && <button className="rollDice" onClick={() => {handleRandomDice(), clickButton()}}>Lancer le dé</button>}
-                {showAnswer && <div className="answerDice">{success ? libelle_action_reussite : libelle_action_echec}</div>}
+                {showAnswer && <div className="answerDice">{success ? section_action.libelle_action_reussite : section_action.libelle_action_echec}</div>}
             </div>
         </>
     )
