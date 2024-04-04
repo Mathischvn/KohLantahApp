@@ -3,6 +3,7 @@ import "./blankPage.css"
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
+import { SideBar } from "../sideBar/sideBar";
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
@@ -10,7 +11,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
             const data = await response.json();
-            console.log("data", data)
             setSection(data);
         }
         fetchData();
@@ -22,17 +22,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
-    console.log("isCombat", isCombat)
-    console.log("isEnigme", isEnigme)
-    console.log("isDe", isDe)
-    console.log("isChoix", isChoix)
-    console.log("choix", section.choix)
-    
-    console.log("section", section)
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>
-                <div className="blankPage">
+                <SideBar></SideBar>
+                <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>
                     
                     {
