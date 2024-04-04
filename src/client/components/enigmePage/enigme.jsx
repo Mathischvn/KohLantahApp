@@ -1,5 +1,6 @@
 import React from "react"
 import { FormElement } from "../formElement/formElement" 
+import levenshtein from "../../Levenshtein.js"
 import "./enigme.css"
 
 export const Enigme = ({setSectionID, section_action}) => {
@@ -10,7 +11,7 @@ export const Enigme = ({setSectionID, section_action}) => {
     var compteur = 2
 
     const handleValidation = () => {
-        if (state.userAnswer.toLowerCase() === state.answer.toLowerCase()){ 
+        if (levenshtein(state.userAnswer.toLowerCase(), state.answer.toLowerCase()) < 5){ 
             setSectionID(section_action.id_section_reussite)
         }
         else{
