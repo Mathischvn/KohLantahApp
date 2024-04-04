@@ -12,15 +12,16 @@ import { BlankPage } from './components/blankPage/blankPage'
 
 
 function App() {
-  const [sectionID, setSectionID] = React.useState(2)
-  console.log("sectionID", sectionID)
+  const [sectionID, setSectionID] = React.useState(1)
   return (
-    <>
-
-      <BlankPage sectionId={sectionID} setSectionID={setSectionID} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TitlePage />} />
+        <Route path="/game" element={<BlankPage sectionId={sectionID} setSectionID={setSectionID} />} />
+      </Routes>
       
      
-    </>
+    </BrowserRouter>
   )
 }
 

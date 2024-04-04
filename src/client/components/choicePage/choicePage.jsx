@@ -1,7 +1,6 @@
 import React from "react"
 import "./choicePage.css"
 export const ChoicePage = ({setSectionID, liste_choix}) => {
-    console.log(liste_choix)
     return (
         <>
             {liste_choix.map((choix, index) => (

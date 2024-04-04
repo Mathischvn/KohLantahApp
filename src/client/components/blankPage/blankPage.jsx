@@ -10,7 +10,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
             const data = await response.json();
-            console.log("data", data)
             setSection(data);
         }
         fetchData();
@@ -22,13 +21,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
-    console.log("isCombat", isCombat)
-    console.log("isEnigme", isEnigme)
-    console.log("isDe", isDe)
-    console.log("isChoix", isChoix)
-    console.log("choix", section.choix)
-    
-    console.log("section", section)
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>
