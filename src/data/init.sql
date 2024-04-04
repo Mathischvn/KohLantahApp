@@ -165,13 +165,6 @@ Que choisissez-vous ?',
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
-VALUES ('Exploration de différentes étagères', 
-	'Vous vous retrouvez devant une série d''étagères remplies de livres poussiéreux. Une étagère semble instable, prête à s''effondrer à tout moment.
-Que choisissez-vous ?',
-		null, null);
-
-INSERT INTO
-    section (titre, libelle, description_fond_prompt, entite)
 VALUES ('Descendre vers le sous-sol', 
 	'Vous descendez précautionneusement l''escalier vers l''obscurité du sous-sol. Une fois en bas, vous entendez un grognement sourd venant d''un coin sombre de la pièce.
 Préparez-vous au combat ! Lancez un dé pour déterminer votre succès.',
@@ -295,13 +288,18 @@ VALUES ('Évasion de la bibliothèque',
 	'Avec le livre 269 en main, vous vous dirigez vers la sortie de la bibliothèque, votre cœur léger d''avoir réussi votre quête. 
 	Vous traversez les rayonnages de livres, revivant les aventures incroyables que vous avez vécues.
 	Finalement, vous atteignez les grandes portes de la bibliothèque et sortez dans la lumière du jour, 
-	prêt à partager vos exploits avec le monde extérieur.',
+	prêt à partager vos exploits avec le monde extérieur. Au moment de sortir, vous tombez dans les pommes et vos souvenirs se dissipent.',
 		null, null);
 
 INSERT INTO
     section (titre, libelle, description_fond_prompt, entite)
 VALUES (
 	'Mort', 'Vous êtes mort. Vos souvenirs se troublent.', null, null);
+
+INSERT INTO
+    section (titre, libelle, description_fond_prompt, entite)
+VALUES (
+	'Mort', 'Le gardien n''apprécie pas votre comportement. Il vous fait voler à travers la pièce. Vous êtes mort. Vos souvenirs se troublent.', null, null);
 
 ----------------------------------------------------------------------------
 INSERT INTO
@@ -362,7 +360,7 @@ VALUES ( 14, 15, null, 'Tenter de convaincre le gardien de votre mission.');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 14, 26, null, 'Essayer de trouver un moyen de contourner le gardien.');
+VALUES ( 14, 27, null, 'Essayer de trouver un moyen de contourner le gardien.');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
@@ -398,7 +396,11 @@ VALUES ( 26, 1, null, 'Essayer de se réveiller');
 
 INSERT INTO
     section_choix (id_section, id_choix, condition_choix, libelle_choix)
-VALUES ( 25, 1, null, 'Vous mourrez');
+VALUES ( 25, 1, null, 'Essayer de se réveiller');
+
+INSERT INTO
+    section_choix (id_section, id_choix, condition_choix, libelle_choix)
+VALUES ( 27, 1, null, 'Essayer de se réveiller');
 
 ----------------------------------------------------------------------------
 
@@ -425,22 +427,22 @@ VALUES ( 10, 14, 26, 'intelligence>3', 'Bravo ! Vous avez gagné le combat !', '
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 17, 18, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 16, 17, 2, 'reponse: un miroir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 20, 21, 21, 'lancer>3', 'Bravo ! Vous avez eu de la chance !', 'Pas de bol.', false, true, false);
+VALUES ( 19, 20, 21, 'lancer>3', 'Bravo ! Vous avez eu de la chance !', 'Pas de bol.', false, true, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 22, 24, 27, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
+VALUES ( 21, 24, 26, 'intelligence > 6', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 
 	libelle_action_reussite, libelle_action_echec, booleen_combat, booleen_lancer_de, booleen_enigme)
-VALUES ( 23, 25, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
+VALUES ( 22, 24, 2, 'reponse : à définir', 'Bravo ! Vous avez trouvé la réponse !', 'Vous avez échoué.', false, false, true);
 
 INSERT INTO
     section_action (id_section, id_section_reussite, id_section_echec, condition_reussite, 

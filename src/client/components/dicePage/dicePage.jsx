@@ -6,10 +6,10 @@ import { useState } from 'react';
 
 export const DicePage = ({setSectionID, section_action}) => {
     
-    function waitFiveSeconds() {
+    function waitFiveSeconds(reussite) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            success ? setSectionID(section_action.id_section_reussite) : setSectionID(section_action.id_section_echec); // Résoudre la promesse après 5 secondes
+            reussite ? setSectionID(section_action.id_section_reussite) : setSectionID(section_action.id_section_echec); // Résoudre la promesse après 5 secondes
           }, 4000); // 5000 millisecondes = 5 secondes
         });
       }
@@ -42,7 +42,6 @@ export const DicePage = ({setSectionID, section_action}) => {
             }, 100);
         }
         document.querySelector(".diceBlockNumber").classList.remove("fadeanime");
-        waitFiveSeconds();
     };
 
     const verifyConditionSuccess = (number) => {
@@ -61,6 +60,9 @@ export const DicePage = ({setSectionID, section_action}) => {
         }
     };
 
+    if (showAnswer) {
+        waitFiveSeconds(success);
+    }
     return (
         <>
             <div className="diceContainer">
