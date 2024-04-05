@@ -10,8 +10,10 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
-            const data = await response.json();
-            setSection(data);
+            if (response != undefined) {
+                const data = await response.json();
+                setSection(data);
+            }
         }
         fetchData();
     }, [sectionId]);
@@ -22,6 +24,19 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
+    const getPlayerInventory = async (name) => {
+        const response = await fetch(`/api/player/inventory/${name}`);
+        const data = await response.json();
+        return data;
+    }
+
+    const insertItem = (name, item) => {
+        const fetchData = async () => {
+            const response = await fetch(`/api/player/insert/${name}/${item}`);
+        }
+        fetchData();
+    };
+
     React.useEffect(() => {
         const section_libelle = document.querySelector(".libelle");
         if (section_libelle && document.cookie.includes("name")) {
@@ -29,10 +44,23 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         }
     }, [section]);
 
+    React.useEffect(() => {
+        if (document.cookie.includes("name")) {
+            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 1);
+        }
+    });
+
+    const playerInventory = async () => {
+        let data = await fetch(`/api/player/inventory/${document.cookie.match(/(?<=name=)[^;]*/)[0]}`);
+        return data;
+    }
+
+    console.log(getPlayerInventory())
+
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>
-                <SideBar></SideBar>
+                <SideBar inventory={playerInventory}></SideBar>
                 <div className="background"></div>
                 <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>
@@ -53,7 +81,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                         isCombat ? <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button> : ""
                     }
                     
-
                     <h2 className="titleSection">Section {section.id} : { section.titre }</h2>
                 </div>
         

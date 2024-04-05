@@ -3,8 +3,10 @@ import "./inventoryPage.css"
 import { InventoryBag } from './inventoryBag/inventoryBag'
 import { StatBar } from "./statBar/statBar"
 import { ProfilePicture } from "../profilePicture/profilePicture"
+import { useState } from "react"
 
-export const InventoryPage = () => {
+export const InventoryPage = ({inventory}) => {
+
     return (
         <>
             <div className="inventory">
@@ -28,7 +30,7 @@ export const InventoryPage = () => {
 
                     <h1>Votre inventaire</h1>
                         <div className="main-bag">
-                            <InventoryBag bagSize={16}></InventoryBag>
+                            <InventoryBag bagSize={16} inventory={inventory}></InventoryBag>
                         </div>
                 </div>
             </div>

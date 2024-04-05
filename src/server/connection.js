@@ -85,5 +85,79 @@ export const insertPlayer = async (name) => {
   }
 };
 
+export const getIdPersonnage = async (name) => {
+    try {
+        const player = await pool`
+        SELECT
+            id
+        FROM personnage
+        WHERE nom=${name}
+        `;
+        return player;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+}
+
+export const getInventoryItemPlayer = async (id_personnage, id_objet) => {
+    try {
+        const inventoryItem = await pool`
+        SELECT
+            *
+        FROM inventaire
+        WHERE id_personnage=${id_personnage} AND id_objet=${id_objet}
+        `;
+        return inventoryItem;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+}
+export const insertItem = async (name, id_item) => {
+    try {
+        const player = await getIdPersonnage(name);
+        const lengthInventoryRequest = await getInventoryItemPlayer(player[0].id, id_item)
+        if (lengthInventoryRequest.length == 0) {
+            console.log('Item déjà présent dans l\'inventaire');
+            await pool`
+            INSERT INTO inventaire(id_objet, id_personnage) VALUES(${id_item}, ${player[0].id}); 
+            `;
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion de l\'item :', error);
+    }
+}
+
+export const getPlayerInventory = async (name) => {
+    try {
+        const player = await getIdPersonnage(name);
+        const inventory = await pool`
+        SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id};
+        `;
+        return inventory;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+}
+
+
+export const getItem = async (playerName) => {
+    try {
+        const inventory = await getPlayerInventory(playerName);
+        const inventoryItem = inventory[0].row.split(',')[0].replace("(", "");
+        console.log(inventory);
+        console.log(inventoryItem)
+        const item = await pool`
+        SELECT
+            *
+        FROM objet
+        WHERE id=${inventoryItem}
+        `;
+        return item;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+}
+
+
 export const resEntite = await queryEntity("Polus");
 export const resSection = await querySection("1");

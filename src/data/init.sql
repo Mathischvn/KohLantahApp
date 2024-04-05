@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS objet (
 	booleen_equipable BOOLEAN, 
 	booleen_utilisation_unique BOOLEAN, 
 	statistiques VARCHAR(255), -- separateur ;
-    emplacement VARCHAR(50) -- ex : bijoux, etc.
+    emplacement VARCHAR(50), -- ex : bijoux, etc.
+	chemin_image VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS inventaire (
@@ -453,8 +454,8 @@ INSERT INTO
 VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez gagné le combat !', 'Vous avez perdu.', true, false, false);
 
 INSERT INTO 
-	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement)
-	VALUES ('Collier du grand-père', true, false, 'intelligence:3;', 'bijoux');
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image)
+	VALUES ('Collier du grand-père', true, false, 'intelligence:3;', 'bijoux', '/images/collier-grand-pere.jpg');
 INSERT INTO 
-	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement)
-	VALUES ('Livre de force', true, false, 'force:3;', 'livre');
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image)
+	VALUES ('Livre de force', true, false, 'force:3;', 'livre', '/images/livre-force.jpg');
