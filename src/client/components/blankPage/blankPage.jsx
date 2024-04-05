@@ -33,6 +33,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         return (
             <>
                 <SideBar></SideBar>
+                <div className="background"></div>
                 <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>
                     
@@ -53,7 +54,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     }
                     
 
-                    <p className="libelle">{ section.titre }</p>
+                    <h2 className="titleSection">Section {section.id} : { section.titre }</h2>
                 </div>
         
             </>

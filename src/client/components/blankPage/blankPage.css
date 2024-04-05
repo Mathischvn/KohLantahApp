@@ -1,4 +1,7 @@
 .background {
+    position: absolute;
+    top: 0;
+    z-index: 1;
     background-color: black;
     background-image: url("/public/images/background-sections.jpg");
     background-size: cover;
@@ -8,6 +11,7 @@
 }
 
 .blank-page{
+    z-index: 2;
     padding: 3em;
     display: flex;
     justify-content: center;
@@ -35,5 +39,17 @@ button:hover {
 
 .libelle{
     padding: 2em;
-    font-size: calc(1rem + 1.25vw)
+    font-size: calc(1rem + 1.25vw);
+}
+
+.titleSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #BDAE97;
+    height: 100px;
+    font-size: 1.5em;
 }
