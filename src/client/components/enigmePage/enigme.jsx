@@ -16,7 +16,7 @@ export const Enigme = ({setSectionID, section_action}) => {
         if (levenshtein(state.userAnswer.toLowerCase(), state.answer.toLowerCase()) < 5){
             toast.success('Bonne Réponse', {
                 position: "top-center",
-                autoClose: 3000,
+                autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -26,7 +26,7 @@ export const Enigme = ({setSectionID, section_action}) => {
             })
             setTimeout(() => {
                 setSectionID(section_action.id_section_reussite);
-            }, 4000); 
+            }, 2500); 
         }
         else if(compteur == 0) {
             setSectionID(section_action.id_section_echec)
@@ -34,7 +34,7 @@ export const Enigme = ({setSectionID, section_action}) => {
         else{
             toast.error('Mauvaise réponse. Réessayez !', {
                 position: "top-center",
-                autoClose: 3000,
+                autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
