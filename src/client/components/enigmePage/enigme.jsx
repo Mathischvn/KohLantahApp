@@ -64,7 +64,7 @@ export const Enigme = ({setSectionID, section_action}) => {
             <div className="form-answer">
                 <div className="input-answer">
                     <FormElement 
-                        label={"Reponse"} 
+                        label={"Réponse"} 
                         type={"text"} 
                         name={"reponse"} 
                         value={state.userAnswer} 
