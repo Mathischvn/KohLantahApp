@@ -1,16 +1,29 @@
-import React from "react"
 import { FormElement } from "../formElement/formElement"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import levenshtein from "../../Levenshtein.js"
+import React, { useState, useEffect } from 'react';
+import correctAnswer from '/sound_effects/correctAnswer.mp3?url';
 import "./enigme.css"
 
+
+
 export const Enigme = ({setSectionID, section_action}) => {
+    const [goodAnswer, setGoodAnswer] = useState(false);
+
     const [state, setState] = React.useState({
         answer: "",
         userAnswer: ""
     })
     const [compteur, setCompteur] = React.useState(3)
+    
+    const [isPlaying, setIsPlaying] = useState(false);
+    useEffect(() => {
+      if (goodAnswer) {
+        const audio = new Audio(correctAnswer);
+        audio.play();
+      }
+    }, [isPlaying]);
 
     const handleValidation = () => {
         if (levenshtein(state.userAnswer.toLowerCase(), state.answer.toLowerCase()) < 5){
@@ -24,6 +37,8 @@ export const Enigme = ({setSectionID, section_action}) => {
                 progress: undefined,
                 theme: "colored",
             })
+            setGoodAnswer(true)
+            setIsPlaying(true)
             setTimeout(() => {
                 setSectionID(section_action.id_section_reussite);
             }, 2500); 
