@@ -12,7 +12,7 @@
 
 .blank-page{
     z-index: 2;
-    padding: 3em;
+    padding: 3em 5em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,6 +40,9 @@ button:hover {
 .libelle{
     padding: 2em;
     font-size: calc(1rem + 1.25vw);
+    box-shadow: 0 0 30px #ffffff85;
+    background-color: #ffffff3b;
+    border-radius: 30px;
 }
 
 .titleSection {
