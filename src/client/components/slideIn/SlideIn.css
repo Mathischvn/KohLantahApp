@@ -2,12 +2,12 @@
     margin-left: -3000px;
     opacity: 0;
     transition-property: margin-left, opacityleft;
-    transition-duration: 3s;
+    transition-duration: 1.5s;
   }
 
 .slide-out {
     margin-left: 0px;
     opacity: 1;
     transition-property: margin-left, opacityleft;
-    transition-duration: 3s;
+    transition-duration: 1.7s;
   }
