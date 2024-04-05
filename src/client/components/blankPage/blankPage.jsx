@@ -48,9 +48,12 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
                     }
-                    <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button>
-
+                    {
+                        isCombat ? <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button> : ""
+                    }
                     
+
+                    <p className="libelle">{ section.titre }</p>
                 </div>
         
             </>
