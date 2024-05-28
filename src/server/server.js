@@ -1,5 +1,5 @@
 import express from "express";
-import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItem, getInventoryItemPlayer} from "./connection.js"
+import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItem, getInventoryItemPlayer, getPlayerStats} from "./connection.js"
 import ViteExpress from "vite-express";
 
 const app = express();
@@ -39,9 +39,20 @@ app.get('/api/player/inventory/:name/', async (req, res) => {
   let response = await getPlayer(name);
   if(response.length != 0) {
     response = await getItem(name);
+    res.send(response);
   }
-  res.send(response);
 })
+
+app.get('/api/player/stats/:name/', async (req, res) => {
+  const name = req.params.name;
+  let response = await getPlayer(name);
+  if(response.length != 0) {
+    response = await getPlayerStats(name);
+    res.send(response);
+  }
+})
+
+
 
 ViteExpress.listen(app, 3000, () =>
   console.log("Server is listening on port 3000..."),

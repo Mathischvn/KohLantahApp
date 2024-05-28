@@ -455,7 +455,7 @@ VALUES ( 23, 24, 26, 'defense>12;combat>15;intelligence>143', 'Bravo ! Vous avez
 
 INSERT INTO 
 	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image)
-	VALUES ('Collier du grand-père', true, false, 'intelligence:3;', 'bijoux', '/images/collier-grand-pere.jpg');
+	VALUES ('Collier du grand-père', true, false, 'intelligence:3;force:0;hp:0', 'bijoux', '/images/collier-grand-pere.jpg');
 INSERT INTO 
 	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image)
-	VALUES ('Livre de force', true, false, 'force:3;', 'livre', '/images/livre-force.jpg');
+	VALUES ('Livre de force', true, false, 'intelligence:0;force:5;hp:3', 'livre', '/images/livre-force.jpg');
