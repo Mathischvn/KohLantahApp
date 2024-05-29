@@ -1,16 +1,46 @@
-.side-bar{
-    width: 3%;
-    height: 50%;
-    background-color: #BDAE97;
+.side-bar {
     position: absolute;
-    left: 0;
-    top: 25%;
+    top: 20px;
+    left: 20px;
     z-index: 10;
-    border-radius: 0 20px 20px 0;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 1s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
-.side-bar:hover {
-    background-color: #92846f;
+.side-bar-open {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.488);
+    border: solid 1px white;
+}
+
+.side-bar-close {
+    top: 40px;
+    left: 40px;
+}
+
+.inventory-image-open {
+    width: 80px;
+    height: 80px;
+}
+
+.inventory-image-close {
+    width: 50px;
+    height: 50px;
+}
+
+.side-bar-open:hover {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.side-bar-close:hover {
+    transform: scale(1.1);
+}
+
+.side-bar:active {
+    transform: scale(0.9);
 }
