@@ -1,5 +1,6 @@
 import React from "react"
 import "./blankPage.css"
+import { FightPage } from "../fightPage/fightPage";
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
@@ -103,7 +104,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     <p className="libelle">{ section.libelle }</p>
                     
                     {
-                        isCombat ? <div>Combat</div> : ""
+                        isCombat ? <FightPage setSectionID={setSectionID} section_action={section.action} playerStats={playerStats} entity={section.entite} /> : ""
                     }
                     {
                         isEnigme ? <Enigme setSectionID={setSectionID} section_action={section.action}/> : ""
@@ -113,9 +114,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     }
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
-                    }
-                    {
-                        isCombat ? <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button> : ""
                     }
                     
                     <h2 className="titleSection">Section {section.id} : { section.titre }</h2>

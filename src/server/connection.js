@@ -49,9 +49,18 @@ export const querySection = async (id) => {
         FROM section_choix
         WHERE id_section=${id}
         `;
+        const section_entite = await pool`
+        SELECT
+        *
+        FROM entite
+        WHERE id  = ${section[0].entite}
+        `;
         section.map((item) => {
             item.action = section_action[0];
             item.choix = section_choix;
+            if (section_entite != undefined){
+                item.entite = section_entite[0];
+            }
         });
         return section[0];
     } catch (error) {
