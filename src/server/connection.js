@@ -69,36 +69,10 @@ export const querySection = async (id) => {
 };
 
 export const getPlayer = async (name) => {
-  try {
-      const player = await pool`
-      SELECT
-        *
-      FROM personnage
-      WHERE nom=${name}
-      `;
-      return player;
-  } catch (error) {
-      console.error('Erreur lors de l\'insertion du personnage :', error);
-  }
-};
-
-export const insertPlayer = async (name) => {
-  try {
-      await pool`
-      INSERT INTO
-        personnage (nom, statistiques)
-      VALUES (${name}, 'intelligence:10;force:10;hp:10');
-      `;
-  } catch (error) {
-      console.error('Erreur lors de l\'insertion du personnage :', error);
-  }
-};
-
-export const getIdPersonnage = async (name) => {
     try {
         const player = await pool`
         SELECT
-            id
+          *
         FROM personnage
         WHERE nom=${name}
         `;
@@ -106,89 +80,157 @@ export const getIdPersonnage = async (name) => {
     } catch (error) {
         console.error('Erreur lors de l\'insertion du personnage :', error);
     }
-}
-
-export const getInventoryItemPlayer = async (id_personnage, id_objet) => {
+  };
+  
+  
+  export const insertPlayer = async (name) => {
     try {
-        const inventoryItem = await pool`
-        SELECT
-            *
-        FROM inventaire
-        WHERE id_personnage=${id_personnage} AND id_objet=${id_objet}
+        await pool`
+        INSERT INTO
+          personnage (nom, statistiques)
+        VALUES (${name}, 'intelligence:10;force:10;hp:10');
         `;
-        return inventoryItem;
-    } catch (error) {
-        console.error('Erreur lors de la récupération de l\item depuis l\'inventaire :', error);
-    }
-}
-export const insertItem = async (name, id_item) => {
-    try {
-        const player = await getIdPersonnage(name);
-        const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
-
-        if (inventoryItem.length === 0) {
-            await pool`
-                INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
-            `;
-            console.log('Item inséré avec succès.');
-        } else {
-            console.error('L\'item est déjà présent dans l\'inventaire.');
-        }
-    } catch (error) {
-        console.error('Erreur lors de l\'insertion de l\'item :', error);
-    }
-}
-
-
-export const getPlayerInventory = async (name) => {
-    try {
-        const player = await getIdPersonnage(name);
-        const inventory = await pool`
-        SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id};
-        `;
-        return inventory;
     } catch (error) {
         console.error('Erreur lors de l\'insertion du personnage :', error);
     }
-}
-
-
-export const getItem = async (playerName) => {
-    try {
-        const inventory = await getPlayerInventory(playerName);
-
-        if (inventory.length === 0) {
-            console.error('L\'inventaire est vide.');
-            return null; // Ou une autre valeur par défaut selon votre logique
-        }
-
-        for (let i = 0; i < inventory.length; i++) {
-            const inventoryItem = await pool`
-                SELECT *
-                FROM objet
-                WHERE id=${inventory[i].row.split(',')[0].replace("(", "")}
-            `;
-            inventory[i] = inventoryItem;
-        }
-        console.log('Inventaire récupéré avec succès :', inventory);
-        return inventory;
-    } catch (error) {
-        console.error('Erreur lors de la récupération de l\'item :', error);
-    }
-}
-
-export const getPlayerStats = async (name) => {
-    try {
-        const player = await getPlayer(name);
-        console.log('Statistiques récupérées avec succès :', player[0].statistiques);
-        const intelligence = player[0].statistiques.split(';')[0].split(':')[1];
-        const force = player[0].statistiques.split(';')[1].split(':')[1];
-        const hp = player[0].statistiques.split(';')[2].split(':')[1];
-        return [intelligence, force, hp]
-    } catch (error) {
-        console.error('Erreur lors de la récupération des statistiques du joueur :', error);
-    }
-}
-
-export const resEntite = await queryEntity("Polus");
-export const resSection = await querySection("1");
+  };
+  
+  
+  export const getIdPersonnage = async (name) => {
+      try {
+          const player = await pool`
+          SELECT
+              id
+          FROM personnage
+          WHERE nom=${name}
+          `;
+          return player;
+      } catch (error) {
+          console.error('Erreur lors de l\'insertion du personnage :', error);
+      }
+  }
+  
+  
+  export const getInventoryItemPlayer = async (id_personnage, id_objet) => {
+      try {
+          const inventoryItem = await pool`
+          SELECT
+              *
+          FROM inventaire
+          WHERE id_personnage=${id_personnage} AND id_objet=${id_objet}
+          `;
+          return inventoryItem;
+      } catch (error) {
+          console.error('Erreur lors de la récupération de l\item depuis l\'inventaire :', error);
+      }
+  }
+  
+  
+  export const insertItem = async (name, id_item) => {
+      try {
+          const player = await getIdPersonnage(name);
+          const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
+  
+          if (inventoryItem.length === 0) {
+              await pool`
+                  INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
+              `;
+              console.log('Item inséré avec succès.');
+          } else {
+              console.error('L\'item est déjà présent dans l\'inventaire.');
+          }
+      } catch (error) {
+          console.error('Erreur lors de l\'insertion de l\'item :', error);
+      }
+  }
+  
+  
+  export const getPlayerInventory = async (name) => {
+      try {
+          const player = await getIdPersonnage(name);
+          const inventory = await pool`
+          SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id};
+          `;
+          return inventory;
+      } catch (error) {
+          console.error('Erreur lors de l\'insertion du personnage :', error);
+      }
+  }
+  
+  
+  export const getItemsInInventory = async (playerName) => {
+      try {
+          const inventory = await getPlayerInventory(playerName);
+  
+          if (inventory.length === 0) {
+              console.error('L\'inventaire est vide.');
+              return null; // Ou une autre valeur par défaut selon votre logique
+          }
+  
+          for (let i = 0; i < inventory.length; i++) {
+              const inventoryItem = await pool`
+                  SELECT *
+                  FROM objet
+                  WHERE id=${inventory[i].row.split(',')[0].replace("(", "")}
+              `;
+              inventory[i] = inventoryItem;
+          }
+          console.log('Inventaire récupéré avec succès :', inventory);
+          return inventory;
+      } catch (error) {
+          console.error('Erreur lors de la récupération de l\'item :', error);
+      }
+  }
+  
+  
+  export const getPlayerStats = async (name) => {
+      try {
+          const player = await getPlayer(name);
+          console.log('Statistiques récupérées avec succès :', player[0].statistiques);
+          const intelligence = player[0].statistiques.split(';')[0].split(':')[1];
+          const force = player[0].statistiques.split(';')[1].split(':')[1];
+          const hp = player[0].statistiques.split(';')[2].split(':')[1];
+          return [intelligence, force, hp]
+      } catch (error) {
+          console.error('Erreur lors de la récupération des statistiques du joueur : ', error);
+      }
+  }
+  
+  
+  export const getAllItems = async () => {
+      console.log("récupération des tous les items")
+      try {
+          const allItems = await pool`
+          SELECT *
+          FROM objet;`;
+      
+          if (allItems.length === 0){
+              console.log("Pas d'items disponible")
+          } else {
+              console.log("Les items disponibles : ", allItems)
+          }
+  
+      return allItems
+  
+      } catch (error) {
+          console.error("Erreur lors de la récupération des items : ", error)
+      }
+  }
+  
+  
+  export const getItemById = async (id_objet) => {
+      try {
+          const item = await pool`
+          SELECT
+              *
+          FROM objet
+          WHERE id=${id_objet}
+          `;
+          return item;
+      } catch (error) {
+          console.error('Erreur lors de la récupération de l\item :', error);
+      }
+  }
+  
+  export const resEntite = await queryEntity("Polus");
+  export const resSection = await querySection("1");

@@ -15,13 +15,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
-            console.log('Response vraie:', response);
             if (response != undefined) {
                 const data = await response.json();
                 setSection(data);
             }
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 1);
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 2);
+            checkItemInsertion(sectionId)
         }
         fetchData();
     }, [sectionId]);
@@ -35,11 +33,68 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const insertItem = (name, item) => {
         const fetchData = async () => {
             const response = await fetch(`/api/player/insert/${name}/${item}`);
-            console.log('Response insertitem:', response);
-            console.log('item inserted');
+
         }
         fetchData();
     };
+
+    const getAllItems = () => {
+        const fetchData = async () => {
+            const response = await fetch(`/api/items/all/`);
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                const res = data
+                console.log("Les items : ", res);
+                return res
+            }
+        }
+        const response = fetchData();
+        return response;
+
+    }
+
+    const getStats = async (name) => {
+        const response = await fetch(`/api/player/stats/${name}`);
+        if (response.headers.get('content-length') != '0') {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                console.log('Data loaded:', data);
+                setPlayerStats(data);
+            } else {
+                setInventoryLoaded(false);
+                console.log('Data pas loaded:', data);
+            }
+        } else {
+            setInventoryLoaded(false);
+            console.log('response:', response);
+        }
+    }
+
+    const getPlayerItems = async (name) => {
+        const response = await fetch(`/api/player/inventory/${name}`);
+        if (response.headers.get('content-length') != '0') {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                console.log('Data loaded:', data);
+                setPlayerInventory(data);
+            } else {
+                setInventoryLoaded(false);
+                console.log('Data pas loaded:', data);
+            }
+        } else {
+            setInventoryLoaded(false);
+            console.log('response:', response);
+        }
+    }
+
+    const checkItemInsertion = async (section) => {
+        console.log("Y'a-t-il des items dans la section : ", section)
+        const allItems = getAllItems();
+        console.log("allitems", allItems)
+        for(item in allItems){
+            console.log("Item :", item)
+        }
+    }
 
     React.useEffect(() => {
         const section_libelle = document.querySelector(".libelle");
@@ -51,49 +106,20 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         if (document.cookie.includes("name")) {
             let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
-            const getItems = async (name) => {
-                const response = await fetch(`/api/player/inventory/${name}`);
-                if (response.headers.get('content-length') != '0') {
-                    const data = await response.json();
-                    if (Array.isArray(data)) {
-                        console.log('Data loaded:', data);
-                        setPlayerInventory(data);
-                    } else {
-                        setInventoryLoaded(false);
-                        console.log('Data pas loaded:', data);
-                    }
-                } else {
-                    setInventoryLoaded(false);
-                    console.log('response:', response);
-                }
-            }
-
-            const getStats = async (name) => {
-                const response = await fetch(`/api/player/stats/${name}`);
-                if (response.headers.get('content-length') != '0') {
-                    const data = await response.json();
-                    if (Array.isArray(data)) {
-                        console.log('Data loaded:', data);
-                        setPlayerStats(data);
-                    } else {
-                        setInventoryLoaded(false);
-                        console.log('Data pas loaded:', data);
-                    }
-                } else {
-                    setInventoryLoaded(false);
-                    console.log('response:', response);
-                }
-            }
-            getItems(name);
             getStats(name);
-            console.log('PlayerInventory:', playerInventory);
+        }
+    }, [])
+
+    React.useEffect(() => {
+        if (document.cookie.includes("name")) {
+            let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
+            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 1);
+            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 2);
+            getPlayerItems(name);
+            getAllItems();
         }
     }, [sectionId]);
-    
-    
-    if (inventoryLoading) {
-        return <div>Chargement...</div>;
-    }
+
 
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (

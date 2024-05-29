@@ -1134,38 +1134,9 @@ VALUES (
         false
     );
 
-INSERT INTO
-    objet (
-        nom,
-        booleen_equipable,
-        booleen_utilisation_unique,
-        statistiques,
-        emplacement,
-        chemin_image
-    )
-VALUES (
-        'Collier du grand-père',
-        true,
-        false,
-        'intelligence:3;force:0;hp:0',
-        'bijoux',
-        '/images/collier-grand-pere.jpg'
-    );
-
-INSERT INTO
-    objet (
-        nom,
-        booleen_equipable,
-        booleen_utilisation_unique,
-        statistiques,
-        emplacement,
-        chemin_image
-    )
-VALUES (
-        'Livre de force',
-        true,
-        false,
-        'intelligence:0;force:5;hp:3',
-        'livre',
-        '/images/livre-force.jpg'
-    );
+INSERT INTO 
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image, acquire_section)
+	VALUES ('Collier du grand-père', true, false, 'intelligence:3;force:0;hp:0', 'bijoux', '/images/collier-grand-pere.jpg', 1);
+INSERT INTO 
+	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image, acquire_section)
+	VALUES ('Livre de force', true, false, 'intelligence:0;force:5;hp:3', 'livre', '/images/livre-force.jpg', 2);
