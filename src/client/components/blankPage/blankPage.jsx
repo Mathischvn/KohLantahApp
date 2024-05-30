@@ -30,28 +30,24 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
-    const insertItem = (name, item) => {
+    const insertItem = async (name, item) => {
         const fetchData = async () => {
             const response = await fetch(`/api/player/insert/${name}/${item}`);
-
         }
         fetchData();
     };
 
-    const getAllItems = () => {
-        const fetchData = async () => {
-            const response = await fetch(`/api/items/all/`);
-            const data = await response.json();
-            if (Array.isArray(data)) {
-                const res = data
-                console.log("Les items : ", res);
-                return res
-            }
+    const getAllItems = async () => {
+        const response = await fetch(`/api/items/all/`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            const res = data
+            console.log("Les items : ", res);
+            return res
         }
-        const response = fetchData();
-        return response;
-
+        return data
     }
+
 
     const getStats = async (name) => {
         const response = await fetch(`/api/player/stats/${name}`);
@@ -89,10 +85,19 @@ export const BlankPage = ({sectionId, setSectionID}) => {
 
     const checkItemInsertion = async (section) => {
         console.log("Y'a-t-il des items dans la section : ", section)
-        const allItems = getAllItems();
+        const allItems = await getAllItems();
         console.log("allitems", allItems)
-        for(item in allItems){
-            console.log("Item :", item)
+        console.log("allitems[0]", allItems[0])
+
+        for(let i=0; i<allItems.length; i++){
+            console.log("Item numéro " + i + " : " + allItems[i].nom)
+            if(allItems[i].acquire_section == section){
+                if (document.cookie.includes("name")) {
+                    console.log("Insertion de l'item ", allItems[i].nom)
+                    let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
+                    insertItem(name, allItems[i].id).then(getPlayerItems(name));
+                }
+            }
         }
     }
 
@@ -113,10 +118,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         if (document.cookie.includes("name")) {
             let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 1);
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 2);
             getPlayerItems(name);
-            getAllItems();
         }
     }, [sectionId]);
 
