@@ -3,11 +3,17 @@ import "./fightPage.css"
 import { useState } from 'react';
 import { ProfilePicture } from "../profilePicture/profilePicture"
 
-export const FightPage = ({setSectionID, section_action, playerStats, entity}) => {
+export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
     
     function waitFiveSeconds(reussite) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
+            if (reussite){
+                setPlayerStats([playerStats[0], playerStats[1], playerHp.value])
+            }
+            else{
+                setPlayerStats([playerStats[0], playerStats[1], 10])
+            }
             reussite ? setSectionID(section_action.id_section_reussite) : setSectionID(section_action.id_section_echec); // Résoudre la promesse après 5 secondes
           }, 5000); // 5000 millisecondes = 5 secondes
         });
@@ -109,7 +115,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity}) =
         }    
         else{
             setBonusEnemy(true)
-            if (numberEnemy < numberPlayer){
+            if (numberEnemy+2 < numberPlayer){
                 setBooleenSuperieurInferieur(true)
                 var enemyHp = document.getElementById("enemyHp")
                 enemyHp.value = Number(enemyHp.value)-2

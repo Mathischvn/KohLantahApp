@@ -130,7 +130,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     <p className="libelle">{ section.libelle }</p>
                     
                     {
-                        isCombat ? <FightPage setSectionID={setSectionID} section_action={section.action} playerStats={playerStats} entity={section.entite} /> : ""
+                        isCombat ? <FightPage setSectionID={setSectionID} section_action={section.action} playerStats={playerStats} entity={section.entite} setPlayerStats={setPlayerStats} /> : ""
                     }
                     {
                         isEnigme ? <Enigme setSectionID={setSectionID} section_action={section.action}/> : ""
