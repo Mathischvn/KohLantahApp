@@ -2,6 +2,7 @@ import React from "react"
 import "./fightPage.css"
 import { useState } from 'react';
 import { ProfilePicture } from "../profilePicture/profilePicture"
+import damage_sound from '/sound_effects/damage_sound.mp3?url'
 
 export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
     
@@ -29,6 +30,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     const [success, setSuccess] = useState(false);
     const [booleenSuperieurInferieur, setBooleenSuperieurInferieur] = useState(false);
     const [booleenAffichageSuperieurInferieur, setBooleenAffichageSuperieurInferieur] = useState(false);
+    const audio = new Audio(damage_sound);
 
     const clickButton = () => {
         setShowButton(false)
@@ -71,6 +73,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
         console.log("PlayerStats", playerStats)
         booleanStatChecked = (Number(playerStats[0]) >= Number(entityStatChecked))
         if (booleanStatChecked){
+            audio.play()
             setBonusPlayer(true)
             setSuccess(numberEnemy < numberPlayer+2);
             if (numberEnemy < numberPlayer+2){
@@ -94,6 +97,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 }
             }
             else{
+                audio.play();
                 setBooleenSuperieurInferieur(false)
                 var playerHp = document.getElementById("playerHp")
                 playerHp.value = Number(playerHp.value)-2
@@ -114,6 +118,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
             }
         }    
         else{
+            audio.play();
             setBonusEnemy(true)
             if (numberEnemy+2 < numberPlayer){
                 setBooleenSuperieurInferieur(true)
@@ -136,11 +141,13 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 }
             }
             else{
+                audio.play();
                 setBooleenSuperieurInferieur(false)
                 var playerHp = document.getElementById("playerHp")
                 playerHp.value = Number(playerHp.value)-2
                 let ancienne_couleur = playerHp.style.accentColor
                 playerHp.style.accentColor = "red"
+                
                 new Promise((resolve, reject) => {
                     setTimeout(() => {
                         playerHp.style.accentColor = ancienne_couleur
