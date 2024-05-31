@@ -1,5 +1,6 @@
 import React from "react"
 import "./blankPage.css"
+import { FightPage } from "../fightPage/fightPage";
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
@@ -14,13 +15,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
-            console.log('Response vraie:', response);
             if (response != undefined) {
                 const data = await response.json();
                 setSection(data);
             }
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 1);
-            insertItem(document.cookie.match(/(?<=name=)[^;]*/)[0], 2);
+            checkItemInsertion(sectionId)
         }
         fetchData();
     }, [sectionId]);
@@ -31,14 +30,76 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
-    const insertItem = (name, item) => {
+    const insertItem = async (name, item) => {
         const fetchData = async () => {
             const response = await fetch(`/api/player/insert/${name}/${item}`);
-            console.log('Response insertitem:', response);
-            console.log('item inserted');
         }
         fetchData();
     };
+
+    const getAllItems = async () => {
+        const response = await fetch(`/api/items/all/`);
+        const data = await response.json();
+        if (Array.isArray(data)) {
+            const res = data
+            console.log("Les items : ", res);
+            return res
+        }
+        return data
+    }
+
+
+    const getStats = async (name) => {
+        const response = await fetch(`/api/player/stats/${name}`);
+        if (response.headers.get('content-length') != '0') {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                console.log('Data loaded:', data);
+                setPlayerStats(data);
+            } else {
+                setInventoryLoaded(false);
+                console.log('Data pas loaded:', data);
+            }
+        } else {
+            setInventoryLoaded(false);
+            console.log('response:', response);
+        }
+    }
+
+    const getPlayerItems = async (name) => {
+        const response = await fetch(`/api/player/inventory/${name}`);
+        if (response.headers.get('content-length') != '0') {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                console.log('Data loaded:', data);
+                setPlayerInventory(data);
+            } else {
+                setInventoryLoaded(false);
+                console.log('Data pas loaded:', data);
+            }
+        } else {
+            setInventoryLoaded(false);
+            console.log('response:', response);
+        }
+    }
+
+    const checkItemInsertion = async (section) => {
+        console.log("Y'a-t-il des items dans la section : ", section)
+        const allItems = await getAllItems();
+        console.log("allitems", allItems)
+        console.log("allitems[0]", allItems[0])
+
+        for(let i=0; i<allItems.length; i++){
+            console.log("Item numéro " + i + " : " + allItems[i].nom)
+            if(allItems[i].acquire_section == section){
+                if (document.cookie.includes("name")) {
+                    console.log("Insertion de l'item ", allItems[i].nom)
+                    let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
+                    insertItem(name, allItems[i].id).then(getPlayerItems(name));
+                }
+            }
+        }
+    }
 
     React.useEffect(() => {
         const section_libelle = document.querySelector(".libelle");
@@ -50,49 +111,17 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     React.useEffect(() => {
         if (document.cookie.includes("name")) {
             let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
-            const getItems = async (name) => {
-                const response = await fetch(`/api/player/inventory/${name}`);
-                if (response.headers.get('content-length') != '0') {
-                    const data = await response.json();
-                    if (Array.isArray(data)) {
-                        console.log('Data loaded:', data);
-                        setPlayerInventory(data);
-                    } else {
-                        setInventoryLoaded(false);
-                        console.log('Data pas loaded:', data);
-                    }
-                } else {
-                    setInventoryLoaded(false);
-                    console.log('response:', response);
-                }
-            }
-
-            const getStats = async (name) => {
-                const response = await fetch(`/api/player/stats/${name}`);
-                if (response.headers.get('content-length') != '0') {
-                    const data = await response.json();
-                    if (Array.isArray(data)) {
-                        console.log('Data loaded:', data);
-                        setPlayerStats(data);
-                    } else {
-                        setInventoryLoaded(false);
-                        console.log('Data pas loaded:', data);
-                    }
-                } else {
-                    setInventoryLoaded(false);
-                    console.log('response:', response);
-                }
-            }
-            getItems(name);
             getStats(name);
-            console.log('PlayerInventory:', playerInventory);
+        }
+    }, [])
+
+    React.useEffect(() => {
+        if (document.cookie.includes("name")) {
+            let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
+            getPlayerItems(name);
         }
     }, [sectionId]);
-    
-    
-    if (inventoryLoading) {
-        return <div>Chargement...</div>;
-    }
+
 
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
@@ -103,7 +132,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     <p className="libelle">{ section.libelle }</p>
                     
                     {
-                        isCombat ? <div>Combat</div> : ""
+                        isCombat ? <FightPage setSectionID={setSectionID} section_action={section.action} playerStats={playerStats} entity={section.entite} setPlayerStats={setPlayerStats} /> : ""
                     }
                     {
                         isEnigme ? <Enigme setSectionID={setSectionID} section_action={section.action}/> : ""
@@ -113,9 +142,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     }
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
-                    }
-                    {
-                        isCombat ? <button onClick={() => setSectionID(sectionId + 1)}>Suivant</button> : ""
                     }
                     
                     <h2 className="titleSection">Section {section.id} : { section.titre }</h2>

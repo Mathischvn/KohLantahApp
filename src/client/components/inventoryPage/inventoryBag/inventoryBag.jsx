@@ -1,6 +1,6 @@
 import React from "react";
 
-export const InventoryBag = ({bagSize, icon, inventory, stats}) => {
+export const InventoryBag = ({bagSize, icon, inventory, stats, className}) => {
     const handleClick = (item) => {
         if(item !== undefined) {
             console.log(`You clicked on ${item.nom}`);
@@ -21,11 +21,11 @@ export const InventoryBag = ({bagSize, icon, inventory, stats}) => {
     if (inventory === undefined) {
         inventory = [];
     } else {
-        console.log(inventory);
+        // console.log(inventory);
     }
 
     return (
-        <div className="inventory-bag">
+        <div className={"inventory-bag " + className}>
             {Array.from({ length: bagSize }, (_, index) => {
                 if (inventory[index] !== undefined && inventory[index][0] !== undefined) {
                     return (

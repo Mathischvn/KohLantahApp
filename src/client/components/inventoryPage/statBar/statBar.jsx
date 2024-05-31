@@ -5,8 +5,11 @@ export const StatBar = ({stat, value, color}) => {
     return (
         <>
         <div className="stat-container">
-            {stat}
-            <div className="stat-bar" style={{width: value+"px", backgroundColor: color}}></div>{value}
+            <p className="statName">{stat}</p>
+            <div className="stat">
+                <div className="stat-bar" style={{width: value*10+"px", backgroundColor: color}}></div>
+                <p className="stat-bar-value">{value}</p>
+            </div>
         </div>
         </>
     )

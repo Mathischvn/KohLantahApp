@@ -4,11 +4,12 @@
     position: absolute;
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
     text-align: center;
-    padding: 0 3em;
-    height: 100vh;
+    padding: 4em 3em 0 3em;
+    height: 90vh;
     z-index: 6;
+    gap: 20px;
 }
 
 button {
@@ -24,12 +25,15 @@ button {
     cursor: pointer;
 }
 
+.playerName {
+    margin-top: 0;
+}
+
 .inventory-slot {
     opacity: 1;
     background-color: "#D9D9D9";
     height: 5rem;
     width: 5rem;
-    margin: 0 0.2em;
     border-radius: 20%;
     cursor: pointer;
 }
@@ -40,35 +44,78 @@ button {
     justify-content: center;
     background-color: #978262;
     padding: 1em;
-    min-width: 20em;
     border-radius: 20px;
+    gap: 10px;
 }
 
-.inventory-left .inventory-right {
+.jewelry-bag, .artifacts-bag {
+    position: absolute;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0;
+    background-color: transparent;
+}
+
+.jewelry-bag {
+    left: 20px;
+}
+
+.artifacts-bag {
+    right: 20px;
+}
+
+.books-bagh {
+    background-color: transparent;
+}
+
+.player-profile .player-stats-inventory {
     display: flex;
     flex: 1;
 }
 
-.inventory-right {
+.player-profile {
+    position: relative;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #978262;
+    box-shadow: 0 0 20px #00000096;
+}
+
+.player-stats-inventory {
     display: flex;
     flex-wrap: wrap;
     width: 50%;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
+    border-radius: 20px;
+    gap: 40px;
 }
 
-.main-bag {
+.player-stats-inventory > div {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #978262;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #00000096;
+}
+
+.player-stats-inventory h1 {
+    margin: 30px 0 0 30px;
 }
 
 .character-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    background-color: #978262;
     padding: 1em;
+    width: 100%;
+    box-sizing: border-box;
     border-radius: 20px;
+    gap: 15px;
+    font-size: 25px;
 }
