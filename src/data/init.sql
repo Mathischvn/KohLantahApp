@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS objet (
     booleen_utilisation_unique BOOLEAN,
     statistiques VARCHAR(255), -- separateur ;
     emplacement VARCHAR(50), -- ex : bijoux, etc.
-    chemin_image VARCHAR(255)
+    chemin_image VARCHAR(255),
+	acquire_section INT
 );
 
 CREATE TABLE IF NOT EXISTS inventaire (
