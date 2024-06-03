@@ -38,8 +38,8 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     const clickButton = () => {
         setShowButton(false)
     }
-    console.log("Section action :",section_action)
-    console.log("Entity : ",entity)
+    //console.log("Section action :",section_action)
+    //console.log("Entity : ",entity)
     const handleRandomDice = () => {
         audio_rolling_dice.play()
         if (!rolling) {
@@ -173,7 +173,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
         var chaine_bonus = "FOR"
     }
 
-    console.log("Entity : ", entity)
+    //console.log("Entity : ", entity)
     return (
         <>
             <div className="diceContainer">

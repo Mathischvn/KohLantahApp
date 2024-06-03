@@ -3,18 +3,18 @@ import React from "react";
 export const InventoryBag = ({bagSize, icon, inventory, stats, className}) => {
     const handleClick = (item) => {
         if(item !== undefined) {
-            // console.log(`You clicked on ${item.nom}`);
-            // console.log(`Stats: ${item.statistiques}`);
-            // console.log(item.statistiques.split(';')[0].split(':')[1]);
-            // console.log(item.statistiques.split(';')[1].split(':')[1]);
-            // console.log(item.statistiques.split(';')[2].split(':')[1]);
+            //console.log(`You clicked on ${item.nom}`);
+            //console.log(`Stats: ${item.statistiques}`);
+            //console.log(item.statistiques.split(';')[0].split(':')[1]);
+            //console.log(item.statistiques.split(';')[1].split(':')[1]);
+            //console.log(item.statistiques.split(';')[2].split(':')[1]);
 
             stats[0] = parseInt(stats[0]) + parseInt(item.statistiques.split(';')[0].split(':')[1]);
             stats[1] = parseInt(stats[1]) + parseInt(item.statistiques.split(';')[1].split(':')[1]);
             stats[2] = parseInt(stats[2]) + parseInt(item.statistiques.split(';')[2].split(':')[1]);
-            console.log(stats);
+            //console.log(stats);
         } else {
-            console.log('You clicked on an empty slot');
+            //console.log('You clicked on an empty slot');
         }
     };
 
@@ -49,8 +49,6 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className}) => {
 
     if (inventory === undefined) {
         inventory = [];
-    } else {
-        // console.log(inventory);
     }
 
     return (

@@ -149,7 +149,7 @@ export const getPlayer = async (name) => {
               await pool`
                   INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
               `;
-              console.log('Item inséré avec succès.');
+              //console.log('Item inséré avec succès.');
           } else {
               console.error('L\'item est déjà présent dans l\'inventaire.');
           }
@@ -189,7 +189,7 @@ export const getPlayer = async (name) => {
               `;
               inventory[i] = inventoryItem;
           }
-          console.log('Inventaire récupéré avec succès :', inventory);
+          //console.log('Inventaire récupéré avec succès :', inventory);
           return inventory;
       } catch (error) {
           console.error('Erreur lors de la récupération de l\'item :', error);
@@ -200,7 +200,7 @@ export const getPlayer = async (name) => {
   export const getPlayerStats = async (name) => {
       try {
           const player = await getPlayer(name);
-          console.log('Statistiques récupérées avec succès :', player[0].statistiques);
+          //console.log('Statistiques récupérées avec succès :', player[0].statistiques);
           const intelligence = player[0].statistiques.split(';')[0].split(':')[1];
           const force = player[0].statistiques.split(';')[1].split(':')[1];
           const hp = player[0].statistiques.split(';')[2].split(':')[1];
@@ -212,16 +212,16 @@ export const getPlayer = async (name) => {
   
   
   export const getAllItems = async () => {
-      console.log("récupération des tous les items")
+      //console.log("récupération des tous les items")
       try {
           const allItems = await pool`
           SELECT *
           FROM objet;`;
       
           if (allItems.length === 0){
-              console.log("Pas d'items disponible")
+              //console.log("Pas d'items disponible")
           } else {
-              console.log("Les items disponibles : ", allItems)
+              //console.log("Les items disponibles : ", allItems)
           }
   
       return allItems

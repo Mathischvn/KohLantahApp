@@ -23,8 +23,8 @@ app.get('/select', (req, res)=> {
 })
 
 app.listen(PORT,()=>{
-  console.log('le serveur est lancé sur le port : localhost:'+PORT)
-  console.log(path.join(currentDirectory,'dist','index.html'))
+  //console.log('le serveur est lancé sur le port : localhost:'+PORT)
+  //console.log(path.join(currentDirectory,'dist','index.html'))
 })
 
 /* afficher les erreurs à réactiver
@@ -34,6 +34,6 @@ app.use((err,req,res,next)=>{
 })
 */
 app.get((req,res) =>{
-  console.log('404 ${req.method} ${req.url}')
+  //console.log('404 ${req.method} ${req.url}')
   res.status(404).end('Pas trouvé')
 })

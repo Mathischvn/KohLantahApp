@@ -32,11 +32,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         audio.addEventListener("ended", ()=>{
             if(index_tableau_playlist < playlist.length -1){
                 index_tableau_playlist++;
-                console.log("if"+index_tableau_playlist+"  "+ audio.duration)
+                //console.log("if"+index_tableau_playlist+"  "+ audio.duration)
             }
             else{
                 index_tableau_playlist=0;
-                console.log("else"+index_tableau_playlist+"  "+ audio.duration)
+                //console.log("else"+index_tableau_playlist+"  "+ audio.duration)
             }
             backgroundAudio()
         })
@@ -44,7 +44,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
 
     React.useEffect(() => {
         if(booleen_lancement_page && booleenChangementSection){
-            console.log("ici")
+            //console.log("ici")
             backgroundAudio()
             booleen_lancement_page = false
             setBooleenChangementSection(false)
@@ -67,7 +67,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isChoix = !(isNotActionEmpty)
 
     const insertItem = async (name, item) => {
-        console.log("Objet : ", item)
+        //console.log("Objet : ", item)
         
         const fetchData = async () => {
             const response = await fetch(`/api/player/insert/${name}/${item}`);
@@ -79,7 +79,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             let nom_item = data[0].nom
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    console.log("Test")
+                    //console.log("Test")
                     toast.info(`L'objet ${nom_item} a été ajouté à l'inventaire`, {
                         position: "bottom-right",
                         autoClose: 1500,
@@ -103,7 +103,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         const data = await response.json();
         if (Array.isArray(data)) {
             const res = data
-            console.log("Les items : ", res);
+            //console.log("Les items : ", res);
             return res
         }
         return data
@@ -115,15 +115,15 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
             if (Array.isArray(data)) {
-                console.log('Data loaded:', data);
+                //console.log('Data loaded:', data);
                 setPlayerStats(data);
             } else {
                 setInventoryLoaded(false);
-                console.log('Data pas loaded:', data);
+                //console.log('Data pas loaded:', data);
             }
         } else {
             setInventoryLoaded(false);
-            console.log('response:', response);
+            //console.log('response:', response);
         }
     }
 
@@ -132,29 +132,29 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
             if (Array.isArray(data)) {
-                console.log('Data loaded:', data);
+                //console.log('Data loaded:', data);
                 setPlayerInventory(data);
             } else {
                 setInventoryLoaded(false);
-                console.log('Data pas loaded:', data);
+                //console.log('Data pas loaded:', data);
             }
         } else {
             setInventoryLoaded(false);
-            console.log('response:', response);
+            //console.log('response:', response);
         }
     }
 
     const checkItemInsertion = async (section) => {
-        console.log("Y'a-t-il des items dans la section : ", section)
+        //console.log("Y'a-t-il des items dans la section : ", section)
         const allItems = await getAllItems();
-        console.log("allitems", allItems)
-        console.log("allitems[0]", allItems[0])
+        //console.log("allitems", allItems)
+        //console.log("allitems[0]", allItems[0])
 
         for(let i=0; i<allItems.length; i++){
-            console.log("Item numéro " + i + " : " + allItems[i].nom)
+            //console.log("Item numéro " + i + " : " + allItems[i].nom)
             if(allItems[i].acquire_section == section){
                 if (document.cookie.includes("name")) {
-                    console.log("Insertion de l'item ", allItems[i].nom)
+                    //console.log("Insertion de l'item ", allItems[i].nom)
                     let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
                     insertItem(name, allItems[i].id).then(getPlayerItems(name));
                 }
