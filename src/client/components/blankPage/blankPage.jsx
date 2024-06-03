@@ -1,18 +1,57 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import "./blankPage.css"
 import { FightPage } from "../fightPage/fightPage";
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
 import { SideBar } from "../sideBar/sideBar";
+import music1 from '/music/musique_fond1.mp3'
+import music2 from '/music/musique_fond2.mp3'
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
     const [playerInventory, setPlayerInventory] = React.useState([])
     const [inventoryLoading, setInventoryLoaded] = React.useState(false)
     const [playerStats, setPlayerStats] = React.useState([])
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(1);
+    const [bool2, setBool2] = React.useState(true)
+    let i = 1
+    let bool = true
+
+    const playlist = [
+        music1,
+        music2
+      ];
+      
+      function backgroundAudio(){
+          
+          let audio = new Audio(playlist[i]);
+          if (!audio.ended){
+              audio.play()
+          }
+          audio.addEventListener("ended", ()=>{
+                      if(i < playlist.length -1){
+                          i++;
+                          console.log("if"+i+"  "+ audio.duration)
+                      }
+                      else{
+                          i=0;
+                          console.log("else"+i+"  "+ audio.duration)
+                          
+                      }
+                      backgroundAudio()
+                  })
+   // 5000 millisecondes = 5 secondes
+  
+      }
 
     React.useEffect(() => {
+        if(bool && bool2){
+            console.log("ici")
+            backgroundAudio()
+            bool = false
+            setBool2(false)
+        }
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
             if (response != undefined) {
