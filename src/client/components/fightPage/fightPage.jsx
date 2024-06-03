@@ -183,7 +183,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 <div style={{ flexDirection:"row", display:"flex", gap:150}}>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="playerHp" className="hpBar" value={playerStats[2]} max={playerStats[2]}></progress>
-                        <ProfilePicture></ProfilePicture>
+                        <img src="/images/profile-picture.jpg" alt="Photo de profil" />
                     </div>
                     <div style = {{ flexDirection:"row", display:"flex", gap:15 }}>
                         <div style={{ flexDirection:"column"}}>
@@ -198,7 +198,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                     </div>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="enemyHp" className="hpBar" value={entity.statistiques.split("force_mentale:")[1]} max={entity.statistiques.split("force_mentale:")[1]} ></progress>
-                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>                    
+                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>
                     </div>
                 </div>
                 {showButton && <button className="rollDice" onClick={() => {handleRandomDice(), clickButton()}}>Lancer les dés</button>}
