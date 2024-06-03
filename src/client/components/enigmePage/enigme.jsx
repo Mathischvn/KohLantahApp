@@ -34,8 +34,10 @@ export const Enigme = ({setSectionID, section_action}) => {
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
+                icon:false,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
+                style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #fafafa'}
             })
             setGoodAnswer(true)
             setIsPlaying(true)
@@ -52,10 +54,12 @@ export const Enigme = ({setSectionID, section_action}) => {
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
+                icon:false,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
+                theme: "dark",
+                style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #000000'}
             })
             setCompteur(compteur - 1)
         }

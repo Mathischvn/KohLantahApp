@@ -81,6 +81,20 @@ export const getPlayer = async (name) => {
         console.error('Erreur lors de l\'insertion du personnage :', error);
     }
   };
+
+  export const queryItem = async (id) => {
+    try {
+        const item = await pool`
+        SELECT
+          *
+        FROM objet
+        WHERE id=${id}
+        `;
+        return item;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+  };
   
   
   export const insertPlayer = async (name) => {

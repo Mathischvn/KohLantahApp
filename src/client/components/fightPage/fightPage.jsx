@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ProfilePicture } from "../profilePicture/profilePicture"
 import { EntityPicture } from "../entityPicture/entityPicture"
 import damage_sound from '/sound_effects/damage_sound.mp3?url'
+import rolling_dice_sound from '/sound_effects/rolling_dice_sound.mp3?url'
 
 export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
     
@@ -32,6 +33,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     const [booleenSuperieurInferieur, setBooleenSuperieurInferieur] = useState(false);
     const [booleenAffichageSuperieurInferieur, setBooleenAffichageSuperieurInferieur] = useState(false);
     const audio = new Audio(damage_sound);
+    const audio_rolling_dice = new Audio(rolling_dice_sound)
 
     const clickButton = () => {
         setShowButton(false)
@@ -39,6 +41,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     console.log("Section action :",section_action)
     console.log("Entity : ",entity)
     const handleRandomDice = () => {
+        audio_rolling_dice.play()
         if (!rolling) {
             setRolling(true);
             let counter = 0;
@@ -64,14 +67,8 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
         setBooleenAffichageSuperieurInferieur(true)
         let checkedStat = section_action.condition_reussite.split(/[<>]/)[0]
         let booleanStatChecked = false
-        console.log("Player stats : ", playerStats)
         let entityStats = entity.statistiques 
-        console.log("Entity stats : ",entityStats)
-        console.log("Number enemy :", numberEnemy)
-        console.log("Number player :", numberPlayer)
         let entityStatChecked = entityStats.split(checkedStat)[1].split(";")[0].replace(":","")
-        console.log("Entity stat checked :", entityStatChecked)
-        console.log("PlayerStats", playerStats)
         booleanStatChecked = (Number(playerStats[0]) >= Number(entityStatChecked))
         if (booleanStatChecked){
             audio.play()
@@ -183,8 +180,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 <div style={{ flexDirection:"row", display:"flex", gap:150}}>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="playerHp" className="hpBar" value={playerStats[2]} max={playerStats[2]}></progress>
-                        <img src="/images/profile-picture.jpg" alt="Photo de profil" />
-                    </div>
+                        <img src="/images/profile-picture.jpg" alt="Photo de profil" />                    </div>
                     <div style = {{ flexDirection:"row", display:"flex", gap:15 }}>
                         <div style={{ flexDirection:"column"}}>
                             <div className="diceBlockNumber diceBlockNumberPlayer">{numberDicePlayer}</div>
@@ -198,7 +194,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                     </div>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="enemyHp" className="hpBar" value={entity.statistiques.split("force_mentale:")[1]} max={entity.statistiques.split("force_mentale:")[1]} ></progress>
-                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>
+                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>                    
                     </div>
                 </div>
                 {showButton && <button className="rollDice" onClick={() => {handleRandomDice(), clickButton()}}>Lancer les dés</button>}

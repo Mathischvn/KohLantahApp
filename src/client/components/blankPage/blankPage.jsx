@@ -7,6 +7,7 @@ import { DicePage } from "../dicePage/dicePage";
 import { SideBar } from "../sideBar/sideBar";
 import music1 from '/music/musique_fond1.mp3'
 import music2 from '/music/musique_fond2.mp3'
+import { ToastContainer, toast } from 'react-toastify';
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
@@ -14,43 +15,39 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const [inventoryLoading, setInventoryLoaded] = React.useState(false)
     const [playerStats, setPlayerStats] = React.useState([])
     const [currentTrackIndex, setCurrentTrackIndex] = useState(1);
-    const [bool2, setBool2] = React.useState(true)
-    let i = 1
-    let bool = true
+    const [booleenChangementSection, setBooleenChangementSection] = React.useState(true)
+    let index_tableau_playlist = 1
+    let booleen_lancement_page = true
 
     const playlist = [
         music1,
         music2
       ];
       
-      function backgroundAudio(){
-          
-          let audio = new Audio(playlist[i]);
-          if (!audio.ended){
-              audio.play()
-          }
-          audio.addEventListener("ended", ()=>{
-                      if(i < playlist.length -1){
-                          i++;
-                          console.log("if"+i+"  "+ audio.duration)
-                      }
-                      else{
-                          i=0;
-                          console.log("else"+i+"  "+ audio.duration)
-                          
-                      }
-                      backgroundAudio()
-                  })
-   // 5000 millisecondes = 5 secondes
-  
-      }
+    function backgroundAudio(){
+        let audio = new Audio(playlist[i]);
+        if (!audio.ended){
+            audio.play()
+        }
+        audio.addEventListener("ended", ()=>{
+            if(index_tableau_playlist < playlist.length -1){
+                index_tableau_playlist++;
+                console.log("if"+index_tableau_playlist+"  "+ audio.duration)
+            }
+            else{
+                index_tableau_playlist=0;
+                console.log("else"+index_tableau_playlist+"  "+ audio.duration)
+            }
+            backgroundAudio()
+        })
+    }
 
     React.useEffect(() => {
-        if(bool && bool2){
+        if(booleen_lancement_page && booleenChangementSection){
             console.log("ici")
             backgroundAudio()
-            bool = false
-            setBool2(false)
+            booleen_lancement_page = false
+            setBooleenChangementSection(false)
         }
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
@@ -70,10 +67,35 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isChoix = !(isNotActionEmpty)
 
     const insertItem = async (name, item) => {
+        console.log("Objet : ", item)
+        
         const fetchData = async () => {
             const response = await fetch(`/api/player/insert/${name}/${item}`);
         }
         fetchData();
+        const popupItem = async(item) => {
+            const response = await fetch(`/api/item/${item}`);
+            const data = await response.json();
+            let nom_item = data[0].nom
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("Test")
+                    toast.info(`L'objet ${nom_item} a été ajouté à l'inventaire`, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        icon:false,
+                        progress: undefined,
+                        theme: "light",
+                        style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #fafafa'}
+                    })
+                }, 4000)
+            })
+        }
+        popupItem(item)
     };
 
     const getAllItems = async () => {
