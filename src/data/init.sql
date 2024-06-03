@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS entite (
     id SERIAL PRIMARY KEY,
     libelle VARCHAR(255),
     description_prompt TEXT,
-    statistiques VARCHAR(255)
+    statistiques VARCHAR(255),
+    image VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS objet (
@@ -95,52 +96,65 @@ INSERT INTO
     entite (
         description_prompt,
         libelle,
-        statistiques
+        statistiques,
+        image
     )
-VALUES (null, 'Polus', null);
+VALUES (null, 'Polus', null, null);
 
 INSERT INTO
     entite (
         description_prompt,
         libelle,
-        statistiques
+        statistiques,
+        image
     )
-VALUES (null, 'L''oracle', null);
+VALUES (
+        null,
+        'L''oracle',
+        null,
+        'oracle.jpg'
+    );
 
 INSERT INTO
     entite (
         description_prompt,
         libelle,
-        statistiques
+        statistiques,
+        image
     )
 VALUES (
         null,
         'Fantôme',
-        'force:2;intelligence:10;force_mentale:1'
+        'force:2;intelligence:10;force_mentale:1',
+        'fantome.jpg'
     );
 
 INSERT INTO
     entite (
         description_prompt,
         libelle,
-        statistiques
+        statistiques,
+        image
     )
 VALUES (
         null,
         'Fantôme effrayant',
-        'force:2;intelligence:10;force_mentale:1'
+        'force:2;intelligence:10;force_mentale:1',
+        'fantome_effrayant.jpg'
     );
 
 INSERT INTO
     entite (
         description_prompt,
         libelle,
-        statistiques
+        statistiques,
+        image
     )
 VALUES (
         null,
         'Fantôme cauchemardesque',
-        'force:3;intelligence:10;force_mentale:2'
+        'force:3;intelligence:10;force_mentale:2',
+        'fantome_cauchemardesque.jpg'
     );
 
 -- SECTIONS
@@ -1134,9 +1148,42 @@ VALUES (
         false
     );
 
-INSERT INTO 
-	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image, acquire_section)
-	VALUES ('Collier du grand-père', true, false, 'intelligence:3;force:0;hp:0', 'bijoux', '/images/collier-grand-pere.jpg', 1);
-INSERT INTO 
-	objet (nom, booleen_equipable, booleen_utilisation_unique, statistiques, emplacement, chemin_image, acquire_section)
-	VALUES ('Livre de force', true, false, 'intelligence:0;force:5;hp:3', 'livre', '/images/livre-force.jpg', 2);
+INSERT INTO
+    objet (
+        nom,
+        booleen_equipable,
+        booleen_utilisation_unique,
+        statistiques,
+        emplacement,
+        chemin_image,
+        acquire_section
+    )
+VALUES (
+        'Collier du grand-père',
+        true,
+        false,
+        'intelligence:3;force:0;hp:0',
+        'bijoux',
+        '/images/collier-grand-pere.jpg',
+        1
+    );
+
+INSERT INTO
+    objet (
+        nom,
+        booleen_equipable,
+        booleen_utilisation_unique,
+        statistiques,
+        emplacement,
+        chemin_image,
+        acquire_section
+    )
+VALUES (
+        'Livre de force',
+        true,
+        false,
+        'intelligence:0;force:5;hp:3',
+        'livre',
+        '/images/livre-force.jpg',
+        2
+    );

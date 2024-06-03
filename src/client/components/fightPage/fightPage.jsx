@@ -2,6 +2,7 @@ import React from "react"
 import "./fightPage.css"
 import { useState } from 'react';
 import { ProfilePicture } from "../profilePicture/profilePicture"
+import { EntityPicture } from "../entityPicture/entityPicture"
 import damage_sound from '/sound_effects/damage_sound.mp3?url'
 
 export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
@@ -175,6 +176,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
         var chaine_bonus = "FOR"
     }
 
+    console.log("Entity : ", entity)
     return (
         <>
             <div className="diceContainer">
@@ -194,8 +196,9 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                             {bonusEnemy && <p className="bonus">Bonus {chaine_bonus} +2</p>}
                         </div>
                     </div>
-                    <div>
+                    <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="enemyHp" className="hpBar" value={entity.statistiques.split("force_mentale:")[1]} max={entity.statistiques.split("force_mentale:")[1]} ></progress>
+                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>                    
                     </div>
                 </div>
                 {showButton && <button className="rollDice" onClick={() => {handleRandomDice(), clickButton()}}>Lancer les dés</button>}
