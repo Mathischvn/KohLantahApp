@@ -70,7 +70,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         //console.log("Objet : ", item)
         
         const fetchData = async () => {
-            const response = await fetch(`/api/player/insert/${name}/${item}`);
+            const response = await fetch(`/api/player/insertItem/${name}/${item}`);
         }
         fetchData();
         const popupItem = async(item) => {

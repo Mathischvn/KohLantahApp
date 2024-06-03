@@ -15,7 +15,7 @@ app.get('/api/section/:id', async (req, res) => {
   res.send(response);
 })
 
-app.get('/api/player/:name/:password', async (req, res) => {
+app.get('/api/player/insertPlayer/:name/:password', async (req, res) => {
   const name = req.params.name;
   const password = req.params.password;
   const response = await getPlayer(name);
@@ -29,7 +29,7 @@ app.get('/api/player/:name/:password', async (req, res) => {
   
 })
 
-app.get('/api/player/insert/:name/:item', async (req, res) => {
+app.get('/api/player/insertItem/:name/:item', async (req, res) => {
   const name = req.params.name;
   const item = req.params.item;
   const response = await getPlayer(name);

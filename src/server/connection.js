@@ -116,12 +116,12 @@ export const getPlayer = async (name) => {
   };
   
   
-  export const insertPlayer = async (name, password, id_section) => {
+  export const insertPlayer = async (name, password) => {
     try {
         await pool`
         INSERT INTO
-          personnage (nom, statistiques, mdp)
-        VALUES (${name}, 'intelligence:10;force:10;hp:10, ${password}, 1');
+          personnage (nom, statistiques, mdp, id_section)
+        VALUES (${name}, 'intelligence:10;force:10;hp:10', ${password}, 1);
         `;
     } catch (error) {
         console.error('Erreur lors de l\'insertion du personnage :', error);
