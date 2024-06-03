@@ -25,7 +25,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
       ];
       
     function backgroundAudio(){
-        let audio = new Audio(playlist[i]);
+        let audio = new Audio(playlist[index_tableau_playlist]);
         if (!audio.ended){
             audio.play()
         }
