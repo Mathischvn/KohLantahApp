@@ -18,7 +18,10 @@ DROP TABLE if exists entite;
 CREATE TABLE IF NOT EXISTS personnage (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255),
-    statistiques VARCHAR(255)
+    statistiques VARCHAR(255),
+    mdp VARCHAR(255),
+    id_section ID,
+    FOREIGN KEY (id_section) REFERENCES section (id)
 );
 
 CREATE TABLE IF NOT EXISTS entite (
@@ -37,7 +40,7 @@ CREATE TABLE IF NOT EXISTS objet (
     statistiques VARCHAR(255), -- separateur ;
     emplacement VARCHAR(50), -- ex : bijoux, etc.
     chemin_image VARCHAR(255),
-	acquire_section INT
+    acquire_section INT
 );
 
 CREATE TABLE IF NOT EXISTS inventaire (

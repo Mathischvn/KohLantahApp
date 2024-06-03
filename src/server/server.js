@@ -15,13 +15,18 @@ app.get('/api/section/:id', async (req, res) => {
   res.send(response);
 })
 
-app.get('/api/player/:name', async (req, res) => {
+app.get('/api/player/:name/:password', async (req, res) => {
   const name = req.params.name;
+  const password = req.params.password;
   const response = await getPlayer(name);
   if(response.length === 0) {
-    insertPlayer(name);
+    insertPlayer(name, password);
+    res.send(response);
   }
-  res.send(response);
+  else{
+    return null;
+  }
+  
 })
 
 app.get('/api/player/insert/:name/:item', async (req, res) => {
