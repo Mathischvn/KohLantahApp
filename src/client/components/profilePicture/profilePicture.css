@@ -1,6 +1,6 @@
-
-img {
+.player_picture {
     border-radius: 20px;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 0 20px black;
 }

@@ -9,9 +9,35 @@ export const InventoryPage = ({inventory, stats}) => {
 
     const playerName = document.cookie.match(/(?<=name=)[^;]*/)[0];
 
+    const [clickItem, setClickItem] = useState(false);
+
+    const activeTuto = () => {
+        const backgroundTuto = document.querySelector(".tuto");
+        const tooltipTuto = document.querySelector(".tooltip-tuto");
+        const firstSlotInventory = document.querySelector(".player-stats-inventory .inventory-bag > :first-child");
+
+        if(backgroundTuto !== null) {
+            backgroundTuto.style.display = "block";
+            tooltipTuto.style.display = "block";
+            firstSlotInventory.classList.add("animationTuto");
+    
+            firstSlotInventory.addEventListener('click', () => {
+                firstSlotInventory.classList.remove("animationTuto");
+                backgroundTuto.style.display = "none";
+                tooltipTuto.style.display = "none";
+                setClickItem(true);
+            });
+        }
+    };
+
+    if(!clickItem) {
+        activeTuto()
+    }
+
     return (
         <>
             <div className="inventory">
+                <div className="tuto"></div>
                 <div className="player-profile">
                     <h1 className="playerName">{playerName}</h1>
                     <ProfilePicture></ProfilePicture>
@@ -33,6 +59,9 @@ export const InventoryPage = ({inventory, stats}) => {
                     <div>
                         <h1>Votre inventaire</h1>
                         <div className="main-bag">
+                            <div className="tooltip-tuto">
+                                Cliquer sur votre objet pour l'équiper et améliorer vos statistiques.
+                            </div>
                             <InventoryBag bagSize={16} inventory={inventory} stats={stats}></InventoryBag>
                         </div>
                     </div>
