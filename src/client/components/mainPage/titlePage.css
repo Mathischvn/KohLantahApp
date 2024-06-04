@@ -61,7 +61,7 @@ h1 {
 .error-message {
     font-size: 1.2em;
     background-color: #ff000061;
-    color: rgb(253, 149, 149);
+    color: rgb(255, 234, 234);
     opacity: 0;
     transition: all 0.2s ease-in-out;
     padding: 0.5em 1em;

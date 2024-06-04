@@ -42,8 +42,9 @@ export const TitlePage = () => {
                     navigate("/game");
                 } else {
                     const errorMessage = document.querySelector(".error-message");
-                    errorMessage.style.opacity = "1"
-                    errorMessage.innerHTMl = "Ce nom existe déjà, veuillez prendre un autre nom.";                }
+                    errorMessage.style.opacity = "1";
+                    errorMessage.innerHTML = "Nom ou mot de passe incorrect";
+                }
             }
             fetchData();
         }
@@ -56,6 +57,8 @@ export const TitlePage = () => {
         const inputMdpCreate = document.querySelector(".player_mdp_input_create");
         const inputNameLoading = document.querySelector(".player_name_input_loading");
         const inputMdpLoading = document.querySelector(".player_mdp_input_loading");
+        const errorMessage = document.querySelector(".error-message");
+        errorMessage.style.opacity = "0";
         if(inputNameCreate != null && inputMdpCreate != null) {
             inputNameCreate.value = "";
             inputMdpCreate.value = "";        
