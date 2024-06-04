@@ -61,5 +61,10 @@
 }
 
 .answerDice {
+    border: solid 1px white;
+    background-color: rgba(0, 0, 0, 0.793);
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
     font-size: 1.5em;
 }
