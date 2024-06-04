@@ -20,7 +20,7 @@ h1 {
     display: flex;
     gap: 20px;
 }
-
+container-title-page
 .buttons-title button {
     width: 400px;
 }
@@ -38,8 +38,20 @@ h1 {
     gap: 20px;
 }
 
+.container-title-page button i {
+    font-size: 23px;
+    margin: 10px 0px 10px 5px;
+}
+
+.blockInput {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
 .player_name_input_create, 
 .player_mdp_input_create,
+.player_confirm_mdp_input_create,
 .player_name_input_loading, 
 .player_mdp_input_loading {
     padding: 0.7em 1em;
