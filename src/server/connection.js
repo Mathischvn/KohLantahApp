@@ -88,16 +88,11 @@ export const getPlayer = async (name) => {
         SELECT
           *
         FROM personnage
-        WHERE nom=${name}
+        WHERE nom=${name} AND mdp=${password}
         `;
-        if (player[0].mdp == password){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player;
     } catch (error) {
-        console.error('Erreur lors de l\'insertion du personnage :', error);
+        console.error('Erreur lors de la récupération du personnage :', error);
     }
   };
 
