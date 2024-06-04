@@ -5,40 +5,56 @@ import { useState } from "react"
 
 export const TitlePage = () => {
     const navigate = useNavigate();
-    const [createLoadingSave, setCreateLoadingSave] = useState(false);
-    const [activeButton, setActiveButton] = useState('new');
+    const [createLoadingSave, setCreateLoadingSave] = useState(true);
+    const [activeButton, setActiveButton] = useState('load');
+    const minLengthPassword = 6;
     
     const createSave = () => {
         const inputName = document.querySelector(".player_name_input_create").value;
         const inputMdp = document.querySelector(".player_mdp_input_create").value;
-        if(verifyPassword()) {
-            if (inputName !== "" && inputMdp !== "") {
-                const fetchData = async () => { 
-                    const response = await fetch(`http://localhost:3000/api/player/insertPlayer/${inputName}/${inputMdp}`);
-                    const data = await response.json();
-                    if(data.length === 0) {
-                        document.cookie = `name=${inputName}`;
-                        navigate("/game");
-                    } else {
-                        const errorMessage = document.querySelector(".error-message");
-                        errorMessage.style.opacity = "1";
-                        errorMessage.innerHTML = "Ce nom existe déjà, veuillez prendre un autre nom.";
+        const errorMessage = document.querySelector(".error-message");
+
+        errorMessage.style.opacity = "0";
+
+        if(verifyPasswordPresence()) {
+            if(verifyConfirmPassword()) {
+                if(verifyLengthPassword()) {
+                    const fetchData = async () => { 
+                        const response = await fetch(`http://localhost:3000/api/player/insertPlayer/${inputName}/${inputMdp}`);
+                        const data = await response.json();
+                        if(data.length === 0) {
+                            document.cookie = `name=${inputName}`;
+                            navigate("/game");
+                        } else {
+                            errorMessage.style.opacity = "1";
+                            errorMessage.innerHTML = "Ce nom existe déjà, veuillez prendre un autre nom.";
+                        }
                     }
+                    fetchData();
+                } else {
+                    errorMessage.style.opacity = "1";
+                    errorMessage.innerHTML = "Mot de passe trop court";
                 }
-                fetchData();
+            } else {
+                errorMessage.style.opacity = "1";
+                errorMessage.innerHTML = "Mots de passe différents";
             }
         } else {
-            const errorMessage = document.querySelector(".error-message");
             errorMessage.style.opacity = "1";
-            errorMessage.innerHTML = "Mots de passe différents";
+            errorMessage.innerHTML = "Veuillez entrer un mot de passe.";
         }
     };
 
     const loadSave = () => {
         const inputName = document.querySelector(".player_name_input_loading").value;
         const inputMdp = document.querySelector(".player_mdp_input_loading").value;
-        if (inputName !== "" && inputMdp !== "") {
-            document.querySelector(".start-button").innerHTML = 'Charger la partie <i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+        const buttonStart = document.querySelector(".start-button");
+        const errorMessage = document.querySelector(".error-message");
+        
+        errorMessage.style.opacity = "0";
+        buttonStart.innerHTML = 'Charger la partie <i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+        
+        if(verifyPasswordPresence()) {
             setTimeout(() => {
                 const fetchData = async () => { 
                     const response = await fetch(`http://localhost:3000/api/player/getPlayer/${inputName}/${inputMdp}`);
@@ -47,18 +63,34 @@ export const TitlePage = () => {
                         document.cookie = `name=${inputName}`;
                         navigate("/game");
                     } else {
-                        const errorMessage = document.querySelector(".error-message");
                         errorMessage.style.opacity = "1";
                         errorMessage.innerHTML = "Nom ou mot de passe incorrect";
                     }
-                    document.querySelector(".start-button").innerHTML = 'Charger la partie <i class="fa-solid fa-play"></i>';
+                    buttonStart.innerHTML = 'Charger la partie <i class="fa-solid fa-play"></i>';
                 }
                 fetchData();
-            }, "500");              
+            }, "500");
+        } else {
+            errorMessage.style.opacity = "1";
+            errorMessage.innerHTML = "Veuillez entrer un mot de passe.";
+            buttonStart.innerHTML = 'Charger la partie <i class="fa-solid fa-play"></i>';
         }
     };
 
-    const verifyPassword = () => {
+    const verifyPasswordPresence = () => {
+        let inputMdp;
+        document.querySelector(".player_mdp_input_create") !== null ? 
+            inputMdp = document.querySelector(".player_mdp_input_create").value 
+            : inputMdp = document.querySelector(".player_mdp_input_loading").value;
+
+        let presencePassword = true;
+        if(inputMdp === "") {
+            presencePassword = false;
+        }
+        return presencePassword;
+    };
+
+    const verifyConfirmPassword = () => {
         const inputMdp = document.querySelector(".player_mdp_input_create").value;
         const inputConfirmMdp = document.querySelector(".player_confirm_mdp_input_create").value;
         let samePassword = true;
@@ -66,6 +98,15 @@ export const TitlePage = () => {
             samePassword = false;
         }
         return samePassword;
+    };
+
+    const verifyLengthPassword = () => {
+        const inputMdp = document.querySelector(".player_mdp_input_create").value;
+        let passWordSafe = true;
+        if(inputMdp.length < minLengthPassword) {
+            passWordSafe = false;
+        }
+        return passWordSafe;
     };
 
     const changeMenu = (bool, button) => {

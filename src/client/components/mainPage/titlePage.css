@@ -36,6 +36,7 @@ container-title-page
     justify-content: center;
     align-items: center;
     gap: 20px;
+    height: 360px;
 }
 
 .container-title-page button i {
@@ -49,11 +50,7 @@ container-title-page
     color: white;
 }
 
-.player_name_input_create, 
-.player_mdp_input_create,
-.player_confirm_mdp_input_create,
-.player_name_input_loading, 
-.player_mdp_input_loading {
+.blockInput input {
     padding: 0.7em 1em;
     border-radius: 15px;
     background-color: rgba(0, 0, 0, 0.354);
@@ -63,11 +60,15 @@ container-title-page
     color: white;
     margin: 0;
     width: 300px;
+    transition: all 0.2s ease-in-out;
 }
 
-.player_name_input::placeholder, 
-.player_mdp_input::placeholder {
+.blockInput input::placeholder {
     color: white;
+}
+
+.blockInput input:hover {
+    background-color: rgba(0, 0, 0, 0.51);
 }
 
 .error-message {
