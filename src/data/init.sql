@@ -15,21 +15,30 @@ DROP TABLE if exists objet;
 
 DROP TABLE if exists entite;
 
-CREATE TABLE IF NOT EXISTS personnage (
-    id SERIAL PRIMARY KEY,
-    nom VARCHAR(255),
-    statistiques VARCHAR(255),
-    mdp VARCHAR(255),
-    id_section ID,
-    FOREIGN KEY (id_section) REFERENCES section (id)
-);
-
 CREATE TABLE IF NOT EXISTS entite (
     id SERIAL PRIMARY KEY,
     libelle VARCHAR(255),
     description_prompt TEXT,
     statistiques VARCHAR(255),
     image VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS section (
+    id SERIAL PRIMARY KEY,
+    titre VARCHAR(50),
+    libelle TEXT,
+    description_fond_prompt TEXT,
+    entite INT,
+    FOREIGN KEY (entite) REFERENCES entite (id)
+);
+
+CREATE TABLE IF NOT EXISTS personnage (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255),
+    statistiques VARCHAR(255),
+    mdp VARCHAR(255),
+    id_section int,
+    FOREIGN KEY (id_section) REFERENCES section (id)
 );
 
 CREATE TABLE IF NOT EXISTS objet (
@@ -49,15 +58,6 @@ CREATE TABLE IF NOT EXISTS inventaire (
     PRIMARY KEY (id_personnage, id_objet),
     FOREIGN KEY (id_objet) REFERENCES objet (id),
     FOREIGN KEY (id_personnage) REFERENCES personnage (id)
-);
-
-CREATE TABLE IF NOT EXISTS section (
-    id SERIAL PRIMARY KEY,
-    titre VARCHAR(50),
-    libelle TEXT,
-    description_fond_prompt TEXT,
-    entite INT,
-    FOREIGN KEY (entite) REFERENCES entite (id)
 );
 
 CREATE TABLE IF NOT EXISTS recompense (
