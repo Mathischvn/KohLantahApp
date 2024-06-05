@@ -1,5 +1,5 @@
 import express from "express";
-import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, getPlayerWithPassword} from "./connection.js"
+import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, getPlayerWithPassword, verifyItem} from "./connection.js"
 import ViteExpress from "vite-express";
 
 const app = express();
@@ -45,10 +45,11 @@ app.get('/api/player/insertItem/:name/:item', async (req, res) => {
   const name = req.params.name;
   const item = req.params.item;
   const response = await getPlayer(name);
+  const valueAlreadyExists = await verifyItem(name, item);
   if(response.length != 0) {
     insertItem(name, item);
   }
-  res.send(response);
+  res.send(valueAlreadyExists);
 })
 
 app.get('/api/player/inventory/:name/', async (req, res) => {

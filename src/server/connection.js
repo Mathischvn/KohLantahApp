@@ -165,23 +165,45 @@ export const getPlayer = async (name) => {
   }
   
   
-  export const insertItem = async (name, id_item) => {
-      try {
-          const player = await getIdPersonnage(name);
-          const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
-  
-          if (inventoryItem.length === 0) {
-              await pool`
-                  INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
-              `;
-              //console('Item inséré avec succès.');
-          } else {
-              console.error('L\'item est déjà présent dans l\'inventaire.');
-          }
-      } catch (error) {
-          console.error('Erreur lors de l\'insertion de l\'item :', error);
-      }
-  }
+    export const insertItem = async (name, id_item) => {
+        try {
+            console.error("Name :", name)
+            const player = await getIdPersonnage(name);
+            console.error("Player :", player)
+            console.error("Player :", player[0])
+            const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
+
+            
+
+            if (inventoryItem.length === 0) {
+                await pool`
+                    INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
+                `;
+                //console('Item inséré avec succès.');
+            } else {
+                console.error('L\'item est déjà présent dans l\'inventaire.');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'insertion de l\'item :', error);
+        }
+    }
+
+    export const verifyItem = async (name, id_item) => {
+        try {
+            const player = await getIdPersonnage(name);
+            const inventory = await pool`
+            SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id} AND id_objet=${id_item};
+            `;
+            if (inventory.length > 0){
+                return true
+            }
+            else{
+                return false
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'insertion du personnage :', error);
+        }
+    }
   
   
   export const getPlayerInventory = async (name) => {

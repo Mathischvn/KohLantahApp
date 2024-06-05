@@ -71,8 +71,8 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         
         const fetchData = async () => {
             const response = await fetch(`/api/player/insertItem/${name}/${item}`);
+            return response.json();
         }
-        fetchData();
         const popupItem = async(item) => {
             const response = await fetch(`/api/item/${item}`);
             const data = await response.json();
@@ -90,12 +90,15 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                         icon:false,
                         progress: undefined,
                         theme: "light",
-                        style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #fafafa'}
+                        style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #fafafa'}
                     })
                 }, 4000)
             })
         }
-        popupItem(item)
+        let ajoutItem = await fetchData();
+        if (!ajoutItem){
+            popupItem(item)
+        }
     };
 
     const getAllItems = async () => {
