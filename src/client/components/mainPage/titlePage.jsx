@@ -133,14 +133,12 @@ export const TitlePage = () => {
             <div className="buttons-title">
                 <button
                     className={activeButton === 'new' ? 'active' : ''}
-                    onClick={() => changeMenu(false, 'new')}
-                >
+                    onClick={() => changeMenu(false, 'new')}>
                     Créer une nouvelle partie
                 </button>
                 <button
                     className={activeButton === 'load' ? 'active' : ''}
-                    onClick={() => changeMenu(true, 'load')}
-                >
+                    onClick={() => changeMenu(true, 'load')}>
                     Charger une partie
                 </button>
             </div>

@@ -222,6 +222,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                 equippedBooks={equippedBooks} setEquippedBooks={setEquippedBooks}
                 >
                 </SideBar>
+                <a className="exitToMenu" href="/" title="Revenir à l'accueil"><i className="fa-solid fa-right-from-bracket"></i></a>
                 <div className="background"></div>
                 <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>

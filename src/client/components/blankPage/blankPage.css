@@ -56,3 +56,24 @@ button:hover {
     height: 100px;
     font-size: 1.5em;
 }
+
+.exitToMenu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.488);
+    border: solid 1px white;
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.2s ease-in-out;
+}
+
+.exitToMenu:hover {
+    background-color: rgba(0, 0, 0, 0.629);
+}
+
+.exitToMenu i {
+    font-size: 51px;
+    color: white;
+}
