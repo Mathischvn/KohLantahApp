@@ -80,6 +80,12 @@ app.get('/api/player/stats/:name/', async (req, res) => {
   }
 })
 
+app.get('/api/player/:name/', async (req, res) => {
+  const name = req.params.name;
+  let response = await getPlayer(name);
+  res.send(response);
+})
+
 app.get('/api/item/:id', async (req, res) => {
   const id = req.params.id;
   const response  = await queryItem(id);
