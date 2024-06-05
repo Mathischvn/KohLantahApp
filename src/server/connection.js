@@ -147,7 +147,7 @@ export const getPlayer = async (name) => {
   
           if (inventoryItem.length === 0) {
               await pool`
-                  INSERT INTO inventaire (id_objet, id_personnage) VALUES (${id_item}, ${player[0].id}); 
+                  INSERT INTO inventaire (id_objet, id_personnage, is_equipped) VALUES (${id_item}, ${player[0].id}, FALSE); 
               `;
               //console.log('Item inséré avec succès.');
           } else {
@@ -245,6 +245,33 @@ export const getPlayer = async (name) => {
           console.error('Erreur lors de la récupération de l\item :', error);
       }
   }
+
+  export const equip_item = async (nom_personnage, id_objet) => {
+    try {
+        const player = await getIdPersonnage(nom_personnage);
+        const inventoryItem = await getInventoryItemPlayer(player[0].id, id_objet);
+        console.log("Inventory item : ", inventoryItem);
+
+        if (inventoryItem[0].is_equipped === false) {
+            await pool`
+                UPDATE inventaire
+                SET is_equipped = TRUE
+                WHERE id_personnage=${player[0].id} AND id_objet=${id_objet};
+            `;
+            console.log(`L'item ${id_objet} a été équipé.`);
+        } else {
+            await pool`
+                UPDATE inventaire
+                SET is_equipped = FALSE
+                WHERE id_personnage=${player[0].id} AND id_objet=${id_objet};
+            `;
+            console.log(`L'item ${id_objet} a été déséquipé.`);
+        }
+    } catch (error) {
+        console.error('Erreur lors de l\'équipement de l\'item :', error);
+    }
+  }
+
   
   export const resEntite = await queryEntity("Polus");
   export const resSection = await querySection("1");

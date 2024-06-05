@@ -16,6 +16,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const [playerStats, setPlayerStats] = React.useState([])
     const [currentTrackIndex, setCurrentTrackIndex] = useState(1);
     const [booleenChangementSection, setBooleenChangementSection] = React.useState(true)
+    const [equippedItems, setEquippedItems] = React.useState([])
+    const [equippedJewels, setEquippedJewels] = React.useState([])
+    const [equippedArtifacts, setEquippedArtifacts] = React.useState([])
+    const [equippedBooks, setEquippedBooks] = React.useState([])
+
     let index_tableau_playlist = 1
     let booleen_lancement_page = true
 
@@ -56,6 +61,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                 setSection(data);
             }
             checkItemInsertion(sectionId)
+            console.log("Section : ", section)
+            console.log("equippedItems : ", equippedItems)
+            console.log("equippedJewels : ", equippedJewels)
+            console.log("equippedArtifacts : ", equippedArtifacts)
+            console.log("equippedBooks : ", equippedBooks)
         }
         fetchData();
     }, [sectionId]);
@@ -187,7 +197,14 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     if ((isChoix && (section.choix != undefined && section.choix != [] && section.choix != null)) || (isNotActionEmpty)){
         return (
             <>
-                <SideBar inventory={playerInventory} stats={playerStats}></SideBar>
+                <SideBar inventory={playerInventory} setPlayerInventory={setPlayerInventory} 
+                stats={playerStats} setPlayerStats={setPlayerStats} 
+                equippedItems={equippedItems} setEquippedItems={setEquippedItems} 
+                equippedJewels={equippedJewels} setEquippedJewels={setEquippedJewels}
+                equippedArtifacts={equippedArtifacts} setEquippedArtifacts={setEquippedArtifacts}
+                equippedBooks={equippedBooks} setEquippedBooks={setEquippedBooks}
+                >
+                </SideBar>
                 <div className="background"></div>
                 <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>

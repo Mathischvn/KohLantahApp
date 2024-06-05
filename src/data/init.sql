@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS objet (
 CREATE TABLE IF NOT EXISTS inventaire (
     id_objet INT,
     id_personnage INT,
+    is_equipped BOOLEAN,
     PRIMARY KEY (id_personnage, id_objet),
     FOREIGN KEY (id_objet) REFERENCES objet (id),
     FOREIGN KEY (id_personnage) REFERENCES personnage (id)

@@ -4,14 +4,15 @@ import { useState } from "react"
 import SlideIn from "../slideIn/SlideIn"
 import { InventoryPage } from "../inventoryPage/inventoryPage"
 
-export const SideBar = ({inventory, stats}) => {
+export const SideBar = ({inventory, setPlayerInventory, stats, setPlayerStats, equippedItems, setEquippedItems, equippedJewels, setEquippedJewels, equippedArtifacts, setEquippedArtifacts, equippedBooks, setEquippedBooks}) => {
     const [startAnimation, setStartAnimation] = useState(false);
     const [closeInventory, setCloseInventory] = useState(false);
 
     return (
         <div>
             <SlideIn startAnimation={startAnimation}>
-                <InventoryPage inventory={inventory} stats={stats}/>
+                <InventoryPage inventory={inventory} setPlayerInventory={setPlayerInventory} stats={stats} setPlayerStats={setPlayerStats} equippedItems={equippedItems} setEquippedItems={setEquippedItems} equippedJewels={equippedJewels} setEquippedJewels={setEquippedJewels} equippedArtifacts={equippedArtifacts} setEquippedArtifacts={setEquippedArtifacts}
+                equippedBooks={equippedBooks} setEquippedBooks={setEquippedBooks}/>
             </SlideIn>
             {!closeInventory && 
             <div className="side-bar side-bar-open" onClick={() => {setStartAnimation(!startAnimation), setCloseInventory(true)}}>
