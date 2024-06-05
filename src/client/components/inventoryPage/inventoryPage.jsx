@@ -15,20 +15,20 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
     React.useEffect(() => {
         for (let index = 0; index < equippedItems.length; index++) {
             const item = equippedItems[index];
-            console.log("Item équipé : ", item.nom, "Emplacement : ", item.emplacement)
+            //console.log("Item équipé : ", item.nom, "Emplacement : ", item.emplacement)
             let isAlreadyEquippedJewel = false;
             let isAlreadyEquippedArtifact = false;
             let isAlreadyEquippedBook = false;
 
             if (item.emplacement === "bijoux") {
-                console.log("Un bijou est équipé: ", item)
+                //console.log("Un bijou est équipé: ", item)
                 for(let jewel of equippedJewels) {
                     if(jewel.id === item.id) {
                         isAlreadyEquippedJewel = true;
                     }
                 }
 
-                console.log("Bijoux déjà équipé ? ", isAlreadyEquippedJewel);
+                //console.log("Bijoux déjà équipé ? ", isAlreadyEquippedJewel);
 
                 if(!isAlreadyEquippedJewel) {
                     setEquippedJewels([...equippedJewels, item]);
@@ -54,10 +54,10 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                 }
             }
         }
-        console.log("Equipped items dans inventoryPage : ", equippedItems);
-        console.log("Equipped jewels : ", equippedJewels);
-        console.log("Equipped artifacts : ", equippedArtifacts);
-        console.log("Equipped books : ", equippedBooks);
+        // console.log("Equipped items dans inventoryPage : ", equippedItems);
+        // console.log("Equipped jewels : ", equippedJewels);
+        // console.log("Equipped artifacts : ", equippedArtifacts);
+        // console.log("Equipped books : ", equippedBooks);
     }, [equippedItems]);
 
     

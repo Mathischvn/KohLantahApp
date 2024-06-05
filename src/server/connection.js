@@ -177,7 +177,7 @@ export const getPlayer = async (name) => {
 
             if (inventoryItem.length === 0) {
                 await pool`
-                    INSERT INTO inventaire (id_objet, id_personnage, is_equipped) VALUES (${id_item}, ${player[0].id}); 
+                    INSERT INTO inventaire (id_objet, id_personnage, is_equipped) VALUES (${id_item}, ${player[0].id}, false); 
                 `;
                 //console('Item inséré avec succès.');
             } else {

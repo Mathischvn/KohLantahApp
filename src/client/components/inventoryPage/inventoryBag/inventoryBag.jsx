@@ -14,13 +14,13 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
 
     const handleClick = (item) => {
         if(item !== undefined) {
-            console.log(`You clicked on ${item.nom}`);
-            console.log(`Stats: ${item.statistiques}`);
-            console.log(item.statistiques.split(';')[0].split(':')[1]);
-            console.log(item.statistiques.split(';')[1].split(':')[1]);
-            console.log(item.statistiques.split(';')[2].split(':')[1]);
-            console.log("Type d'item: ", item.emplacement);
-            console.log("Stats du joueur: ", stats);
+            // console.log(`You clicked on ${item.nom}`);
+            // console.log(`Stats: ${item.statistiques}`);
+            // console.log(item.statistiques.split(';')[0].split(':')[1]);
+            // console.log(item.statistiques.split(';')[1].split(':')[1]);
+            // console.log(item.statistiques.split(';')[2].split(':')[1]);
+            // console.log("Type d'item: ", item.emplacement);
+            // console.log("Stats du joueur: ", stats);
             
             let newStats = [];
             let isItemAlreadyEquipped = false;
@@ -32,12 +32,12 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
             setPlayerStats(newStats);
 
             // On vérifie si l'item est déjà équipé
-            console.log("equippedItems : ", equippedItems)
-            console.log("Item : ", item)
+            // console.log("equippedItem : ", equippedItems[0])
+            // console.log("Item : ", item)
             // console.log("Item déjà équipé : ", equippedItems.includes(item))
             for(let equipped of equippedItems) {
-                console.log("Equipped : ", equipped)
                 if(equipped.id === item.id) {
+                    // console.log("Equipped : ", equipped)
                     isItemAlreadyEquipped = true;
                 }
             }
@@ -45,8 +45,13 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
             console.log("isAlreadyEquipped : ", isItemAlreadyEquipped)
 
             if (isItemAlreadyEquipped) {
-                console.log('Item déjà équipé');
-                equippedItems.pop(item);
+                // console.log('Item déjà équipé');
+                // console.log("EquippedItem 0 avant pop: ", equippedItems[0])
+                // console.log("EquippedItem 1 avant pop: ", equippedItems[1])
+                equippedItems.splice(equippedItems.indexOf(item), 1);
+                // console.log("EquippedItem 0 apres pop: ", equippedItems[0])
+                // console.log("EquippedItem 1 apres pop: ", equippedItems[1])
+                // console.log("equippedItems après pop : ", equippedItems)
 
                 let newStats = [];
 
@@ -58,11 +63,11 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                 equipItem(item.id);
                 // On retire l'item des items équipés par slot
                 if(item.emplacement === "bijoux") {
-                    equippedJewels.pop(item);
+                    equippedJewels.splice(equippedJewels.indexOf(item), 1);
                 } else if(item.emplacement === "artefacts") {
-                    equippedArtifacts.pop(item);
+                    equippedArtifacts.splice(equippedArtifacts.indexOf(item), 1);
                 } else if(item.emplacement === "livre") {
-                    equippedBooks.pop(item);
+                    equippedBooks.splice(equippedBooks.indexOf(item), 1);
                 }
                 return;
             } else {
@@ -71,8 +76,6 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                 setEquippedItems([...equippedItems, item]);
                 equipItem(item.id);
             }
-            console.log("L'inventaire ", inventory)
-            console.log("Les items équipés : ", equippedItems);
         } else {
             console.log('You clicked on an empty slot');
         }
