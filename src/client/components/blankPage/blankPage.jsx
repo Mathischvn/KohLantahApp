@@ -48,12 +48,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     }
 
     React.useEffect(() => {
-        if(booleen_lancement_page && booleenChangementSection){
-            //console.log("ici")
-            backgroundAudio()
-            booleen_lancement_page = false
-            setBooleenChangementSection(false)
-        }
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
             if (response != undefined) {
@@ -68,6 +62,21 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             console.log("equippedBooks : ", equippedBooks)
         }
         fetchData();
+
+        if(booleen_lancement_page && booleenChangementSection){
+            //console.log("ici")
+            backgroundAudio()
+            booleen_lancement_page = false
+            setBooleenChangementSection(false)
+            let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
+            const setSectionWithPlayerHistory = async (name) => {
+                const response = await fetch(`/api/player/${name}`);
+                let data = await response.json()
+                console.log("Data : ", data[0].id_section)
+                setSectionID(data[0].id_section)
+            }
+            setSectionWithPlayerHistory(name)
+        }
     }, [sectionId]);
     
     const isNotActionEmpty = section.action != [] && section.action != null  && section.action != undefined
