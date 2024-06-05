@@ -5,8 +5,8 @@ import { useState } from "react"
 
 export const TitlePage = () => {
     const navigate = useNavigate();
-    const [createLoadingSave, setCreateLoadingSave] = useState(true);
-    const [activeButton, setActiveButton] = useState('load');
+    const [createLoadingSave, setCreateLoadingSave] = useState(false);
+    const [activeButton, setActiveButton] = useState('new');
     const minLengthPassword = 6;
     
     const createSave = () => {
@@ -33,7 +33,7 @@ export const TitlePage = () => {
                     fetchData();
                 } else {
                     errorMessage.style.opacity = "1";
-                    errorMessage.innerHTML = "Mot de passe trop court";
+                    errorMessage.innerHTML = "Mot de passe trop court, mettez au moins 6 caractères.";
                 }
             } else {
                 errorMessage.style.opacity = "1";
@@ -176,6 +176,11 @@ export const TitlePage = () => {
                     </button>
                 </div>
             )}
+            <div className="bg-animation">
+                <div id='stars'></div>
+                <div id='stars2'></div>
+                <div id='stars3'></div>
+            </div>
         </div>
     );
 }
