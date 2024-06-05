@@ -170,6 +170,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         if (section_libelle && document.cookie.includes("name")) {
             section_libelle.textContent = section.libelle.replace(/#username/g, document.cookie.match(/(?<=name=)[^;]*/)[0]);
         }
+        let name = document.cookie.match(/(?<=name=)[^;]*/)[0]
+        const changeSectionPlayer = async (section, name) => {
+            const response = await fetch(`/api/player/changeSection/${name}/${section.id}`);
+        }
+        changeSectionPlayer(section, name)
     }, [section]);
 
     React.useEffect(() => {

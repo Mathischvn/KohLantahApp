@@ -1,5 +1,5 @@
 import express from "express";
-import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, getPlayerWithPassword, verifyItem} from "./connection.js"
+import {resEntite, updatePlayerSection, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, getPlayerWithPassword, verifyItem} from "./connection.js"
 import ViteExpress from "vite-express";
 
 const app = express();
@@ -57,6 +57,16 @@ app.get('/api/player/inventory/:name/', async (req, res) => {
   let response = await getPlayer(name);
   if(response.length != 0) {
     response = await getItemsInInventory(name);
+    res.send(response);
+  }
+})
+
+app.get('/api/player/changeSection/:name/:section', async (req, res) => {
+  const name = req.params.name;
+  const section = req.params.section;
+  let response = await getPlayer(name);
+  if(response.length != 0) {
+    updatePlayerSection(name, section)
     res.send(response);
   }
 })
