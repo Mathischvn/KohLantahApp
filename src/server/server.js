@@ -21,6 +21,7 @@ app.get('/api/player/insertPlayer/:name/:password', async (req, res) => {
   const response = await getPlayer(name);
   if(response.length === 0) {
     insertPlayer(name, password);
+    insertItem(name, 1);
   }
   res.send(response);
 

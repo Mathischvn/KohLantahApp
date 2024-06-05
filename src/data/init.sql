@@ -1170,7 +1170,7 @@ VALUES (
         'intelligence:3;force:0;hp:0',
         'bijoux',
         '/images/collier-grand-pere.jpg',
-        1
+        -1
     );
 
 INSERT INTO
