@@ -2,8 +2,6 @@ import React from "react"
 import "./dicePage.css"
 import { useState } from 'react';
 
-// export const DicePage = ({conditionSuccess = 'lancer>3', libelle_action_reussite="gg mec", libelle_action_echec="gros boloss"}) => {
-
 export const DicePage = ({setSectionID, section_action}) => {
     
     function waitFiveSeconds(reussite) {

@@ -82,6 +82,20 @@ export const getPlayer = async (name) => {
     }
   };
 
+  export const getPlayerWithPassword = async (name, password) => {
+    try {
+        const player = await pool`
+        SELECT
+          *
+        FROM personnage
+        WHERE nom=${name} AND mdp=${password}
+        `;
+        return player;
+    } catch (error) {
+        console.error('Erreur lors de la récupération du personnage :', error);
+    }
+  };
+
   export const queryItem = async (id) => {
     try {
         const item = await pool`
@@ -97,12 +111,23 @@ export const getPlayer = async (name) => {
   };
   
   
-  export const insertPlayer = async (name) => {
+  export const insertPlayer = async (name, password) => {
     try {
         await pool`
         INSERT INTO
-          personnage (nom, statistiques)
-        VALUES (${name}, 'intelligence:10;force:10;hp:10');
+          personnage (nom, statistiques, mdp, id_section)
+        VALUES (${name}, 'intelligence:10;force:10;hp:10', ${password}, 1);
+        `;
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion du personnage :', error);
+    }
+  };
+
+  export const updatePlayerSection = async (name, id_section) => {
+    try {
+        await pool`
+        UPDATE personnage SET id_section = ${id_section}
+        WHERE nom = ${name};
         `;
     } catch (error) {
         console.error('Erreur lors de l\'insertion du personnage :', error);
@@ -140,23 +165,45 @@ export const getPlayer = async (name) => {
   }
   
   
-  export const insertItem = async (name, id_item) => {
-      try {
-          const player = await getIdPersonnage(name);
-          const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
-  
-          if (inventoryItem.length === 0) {
-              await pool`
-                  INSERT INTO inventaire (id_objet, id_personnage, is_equipped) VALUES (${id_item}, ${player[0].id}, FALSE); 
-              `;
-              //console.log('Item inséré avec succès.');
-          } else {
-              console.error('L\'item est déjà présent dans l\'inventaire.');
-          }
-      } catch (error) {
-          console.error('Erreur lors de l\'insertion de l\'item :', error);
-      }
-  }
+    export const insertItem = async (name, id_item) => {
+        try {
+            console.error("Name :", name)
+            const player = await getIdPersonnage(name);
+            console.error("Player :", player)
+            console.error("Player :", player[0])
+            const inventoryItem = await getInventoryItemPlayer(player[0].id, id_item);
+
+            
+
+            if (inventoryItem.length === 0) {
+                await pool`
+                    INSERT INTO inventaire (id_objet, id_personnage, is_equipped) VALUES (${id_item}, ${player[0].id}); 
+                `;
+                //console('Item inséré avec succès.');
+            } else {
+                console.error('L\'item est déjà présent dans l\'inventaire.');
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'insertion de l\'item :', error);
+        }
+    }
+
+    export const verifyItem = async (name, id_item) => {
+        try {
+            const player = await getIdPersonnage(name);
+            const inventory = await pool`
+            SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id} AND id_objet=${id_item};
+            `;
+            if (inventory.length > 0){
+                return true
+            }
+            else{
+                return false
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'insertion du personnage :', error);
+        }
+    }
   
   
   export const getPlayerInventory = async (name) => {
@@ -189,7 +236,7 @@ export const getPlayer = async (name) => {
               `;
               inventory[i] = inventoryItem;
           }
-          //console.log('Inventaire récupéré avec succès :', inventory);
+          //console('Inventaire récupéré avec succès :', inventory);
           return inventory;
       } catch (error) {
           console.error('Erreur lors de la récupération de l\'item :', error);
@@ -200,7 +247,7 @@ export const getPlayer = async (name) => {
   export const getPlayerStats = async (name) => {
       try {
           const player = await getPlayer(name);
-          //console.log('Statistiques récupérées avec succès :', player[0].statistiques);
+          //console('Statistiques récupérées avec succès :', player[0].statistiques);
           const intelligence = player[0].statistiques.split(';')[0].split(':')[1];
           const force = player[0].statistiques.split(';')[1].split(':')[1];
           const hp = player[0].statistiques.split(';')[2].split(':')[1];
@@ -212,16 +259,16 @@ export const getPlayer = async (name) => {
   
   
   export const getAllItems = async () => {
-      //console.log("récupération des tous les items")
+      //console("récupération des tous les items")
       try {
           const allItems = await pool`
           SELECT *
           FROM objet;`;
       
           if (allItems.length === 0){
-              //console.log("Pas d'items disponible")
+              //console("Pas d'items disponible")
           } else {
-              //console.log("Les items disponibles : ", allItems)
+              //console("Les items disponibles : ", allItems)
           }
   
       return allItems

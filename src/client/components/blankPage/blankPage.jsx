@@ -80,9 +80,9 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         //console.log("Objet : ", item)
         
         const fetchData = async () => {
-            const response = await fetch(`/api/player/insert/${name}/${item}`);
+            const response = await fetch(`/api/player/insertItem/${name}/${item}`);
+            return response.json();
         }
-        fetchData();
         const popupItem = async(item) => {
             const response = await fetch(`/api/item/${item}`);
             const data = await response.json();
@@ -100,12 +100,15 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                         icon:false,
                         progress: undefined,
                         theme: "light",
-                        style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #fafafa'}
+                        style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #fafafa'}
                     })
                 }, 4000)
             })
         }
-        popupItem(item)
+        let ajoutItem = await fetchData();
+        if (!ajoutItem){
+            popupItem(item)
+        }
     };
 
     const getAllItems = async () => {
@@ -177,6 +180,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         if (section_libelle && document.cookie.includes("name")) {
             section_libelle.textContent = section.libelle.replace(/#username/g, document.cookie.match(/(?<=name=)[^;]*/)[0]);
         }
+        let name = document.cookie.match(/(?<=name=)[^;]*/)[0]
+        const changeSectionPlayer = async (section, name) => {
+            const response = await fetch(`/api/player/changeSection/${name}/${section.id}`);
+        }
+        changeSectionPlayer(section, name)
     }, [section]);
 
     React.useEffect(() => {

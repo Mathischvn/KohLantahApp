@@ -1,5 +1,5 @@
 import express from "express";
-import {resEntite, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, equip_item} from "./connection.js"
+import {resEntite, updatePlayerSection, querySection, insertPlayer, getPlayer, getPlayerInventory, insertItem, getItemsInInventory, getInventoryItemPlayer, getPlayerStats, getAllItems, queryItem, getPlayerWithPassword, verifyItem, equip_item} from "./connection.js"
 import ViteExpress from "vite-express";
 
 const app = express();
@@ -15,23 +15,41 @@ app.get('/api/section/:id', async (req, res) => {
   res.send(response);
 })
 
-app.get('/api/player/:name', async (req, res) => {
+app.get('/api/player/insertPlayer/:name/:password', async (req, res) => {
   const name = req.params.name;
+  const password = req.params.password;
   const response = await getPlayer(name);
   if(response.length === 0) {
-    insertPlayer(name);
+    insertPlayer(name, password);
   }
   res.send(response);
+
+  
 })
 
-app.get('/api/player/insert/:name/:item', async (req, res) => {
+app.get('/api/player/getPlayer/:name/:password', async (req, res) => {
+  const name = req.params.name;
+  const password = req.params.password;
+  const response = await getPlayerWithPassword(name, password);
+  console.log(response);
+  if(response !== undefined) {
+    res.send(response);
+  }
+  else {
+    res.send(null);
+  }
+  
+})
+
+app.get('/api/player/insertItem/:name/:item', async (req, res) => {
   const name = req.params.name;
   const item = req.params.item;
   const response = await getPlayer(name);
+  const valueAlreadyExists = await verifyItem(name, item);
   if(response.length != 0) {
     insertItem(name, item);
   }
-  res.send(response);
+  res.send(valueAlreadyExists);
 })
 
 app.get('/api/player/inventory/:name/', async (req, res) => {
@@ -39,6 +57,16 @@ app.get('/api/player/inventory/:name/', async (req, res) => {
   let response = await getPlayer(name);
   if(response.length != 0) {
     response = await getItemsInInventory(name);
+    res.send(response);
+  }
+})
+
+app.get('/api/player/changeSection/:name/:section', async (req, res) => {
+  const name = req.params.name;
+  const section = req.params.section;
+  let response = await getPlayer(name);
+  if(response.length != 0) {
+    updatePlayerSection(name, section)
     res.send(response);
   }
 })
