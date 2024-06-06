@@ -98,7 +98,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                     break;
 
                 case "hp":
-                    title += "\nForce mentale : ";
+                    title += "\nSanté mentale : ";
                     break;
             
                 default:

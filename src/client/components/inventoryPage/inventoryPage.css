@@ -76,6 +76,14 @@ button {
     margin-top: 0;
 }
 
+.inventory-slot i {
+    color: #ffffffcf;
+}
+
+img.inventory-slot {
+    animation: twinkle-item-insert 1s;
+}
+
 .inventory-slot {
     opacity: 1;
     background-color: "#D9D9D9";
@@ -184,13 +192,28 @@ button {
     }
 }
 
+@keyframes twinkle-item-insert {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px white;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 @keyframes slideArrow {
     0%,
     100% {
-      transform: translateY(0, 0), rotate(90deg);
+        transform: translateY(0, 0), rotate(90deg);
     }
-  
+
     50% {
-      transform: translateY(10px, 0), rotate(90deg);
+        transform: translateY(10px, 0), rotate(90deg);
     }
-  }
+}
