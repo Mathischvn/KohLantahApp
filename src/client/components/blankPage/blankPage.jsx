@@ -118,9 +118,9 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         }
         // console.log("ajoutitems ?")
         let ajoutItem = await fetchData();
-        // if (!ajoutItem){
+        if (!ajoutItem){
             popupItem(item)
-        // }
+        }
         // console.log("la popup a pop ?")
     };
 
