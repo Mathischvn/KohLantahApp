@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ProfilePicture } from "../profilePicture/profilePicture"
 import { EntityPicture } from "../entityPicture/entityPicture"
 import damage_sound from '/sound_effects/damage_sound.mp3?url'
+import magic_attack from '/sound_effects/magic_attack.mp3?url'
 import rolling_dice_sound from '/sound_effects/rolling_dice_sound.mp3?url'
 
 export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
@@ -32,8 +33,13 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     const [success, setSuccess] = useState(false);
     const [booleenSuperieurInferieur, setBooleenSuperieurInferieur] = useState(false);
     const [booleenAffichageSuperieurInferieur, setBooleenAffichageSuperieurInferieur] = useState(false);
-    const audio = new Audio(damage_sound);
     const audio_rolling_dice = new Audio(rolling_dice_sound)
+
+    let son = null;
+
+    (section_action.condition_reussite.split(/[<>]/)[0] == "force") ? son = damage_sound : son = magic_attack;
+
+    const audio = new Audio(son);
 
     const clickButton = () => {
         setShowButton(false)
@@ -180,7 +186,11 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 <div style={{ flexDirection:"row", display:"flex", gap:150}}>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="playerHp" className="hpBar" value={playerStats[2]} max={playerStats[2]}></progress>
-                        <img src="/images/profile-picture.jpg" alt="Photo de profil" />                    </div>
+                        <img src="/images/profile-picture.jpg" alt="Photo de profil" />                    
+                        <div>
+                            {(section_action.condition_reussite.split(/[<>]/)[0] == "force") ? <div style={{backgroundColor:"rgb(227, 34, 34)", padding:"1em", marginTop:"1em", color:"white", borderRadius:"20px"}}><i className="fa-solid fa-hand-fist"></i>{playerStats[1]}</div> : <div style={{backgroundColor:"rgb(83, 83, 193)", padding:"1em", marginTop:"1em", color:"white", borderRadius:"20px"}}><i className="fa-solid fa-hat-wizard"></i>{playerStats[0]}</div>}
+                        </div>
+                    </div>
                     <div style = {{ flexDirection:"row", display:"flex", gap:15 }}>
                         <div style={{ flexDirection:"column"}}>
                             <div className="diceBlockNumber diceBlockNumberPlayer">{numberDicePlayer}</div>
@@ -194,7 +204,10 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                     </div>
                     <div style={{ flexDirection:"column", display:"flex", alignItems:"center", width:"190px"}}>
                         <progress id="enemyHp" className="hpBar" value={entity.statistiques.split("force_mentale:")[1]} max={entity.statistiques.split("force_mentale:")[1]} ></progress>
-                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>                    
+                        <EntityPicture entityImage={`/images/entities/${entity.image}`}></EntityPicture>
+                        <div>
+                            {(section_action.condition_reussite.split(/[<>]/)[0] == "force") ? <div style={{backgroundColor:"rgb(227, 34, 34)", padding:"1em", marginTop:"1em", color:"white", borderRadius:"20px"}}><i className="fa-solid fa-hand-fist"></i>{entity.statistiques.split(";")[0].split(":")[1]}</div> : <div style={{backgroundColor:"rgb(83, 83, 193)", padding:"1em", marginTop:"1em", color:"white", borderRadius:"20px"}}><i className="fa-solid fa-hat-wizard"></i>{entity.statistiques.split(";")[1].split(":")[1]}</div>}
+                        </div>
                     </div>
                 </div>
                 {showButton && <button className="rollDice" onClick={() => {handleRandomDice(), clickButton()}}>Lancer les dés</button>}
