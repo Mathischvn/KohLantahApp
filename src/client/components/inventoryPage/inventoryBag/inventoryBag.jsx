@@ -5,14 +5,14 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
     const equipItem = async (item) => {
         if (document.cookie.includes("name")) {
             let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
-            console.log("Nom du joueur : ", name);
-            console.log("Item à équiper : ", item);
+            // console.log("Nom du joueur : ", name);
+            // console.log("Item à équiper : ", item);
             const response = await fetch(`/api/items/equip/${name}/${item}`);
-            console.log("Item équipé : ", item);
+            // console.log("Item équipé : ", item);
         }
     }
 
-    const handleClick = (item) => {
+    const handleClick = (item, event) => {
         if(item !== undefined) {
             // console.log(`You clicked on ${item.nom}`);
             // console.log(`Stats: ${item.statistiques}`);
@@ -21,6 +21,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
             // console.log(item.statistiques.split(';')[2].split(':')[1]);
             // console.log("Type d'item: ", item.emplacement);
             // console.log("Stats du joueur: ", stats);
+            // console.log(event.target)
             
             let newStats = [];
             let isItemAlreadyEquipped = false;
@@ -42,7 +43,17 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                 }
             }
 
-            console.log("isAlreadyEquipped : ", isItemAlreadyEquipped)
+            let item_clique = document.getElementById("item_inventaire_"+event.target.id.split("_")[2])
+
+            console.log("target : ", event.target)
+            console.log("item clique : ", item_clique)
+            if(item_clique.classList.contains("equipped")){
+                item_clique.classList.remove("equipped");
+            } else {
+                item_clique.classList.add("equipped");
+            }
+
+            // console.log("isAlreadyEquipped : ", isItemAlreadyEquipped)
 
             if (isItemAlreadyEquipped) {
                 // console.log('Item déjà équipé');
@@ -121,11 +132,12 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                     if (inventory[index] !== undefined && inventory[index][0] !== undefined) {
                         return (
                             <img
+                            id={"item_inventaire_"+inventory[index][0].id}
                             className="inventory-slot"
                             key={index}
                             src={inventory[index][0].chemin_image}
                             alt={`Inventory Slot ${index}`}
-                            onClick={() => handleClick(inventory[index][0])}
+                            onClick={(event) => handleClick(inventory[index][0], event)}
                             title={setTitleItem(inventory[index][0])}
                             />
                         );
@@ -145,11 +157,12 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                         // console.log("Item équipé test: ", equippedJewels[index].nom)
                         return (
                             <img
+                            id={"item_equipe_"+equippedJewels[index].id}
                             className="inventory-slot"
                             key={index}
                             src={equippedJewels[index].chemin_image}
                             alt={`Inventory Slot ${index}`}
-                            onClick={() => handleClick(equippedJewels[index])}
+                            onClick={(event) => handleClick(equippedJewels[index], event)}
                             title={setTitleItem(equippedJewels[index])}
                             />
                         );
@@ -170,11 +183,12 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                     if (equippedArtifacts[index] !== undefined) {
                         return (
                             <img
+                            id={"item_equipe_"+equippedArtifacts[index].id}
                             className="inventory-slot"
                             key={index}
                             src={equippedArtifacts[index].chemin_image}
                             alt={`Inventory Slot ${index}`}
-                            onClick={() => handleClick(equippedArtifacts[index])}
+                            onClick={(event) => handleClick(equippedArtifacts[index], event)}
                             title={setTitleItem(equippedArtifacts[index])}
                             />
                         );
@@ -193,11 +207,12 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                     if (equippedBooks[index] !== undefined) {
                         return (
                             <img
+                            id={"item_equipe_"+equippedBooks[index].id}
                             className="inventory-slot"
                             key={index}
                             src={equippedBooks[index].chemin_image}
                             alt={`Inventory Slot ${index}`}
-                            onClick={() => handleClick(equippedBooks[index])}
+                            onClick={(event) => handleClick(equippedBooks[index], event)}
                             title={setTitleItem(equippedBooks[index])}
                             />
                         );

@@ -194,6 +194,7 @@ export const getPlayer = async (name) => {
             const inventory = await pool`
             SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id} AND id_objet=${id_item};
             `;
+            console.log(inventory)
             if (inventory.length > 0){
                 return true
             }

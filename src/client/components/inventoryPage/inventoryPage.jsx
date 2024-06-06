@@ -141,7 +141,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                             <div className="tooltip-tuto">
                                 Cliquer sur votre objet pour l'équiper et améliorer vos statistiques.
                             </div>
-                            <InventoryBag bagSize={16} 
+                            <InventoryBag bagSize={17} 
                             inventory={inventory} 
                             stats={stats} 
                             className={"main-bag"} 

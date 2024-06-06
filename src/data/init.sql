@@ -144,7 +144,7 @@ INSERT INTO
 VALUES (
         null,
         'Fantôme effrayant',
-        'force:2;intelligence:10;force_mentale:1',
+        'force:2;intelligence:12;force_mentale:6',
         'fantome_effrayant.jpg'
     );
 
@@ -158,7 +158,7 @@ INSERT INTO
 VALUES (
         null,
         'Fantôme cauchemardesque',
-        'force:3;intelligence:10;force_mentale:2',
+        'force:3;intelligence:14;force_mentale:10',
         'fantome_cauchemardesque.jpg'
     );
 
@@ -977,7 +977,7 @@ VALUES (
         5,
         8,
         26,
-        'intelligence>2',
+        'force',
         'Bravo ! Vous avez gagné le combat !',
         'Vous avez perdu.',
         true,
@@ -1025,7 +1025,7 @@ VALUES (
         10,
         14,
         26,
-        'intelligence>3',
+        'intelligence',
         'Bravo ! Vous avez gagné le combat !',
         'Vous avez perdu.',
         true,
@@ -1097,7 +1097,7 @@ VALUES (
         21,
         24,
         26,
-        'intelligence > 6',
+        'intelligence',
         'Bravo ! Vous avez gagné le combat !',
         'Vous avez perdu.',
         true,
@@ -1145,7 +1145,7 @@ VALUES (
         23,
         24,
         26,
-        'defense>12;combat>15;intelligence>143',
+        'intelligence',
         'Bravo ! Vous avez gagné le combat !',
         'Vous avez perdu.',
         true,

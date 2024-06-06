@@ -177,6 +177,10 @@ img.inventory-slot {
     font-size: 25px;
 }
 
+.equipped {
+    opacity: 0.6;
+}
+
 @keyframes twinkle {
     0% {
         transform: scale(1);

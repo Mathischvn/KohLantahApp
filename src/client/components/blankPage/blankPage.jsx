@@ -55,11 +55,11 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                 setSection(data);
             }
             checkItemInsertion(sectionId)
-            console.log("Section : ", section)
-            console.log("equippedItems : ", equippedItems)
-            console.log("equippedJewels : ", equippedJewels)
-            console.log("equippedArtifacts : ", equippedArtifacts)
-            console.log("equippedBooks : ", equippedBooks)
+            // console.log("Section : ", section)
+            // console.log("equippedItems : ", equippedItems)
+            // console.log("equippedJewels : ", equippedJewels)
+            // console.log("equippedArtifacts : ", equippedArtifacts)
+            // console.log("equippedBooks : ", equippedBooks)
         }
         fetchData();
 
@@ -72,7 +72,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             const setSectionWithPlayerHistory = async (name) => {
                 const response = await fetch(`/api/player/${name}`);
                 let data = await response.json()
-                console.log("Data : ", data[0].id_section)
+                // console.log("Data : ", data[0].id_section)
                 setSectionID(data[0].id_section)
             }
             setSectionWithPlayerHistory(name)
@@ -86,7 +86,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const isChoix = !(isNotActionEmpty)
 
     const insertItem = async (name, item) => {
-        //console.log("Objet : ", item)
+        // console.log("Objet : ", item)
         
         const fetchData = async () => {
             const response = await fetch(`/api/player/insertItem/${name}/${item}`);
@@ -96,6 +96,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             const response = await fetch(`/api/item/${item}`);
             const data = await response.json();
             let nom_item = data[0].nom
+            // console.log("rvdcrdcrd");
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     //console.log("Test")
@@ -111,13 +112,16 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                         theme: "light",
                         style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #fafafa'}
                     })
+                    // console.log("popup ????????")
                 }, 4000)
             })
         }
+        // console.log("ajoutitems ?")
         let ajoutItem = await fetchData();
-        if (!ajoutItem){
+        // if (!ajoutItem){
             popupItem(item)
-        }
+        // }
+        // console.log("la popup a pop ?")
     };
 
     const getAllItems = async () => {
@@ -222,6 +226,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                 equippedBooks={equippedBooks} setEquippedBooks={setEquippedBooks}
                 >
                 </SideBar>
+                <ToastContainer></ToastContainer>
                 <a className="exitToMenu" href="/" title="Revenir à l'accueil"><i className="fa-solid fa-right-from-bracket"></i></a>
                 <div className="background"></div>
                 <div className="blank-page">
