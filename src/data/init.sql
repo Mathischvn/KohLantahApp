@@ -478,7 +478,7 @@ VALUES (
         'Alors que vous avancez dans la salle des miroirs, une créature émerge soudainement d''un des reflets, prête à vous attaquer. Vous prenez une profonde inspiration et vous préparez à affronter votre ennemi.
 		Lancez le dé pour déterminer le résultat de votre combat.',
         null,
-        4
+        5
     );
 
 INSERT INTO
@@ -510,7 +510,7 @@ VALUES (
         'La créature surgit de l''un des miroirs, ses yeux luisant d''une lueur maléfique. 
 	Vous vous préparez à l''affronter, sachant que votre vie dépend de votre habileté au combat.',
         null,
-        4
+        5
     );
 
 INSERT INTO
@@ -625,7 +625,7 @@ INSERT INTO
         condition_choix,
         libelle_choix
     )
-VALUES (4, 8, null, 'Passer la porte');
+VALUES (4, 5, null, 'Passer la porte');
 
 INSERT INTO
     section_choix (
