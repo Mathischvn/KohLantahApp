@@ -9,6 +9,7 @@ import rolling_dice_sound from '/sound_effects/rolling_dice_sound.mp3?url'
 
 export const FightPage = ({setSectionID, section_action, playerStats, entity, setPlayerStats}) => {
     
+    //redirige sur la page d'échec ou de réussite au bout de 5 secondes
     function waitFiveSeconds(reussite) {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -42,9 +43,12 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
 
     const audio = new Audio(son);
 
+    //cache le bouton de lancer de dés lorsqu'il est cliqué
     const clickButton = () => {
         setShowButton(false)
     }
+
+    //génére deux nombres aléatoires pour le dé du joueur et celui de l'ennemi
     const handleRandomDice = () => {
         audio_rolling_dice.play()
         if (!rolling) {
@@ -68,6 +72,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
         setShowButton(true)
     };
 
+    //vérifie si l'ennemi ou le joueur a la valeur la plus grande sur son dé et inflige des dégâts au perdant
     const verifyConditionSuccess = (numberEnemy, numberPlayer) => {
         setBooleenAffichageSuperieurInferieur(true)
         let checkedStat = section_action.condition_reussite.split(/[<>]/)[0]

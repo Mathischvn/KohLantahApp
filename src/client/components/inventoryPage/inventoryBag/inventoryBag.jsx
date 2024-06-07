@@ -9,12 +9,14 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
         }
     }
 
+    // Gestion de l'équipement d'objet dans les différents slots
     const handleClick = (item, event) => {
         if(item !== undefined) {
            
             let newStats = [];
             let isItemAlreadyEquipped = false;
 
+            // Ajout des statistiques si l'item n'est pas encore équipé
             newStats[0] = parseInt(stats[0]) + parseInt(item.statistiques.split(';')[0].split(':')[1]);
             newStats[1] = parseInt(stats[1]) + parseInt(item.statistiques.split(';')[1].split(':')[1]);
             newStats[2] = parseInt(stats[2]) + parseInt(item.statistiques.split(';')[2].split(':')[1]);
@@ -27,6 +29,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                 }
             }
 
+            // Vérification de l'item cliqué pour ajouter la classe qui grise
             let item_clique = document.getElementById("item_inventaire_"+event.target.id.split("_")[2])
 
             if(item_clique.classList.contains("equipped")){
@@ -37,16 +40,21 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
 
 
             if (isItemAlreadyEquipped) {
+                // Retire l'item des items équipés
                 equippedItems.splice(equippedItems.indexOf(item), 1);
     
                 let newStats = [];
 
+                // Si l'item est déjà équippé, on retire les statistiques
                 newStats[0] = parseInt(stats[0]) - parseInt(item.statistiques.split(';')[0].split(':')[1]);
                 newStats[1] = parseInt(stats[1]) - parseInt(item.statistiques.split(';')[1].split(':')[1]);
                 newStats[2] = parseInt(stats[2]) - parseInt(item.statistiques.split(';')[2].split(':')[1]);
 
                 setPlayerStats(newStats);
+
+                // Équipe l'item en base de données 
                 equipItem(item.id);
+
                 // On retire l'item des items équipés par slot
                 if(item.emplacement === "bijoux") {
                     equippedJewels.splice(equippedJewels.indexOf(item), 1);
@@ -57,12 +65,15 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                 }
                 return;
             } else {
+                // Si l'item n'est pas déjà équipé, on l'équippe
                 setEquippedItems([...equippedItems, item]);
                 equipItem(item.id);
             }
         } 
     };
 
+
+    // Affichage des infobulles contenant les statistiques des items
     const setTitleItem = (item) => {
         let title = item.nom + " : ";
         let stats = item.statistiques.split(";")
@@ -97,6 +108,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
     }
 
     return (
+        // Sac d'inventaire principal 
         <div className={"inventory-bag " + className}>
             {Array.from({ length: bagSize }, (_, index) => {
                 if (className=="main-bag") {
@@ -124,6 +136,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                         );
                     }
                 } else if (className=="jewelry-bag") {
+                    // Sac de bijoux, actualisé à chaque changement du useState equippedJewels
                     if (equippedJewels[index] !== undefined) {
                         return (
                             <img
@@ -148,6 +161,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                         );
                     }
                 } else if (className=="artifacts-bag") {
+                    // Sac d'artéfacts
                     if (equippedArtifacts[index] !== undefined) {
                         return (
                             <img
@@ -172,6 +186,7 @@ export const InventoryBag = ({bagSize, icon, inventory, stats, className, setPla
                         );
                     }
                 } else if (className=="books-bag") {
+                    // Sac de livres
                     if (equippedBooks[index] !== undefined) {
                         return (
                             <img
