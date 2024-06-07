@@ -33,23 +33,24 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const playerRef = useRef(null);
 
     let booleen_lancement_page = true
-
-    const nomMusique = ["Donovan Jarvis - John Doe",
+    // playlist credits fond  
+    const nomMusique = 
+    ["Donovan Jarvis - John Doe",
         "Independence - Abandoned"
     ]
-
+    //playlist credits musiques combat
     const nomMusiqueCombat = ["Rafael Krux - Mothership"]
-
+    //playlist de fond 
     const playlist = [
         music2,
         music3
       ];
-    
+    // playlist de combat
     const playlistCombat = [
         music1
     ]
 
-    const handleEnd = () => {
+    const handleEnd = () => { //changement de musique de fond et du titre 
         let ibaudio
         if (baudio < playlist.length -1){
             ibaudio = baudio+1 ;
@@ -64,7 +65,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
 
   };
 
-  const handleEndCombat = () => {
+  const handleEndCombat = () => {// fonction de changement de musique lors d'un combat
     if (caudio < playlistCombat.length -1){
         setCaudio(caudio+1);
     }
@@ -76,15 +77,9 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     settypeplayc(true)
 
 };
-
-function waitFiveSeconds() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => 4000); // 5000 millisecondes = 5 secondes
-    });
-  }
       
 
-    React.useEffect(() => {
+    React.useEffect(() => {// récuperation  de la page correspondante 
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3000/api/section/${sectionId}`);
             if (response != undefined) {
@@ -119,7 +114,7 @@ function waitFiveSeconds() {
             const response = await fetch(`/api/player/insertItem/${name}/${item}`);
             return response.json();
         }
-        const popupItem = async(item) => {
+        const popupItem = async(item) => { // pop up en cas de récupération d'objet
             const response = await fetch(`/api/item/${item}`);
             const data = await response.json();
             let nom_item = data[0].nom
@@ -146,7 +141,7 @@ function waitFiveSeconds() {
         }
     }
 
-    const getAllItems = async () => {
+    const getAllItems = async () => {//récupération de tous les items existants 
         const response = await fetch(`/api/items/all/`);
         const data = await response.json();
         if (Array.isArray(data)) {
@@ -157,7 +152,7 @@ function waitFiveSeconds() {
     }
 
 
-    const getStats = async (name) => {
+    const getStats = async (name) => { // récupération des stats du joueur 
         const response = await fetch(`/api/player/stats/${name}`);
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
@@ -171,7 +166,7 @@ function waitFiveSeconds() {
         }
     }
 
-    const getPlayerItems = async (name) => {
+    const getPlayerItems = async (name) => { //récupération des items 
         const response = await fetch(`/api/player/inventory/${name}`);
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
@@ -184,7 +179,7 @@ function waitFiveSeconds() {
             setInventoryLoaded(false);
         }
     }
-    React.useEffect(() => {
+    React.useEffect(() => { // changement de playlist
          if(isCombat && typeplay==true){
             settypeplay(false)
             settypeplayc(true)
@@ -201,7 +196,7 @@ function waitFiveSeconds() {
         // }
       }, [currentTrack]);
 
-    const checkItemInsertion = async (section) => {
+    const checkItemInsertion = async (section) => {// vérifie si un item est à inserrer sur la page actuelle du joueur
         const allItems = await getAllItems();
 
         for(let i=0; i<allItems.length; i++){
@@ -214,7 +209,7 @@ function waitFiveSeconds() {
         }
     }
 
-    React.useEffect(() => {
+    React.useEffect(() => { // changement de la section du joueur dans la BDD
         const section_libelle = document.querySelector(".libelle");
         if (section_libelle && document.cookie.includes("name")) {
             section_libelle.textContent = section.libelle.replace(/#username/g, document.cookie.match(/(?<=name=)[^;]*/)[0]);
@@ -258,14 +253,15 @@ function waitFiveSeconds() {
                 equippedArtifacts={equippedArtifacts} setEquippedArtifacts={setEquippedArtifacts}
                 equippedBooks={equippedBooks} setEquippedBooks={setEquippedBooks}
                 >
+                
                 </SideBar>
-                <ToastContainer></ToastContainer>
+                <ToastContainer></ToastContainer> 
                 <a className="exitToMenu" href="/" title="Revenir à l'accueil"><i className="fa-solid fa-right-from-bracket"></i></a>
                 <div className="background"></div>
                 <div className="blank-page">
                     <p className="libelle">{ section.libelle }</p>
                     
-                    {
+                    {// appel des différentes pages en fonction de l'ID
                         isCombat ? <FightPage setSectionID={setSectionID} section_action={section.action} playerStats={playerStats} entity={section.entite} setPlayerStats={setPlayerStats} /> : ""
                     }
                     {
@@ -278,13 +274,13 @@ function waitFiveSeconds() {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
                     }
                     <div className="NomMusique"><i class="fa-solid fa-music"></i>  {NomMusique }</div>
-                    <ReactHowler
+                    <ReactHowler //controlleur musique de fond 
                         src= {playlist[currentTrack]}
                         playing={typeplay}
                         volume={volume}
                         onEnd={handleEnd}
                         />
-                        <ReactHowler
+                        <ReactHowler //controlleur de musique de combat
                         src= {playlistCombat[currentTrackCombat]}
                         playing={typeplayc}
                         onEnd={ handleEndCombat}
