@@ -194,7 +194,6 @@ export const getPlayer = async (name) => {
             const inventory = await pool`
             SELECT (id_objet, id_personnage) FROM inventaire WHERE id_personnage=${player[0].id} AND id_objet=${id_item};
             `;
-            console.log(inventory)
             if (inventory.length > 0){
                 return true
             }
@@ -298,7 +297,6 @@ export const getPlayer = async (name) => {
     try {
         const player = await getIdPersonnage(nom_personnage);
         const inventoryItem = await getInventoryItemPlayer(player[0].id, id_objet);
-        console.log("Inventory item : ", inventoryItem);
 
         if (inventoryItem[0].is_equipped === false) {
             await pool`
@@ -306,14 +304,12 @@ export const getPlayer = async (name) => {
                 SET is_equipped = TRUE
                 WHERE id_personnage=${player[0].id} AND id_objet=${id_objet};
             `;
-            console.log(`L'item ${id_objet} a été équipé.`);
         } else {
             await pool`
                 UPDATE inventaire
                 SET is_equipped = FALSE
                 WHERE id_personnage=${player[0].id} AND id_objet=${id_objet};
             `;
-            console.log(`L'item ${id_objet} a été déséquipé.`);
         }
     } catch (error) {
         console.error('Erreur lors de l\'équipement de l\'item :', error);
