@@ -37,6 +37,10 @@ button:hover {
     background-color: black;
 }
 
+.choice-button:active {
+    transform: scale(0.8);
+}
+
 .libelle{
     padding: 2em;
     font-size: calc(1rem + 1.25vw);
@@ -61,7 +65,7 @@ button:hover {
     position: absolute;
     top: 20px;
     right: 20px;
-    z-index: 2;
+    z-index: 3;
     background-color: rgba(0, 0, 0, 0.488);
     border: solid 1px white;
     border-radius: 20px;
