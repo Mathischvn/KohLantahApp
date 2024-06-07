@@ -33,6 +33,7 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
     const [success, setSuccess] = useState(false);
     const [booleenSuperieurInferieur, setBooleenSuperieurInferieur] = useState(false);
     const [booleenAffichageSuperieurInferieur, setBooleenAffichageSuperieurInferieur] = useState(false);
+    const [redirection, setRedirection] = useState(true);
     const audio_rolling_dice = new Audio(rolling_dice_sound)
 
     let son = null;
@@ -167,11 +168,13 @@ export const FightPage = ({setSectionID, section_action, playerStats, entity, se
                 }
             }
         }
+        
     };
-
-    if (showAnswer) {
+    if (showAnswer && redirection) {
         waitFiveSeconds(success);
+        setRedirection(false)
     }
+    
     if (section_action.condition_reussite.split(/[<>]/)[0] == "intelligence"){
         var chaine_bonus = "INT"
     }
