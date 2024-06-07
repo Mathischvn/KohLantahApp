@@ -57,15 +57,10 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         else{
             ibaudio=0;
         }
-<<<<<<< HEAD
         setCurrentTrack(ibaudio);
         setNomMusique(nomMusique[ibaudio])
         settypeplay(true)
         setBaudio(ibaudio)
-=======
-        setCurrentTrack(baudio);
-        settypeplay(true)
->>>>>>> 9ae23e9c863764f45ae1e0ca1794109b97b5f7e7
 
   };
 
