@@ -12,9 +12,7 @@ const pool = postgres(connectionString, {
     password : process.env.SQL_PASSWORD,
 }); 
 
-// il y aura toute la liste des fonctions contenant les requêtes SQL nécessaires avec les paramètres adéquats
-
-// Utiliser une promesse pour gérer les requêtes
+// Fonction pour récupérer une entité en fonction de son nom
 const queryEntity = async (name) => {
     try {
         const entites = await pool`
@@ -29,6 +27,7 @@ const queryEntity = async (name) => {
     }
 };
 
+// Fonction pour récupérer la section, la section de choix et la section d'action en fonction de son id
 export const querySection = async (id) => {
     try {
         const section = await pool`
@@ -68,6 +67,7 @@ export const querySection = async (id) => {
     }
 };
 
+// Fonction pour récupérer un joueur avec son nom.
 export const getPlayer = async (name) => {
     try {
         const player = await pool`
@@ -82,6 +82,7 @@ export const getPlayer = async (name) => {
     }
   };
 
+  // Fonction pour récupérer un joueur avec son mot de passe
   export const getPlayerWithPassword = async (name, password) => {
     try {
         const player = await pool`
@@ -96,6 +97,7 @@ export const getPlayer = async (name) => {
     }
   };
 
+  // Fonction pour récupérer un objet par son id
   export const queryItem = async (id) => {
     try {
         const item = await pool`
@@ -110,7 +112,7 @@ export const getPlayer = async (name) => {
     }
   };
   
-  
+  // Fonction pour insérer un joueur avec ses statistiques
   export const insertPlayer = async (name, password) => {
     try {
         await pool`
@@ -123,6 +125,7 @@ export const getPlayer = async (name) => {
     }
   };
 
+  // Fonction pour mettre à jour les sections d'un joueur
   export const updatePlayerSection = async (name, id_section) => {
     try {
         await pool`
@@ -134,7 +137,7 @@ export const getPlayer = async (name) => {
     }
   };
   
-  
+  // Fonction pour récupérer l'id du personnage en fonction de son nom
   export const getIdPersonnage = async (name) => {
       try {
           const player = await pool`
@@ -149,7 +152,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+  // Fonction pour récupérer un item dans l'inventaire d'un joueur par son id
   export const getInventoryItemPlayer = async (id_personnage, id_objet) => {
       try {
           const inventoryItem = await pool`
@@ -164,7 +167,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+    // Fonction pour insérer un item dans l'inventaire d'un joueur
     export const insertItem = async (name, id_item) => {
         try {
             console.error("Name :", name)
@@ -205,7 +208,7 @@ export const getPlayer = async (name) => {
         }
     }
   
-  
+  // Fonction pour récupérer l'inventaire d'un joueur
   export const getPlayerInventory = async (name) => {
       try {
           const player = await getIdPersonnage(name);
@@ -218,7 +221,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+  // Fonction pour récupérer les items dans l'inventaire d'un joueur
   export const getItemsInInventory = async (playerName) => {
       try {
           const inventory = await getPlayerInventory(playerName);
@@ -243,7 +246,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+  // Fonction pour récupérer les statistiques d'un joueur
   export const getPlayerStats = async (name) => {
       try {
           const player = await getPlayer(name);
@@ -257,7 +260,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+  // Fonction pour récupérer tous les items
   export const getAllItems = async () => {
       //console("récupération des tous les items")
       try {
@@ -278,7 +281,7 @@ export const getPlayer = async (name) => {
       }
   }
   
-  
+  // Fonction pour récupérer un item par son id
   export const getItemById = async (id_objet) => {
       try {
           const item = await pool`
@@ -293,6 +296,7 @@ export const getPlayer = async (name) => {
       }
   }
 
+  // Fonction pour équiper un item dans l'inventaire
   export const equip_item = async (nom_personnage, id_objet) => {
     try {
         const player = await getIdPersonnage(nom_personnage);

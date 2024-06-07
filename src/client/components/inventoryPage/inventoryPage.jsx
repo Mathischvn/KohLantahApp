@@ -52,9 +52,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
         }
     }, [equippedItems]);
 
-    
-
-
+    // Fonction d'activation du tutoriel
     const activeTuto = () => {
         const backgroundTuto = document.querySelector(".tuto");
         const tooltipTuto = document.querySelector(".tooltip-tuto");
@@ -85,6 +83,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                 <div className="player-profile">
                     <h1 className="playerName">{playerName}</h1>
                     <ProfilePicture></ProfilePicture>
+                    {/* Sac de bijoux */}
                     <InventoryBag bagSize={2} 
                     icon={"fa-gem"} 
                     className={"jewelry-bag"}
@@ -95,6 +94,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                     setEquippedJewels={setEquippedJewels} equippedJewels={equippedJewels}>
                     </InventoryBag>
 
+                    {/* Sac d'artéfacts */}
                     <InventoryBag bagSize={2} 
                     icon={"fa-wand-sparkles"} 
                     className={"artifacts-bag"} 
@@ -105,6 +105,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                     setEquippedArtifacts={setEquippedArtifacts} equippedArtifacts={equippedArtifacts}>
                     </InventoryBag>
 
+                    {/* Sac de livres */}
                     <InventoryBag bagSize={2} 
                     icon={"fa-book-bookmark"} 
                     className={"books-bag"} 
@@ -133,6 +134,7 @@ export const InventoryPage = ({inventory, setPlayerInventory, stats, setPlayerSt
                             <div className="tooltip-tuto">
                                 Cliquer sur votre objet pour l'équiper et améliorer vos statistiques.
                             </div>
+                            {/* Sac d'inventaire principal */}
                             <InventoryBag bagSize={17} 
                             inventory={inventory} 
                             stats={stats} 
