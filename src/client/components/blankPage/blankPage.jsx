@@ -57,10 +57,15 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         else{
             ibaudio=0;
         }
+<<<<<<< HEAD
         setCurrentTrack(ibaudio);
         setNomMusique(nomMusique[ibaudio])
         settypeplay(true)
         setBaudio(ibaudio)
+=======
+        setCurrentTrack(baudio);
+        settypeplay(true)
+>>>>>>> 9ae23e9c863764f45ae1e0ca1794109b97b5f7e7
 
   };
 
@@ -92,11 +97,6 @@ function waitFiveSeconds() {
                 setSection(data);
             }
             checkItemInsertion(sectionId)
-            // console.log("Section : ", section)
-            // console.log("equippedItems : ", equippedItems)
-            // console.log("equippedJewels : ", equippedJewels)
-            // console.log("equippedArtifacts : ", equippedArtifacts)
-            // console.log("equippedBooks : ", equippedBooks)
         }
         fetchData();
 
@@ -107,7 +107,6 @@ function waitFiveSeconds() {
             const setSectionWithPlayerHistory = async (name) => {
                 const response = await fetch(`/api/player/${name}`);
                 let data = await response.json()
-                // console.log("Data : ", data[0].id_section)
                 setSectionID(data[0].id_section)
             }
             setSectionWithPlayerHistory(name)
@@ -120,9 +119,7 @@ function waitFiveSeconds() {
     const isDe = isNotActionEmpty ? (section.action.booleen_lancer_de) :  false
     const isChoix = !(isNotActionEmpty)
 
-    const insertItem = async (name, item) => {
-        // console.log("Objet : ", item)
-        
+    const insertItem = async (name, item) => {        
         const fetchData = async () => {
             const response = await fetch(`/api/player/insertItem/${name}/${item}`);
             return response.json();
@@ -131,10 +128,8 @@ function waitFiveSeconds() {
             const response = await fetch(`/api/item/${item}`);
             const data = await response.json();
             let nom_item = data[0].nom
-            // console.log("rvdcrdcrd");
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    //console.log("Test")
                     toast.info(`L'objet ${nom_item} a été ajouté à l'inventaire`, {
                         position: "bottom-right",
                         autoClose: 1500,
@@ -147,24 +142,20 @@ function waitFiveSeconds() {
                         theme: "light",
                         style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #fafafa'}
                     })
-                    // console.log("popup ????????")
                 }, 4000)
             })
         }
-        // console.log("ajoutitems ?")
         let ajoutItem = await fetchData();
         if (!ajoutItem){
             popupItem(item)
         }
-        // console.log("la popup a pop ?")
-    };
+    }
 
     const getAllItems = async () => {
         const response = await fetch(`/api/items/all/`);
         const data = await response.json();
         if (Array.isArray(data)) {
             const res = data
-            //console.log("Les items : ", res);
             return res
         }
         return data
@@ -176,15 +167,12 @@ function waitFiveSeconds() {
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
             if (Array.isArray(data)) {
-                //console.log('Data loaded:', data);
                 setPlayerStats(data);
             } else {
                 setInventoryLoaded(false);
-                //console.log('Data pas loaded:', data);
             }
         } else {
             setInventoryLoaded(false);
-            //console.log('response:', response);
         }
     }
 
@@ -193,15 +181,12 @@ function waitFiveSeconds() {
         if (response.headers.get('content-length') != '0') {
             const data = await response.json();
             if (Array.isArray(data)) {
-                //console.log('Data loaded:', data);
                 setPlayerInventory(data);
             } else {
                 setInventoryLoaded(false);
-                //console.log('Data pas loaded:', data);
             }
         } else {
             setInventoryLoaded(false);
-            //console.log('response:', response);
         }
     }
     React.useEffect(() => {
@@ -222,16 +207,11 @@ function waitFiveSeconds() {
       }, [currentTrack]);
 
     const checkItemInsertion = async (section) => {
-        //console.log("Y'a-t-il des items dans la section : ", section)
         const allItems = await getAllItems();
-        //console.log("allitems", allItems)
-        //console.log("allitems[0]", allItems[0])
 
         for(let i=0; i<allItems.length; i++){
-            //console.log("Item numéro " + i + " : " + allItems[i].nom)
             if(allItems[i].acquire_section == section){
                 if (document.cookie.includes("name")) {
-                    //console.log("Insertion de l'item ", allItems[i].nom)
                     let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
                     insertItem(name, allItems[i].id).then(getPlayerItems(name));
                 }

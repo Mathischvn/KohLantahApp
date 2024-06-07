@@ -32,7 +32,6 @@ app.get('/api/player/getPlayer/:name/:password', async (req, res) => {
   const name = req.params.name;
   const password = req.params.password;
   const response = await getPlayerWithPassword(name, password);
-  console.log(response);
   if(response !== undefined) {
     res.send(response);
   }
