@@ -1,51 +1,74 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect,useRef } from "react"
 import "./blankPage.css"
 import { FightPage } from "../fightPage/fightPage";
 import { Enigme } from "../enigmePage/enigme";
 import { ChoicePage } from "../choicePage/choicePage";
 import { DicePage } from "../dicePage/dicePage";
 import { SideBar } from "../sideBar/sideBar";
+import { ToastContainer, toast } from 'react-toastify';
+import ReactHowler from 'react-howler'
+
 import music1 from '/music/musique_fond1.mp3'
 import music2 from '/music/musique_fond2.mp3'
-import { ToastContainer, toast } from 'react-toastify';
+import music3 from '/music/Independence - Abandoned.mp3'
 
 export const BlankPage = ({sectionId, setSectionID}) => {
     const [section, setSection] = React.useState([])
     const [playerInventory, setPlayerInventory] = React.useState([])
     const [inventoryLoading, setInventoryLoaded] = React.useState(false)
     const [playerStats, setPlayerStats] = React.useState([])
-    const [currentTrackIndex, setCurrentTrackIndex] = useState(1);
+    const [currentTrack, setCurrentTrack] = useState(0);
+    const [currentTrackCombat, setCurrentTrackCombat] = useState(0);
+    const [typeplay, settypeplay] = useState(true);
+    const [typeplayc, settypeplayc] = useState(false);
     const [booleenChangementSection, setBooleenChangementSection] = React.useState(true)
     const [equippedItems, setEquippedItems] = React.useState([])
     const [equippedJewels, setEquippedJewels] = React.useState([])
     const [equippedArtifacts, setEquippedArtifacts] = React.useState([])
     const [equippedBooks, setEquippedBooks] = React.useState([])
+    const [volume, setVolume] = useState(1);
+    const playerRef = useRef(null);
 
+    let baudio = 0
+    let caudio = 0
     let index_tableau_playlist = 1
     let booleen_lancement_page = true
 
     const playlist = [
-        music1,
-        music2
+        music2,
+        music3
       ];
-      
-    function backgroundAudio(){
-        let audio = new Audio(playlist[index_tableau_playlist]);
-        if (!audio.ended){
-            audio.play()
+    
+    const playlistCombat = [
+        music1
+    ]
+
+    const handleEnd = () => {
+        if (baudio < playlist.length -1){
+            baudio++;
         }
-        audio.addEventListener("ended", ()=>{
-            if(index_tableau_playlist < playlist.length -1){
-                index_tableau_playlist++;
-                //console.log("if"+index_tableau_playlist+"  "+ audio.duration)
-            }
-            else{
-                index_tableau_playlist=0;
-                //console.log("else"+index_tableau_playlist+"  "+ audio.duration)
-            }
-            backgroundAudio()
-        })
+        else{
+            baudio =0;
+        }
+        console.log(typeplay)
+        setCurrentTrack(baudio);
+        settypeplay(true)
+        console.log(currentTrack+"  "+ typeplay)
+
+  };
+
+  const handleEndCombat = () => {
+    if (caudio < playlistCombat.length -1){
+        caudio++;
     }
+    else{
+        caudio =0;
+    }
+    setCurrentTrackCombat(caudio);
+    settypeplay(true)
+
+};
+      
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -64,8 +87,6 @@ export const BlankPage = ({sectionId, setSectionID}) => {
         fetchData();
 
         if(booleen_lancement_page && booleenChangementSection){
-            //console.log("ici")
-            backgroundAudio()
             booleen_lancement_page = false
             setBooleenChangementSection(false)
             let name = document.cookie.match(/(?<=name=)[^;]*/)[0];
@@ -169,6 +190,22 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             //console.log('response:', response);
         }
     }
+    React.useEffect(() => {
+         if(isCombat && typeplay==true){
+            settypeplay(false)
+            settypeplayc(true)
+        }
+        else if(!isCombat && typeplay==false){
+            settypeplay(true)
+            settypeplayc(false)
+        }
+    }, [section]);
+
+    useEffect(() => {
+        if (playerRef.current) {
+          playerRef.current.seek(0); // reset the track to the beginning
+        }
+      }, [currentTrack]);
 
     const checkItemInsertion = async (section) => {
         //console.log("Y'a-t-il des items dans la section : ", section)
@@ -244,6 +281,17 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
                     }
+                    <ReactHowler
+                        src= {playlist[currentTrack]}
+                        playing={typeplay}
+                        volume={volume}
+                        onEnd={handleEnd}
+                        />
+                        <ReactHowler
+                        src= {playlistCombat[currentTrackCombat]}
+                        playing={typeplayc}
+                        onEnd={ handleEndCombat}
+                        />
                     
                     <h2 className="titleSection">Section {section.id} : { section.titre }</h2>
                 </div>
