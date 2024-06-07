@@ -87,6 +87,7 @@ button:hover {
     bottom: 100px;
     left: 0;
     background-color: #685029;
+    color: white;
     padding: 10px;
     border-top-right-radius: 10px;
 }
