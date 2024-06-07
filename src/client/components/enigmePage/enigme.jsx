@@ -37,7 +37,7 @@ export const Enigme = ({setSectionID, section_action}) => {
                 icon:false,
                 progress: undefined,
                 theme: "light",
-                style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #fafafa'}
+                style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #fafafa'}
             })
             setGoodAnswer(true)
             setIsPlaying(true)
@@ -59,9 +59,17 @@ export const Enigme = ({setSectionID, section_action}) => {
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
-                style: {"backgroundColor":"#71553a", "color":"#fafafa", "font-family":'Irish Grover', 'border':'3px solid #000000'}
+                style: {"backgroundColor":"#71553a", "color":"#fafafa", "fontFamily":'Irish Grover', 'border':'3px solid #000000'}
             })
-            setCompteur(compteur - 1)
+            setCompteur(compteur - 1);
+            if(compteur === 2) {
+                document.querySelector(".compteur span").classList.add("warning");
+                document.querySelector(".compteur span.plural").style.display = "none";
+            }
+        }
+        if(compteur == 1) {
+            document.querySelector(".compteur p").innerHTML = "C'est votre dernière chance !"
+            document.querySelector(".compteur p").classList.add("warning");
         }
     }
     const handleUserAnswerChange = (e) => {
@@ -90,7 +98,7 @@ export const Enigme = ({setSectionID, section_action}) => {
                         onChange={handleUserAnswerChange}
                     />
                     <div className="compteur">
-                        <p>Il vous reste {compteur} essais</p>
+                        <p>Il vous reste <span>{compteur} essai<span className="plural">s</span></span></p>
                     </div>
                     <button className="button-submit" onClick={handleValidation}>Valider</button>
                     <ToastContainer />
