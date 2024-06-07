@@ -81,3 +81,12 @@ button:hover {
     font-size: 51px;
     color: white;
 }
+
+.NomMusique {
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    background-color: #685029;
+    padding: 10px;
+    border-top-right-radius: 10px;
+}
