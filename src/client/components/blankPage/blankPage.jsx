@@ -26,13 +26,19 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     const [equippedJewels, setEquippedJewels] = React.useState([])
     const [equippedArtifacts, setEquippedArtifacts] = React.useState([])
     const [equippedBooks, setEquippedBooks] = React.useState([])
+    const [NomMusique, setNomMusique] = React.useState([])
+    const [baudio,setBaudio] = useState(0)
+    const [caudio,setCaudio] = useState(0)
     const [volume, setVolume] = useState(1);
     const playerRef = useRef(null);
 
-    let baudio = 0
-    let caudio = 0
-    let index_tableau_playlist = 1
     let booleen_lancement_page = true
+
+    const nomMusique = ["Donovan Jarvis - John Doe",
+        "Independence - Abandoned"
+    ]
+
+    const nomMusiqueCombat = ["Rafael Krux - Mothership"]
 
     const playlist = [
         music2,
@@ -44,30 +50,38 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     ]
 
     const handleEnd = () => {
+        let ibaudio
         if (baudio < playlist.length -1){
-            baudio++;
+            ibaudio = baudio+1 ;
         }
         else{
-            baudio =0;
+            ibaudio=0;
         }
-        console.log(typeplay)
-        setCurrentTrack(baudio);
+        setCurrentTrack(ibaudio);
+        setNomMusique(nomMusique[ibaudio])
         settypeplay(true)
-        console.log(currentTrack+"  "+ typeplay)
+        setBaudio(ibaudio)
 
   };
 
   const handleEndCombat = () => {
     if (caudio < playlistCombat.length -1){
-        caudio++;
+        setCaudio(caudio+1);
     }
     else{
-        caudio =0;
+        setCaudio(0);
     }
     setCurrentTrackCombat(caudio);
-    settypeplay(true)
+    setNomMusique(nomMusique[caudio])
+    settypeplayc(true)
 
 };
+
+function waitFiveSeconds() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => 4000); // 5000 millisecondes = 5 secondes
+    });
+  }
       
 
     React.useEffect(() => {
@@ -202,9 +216,9 @@ export const BlankPage = ({sectionId, setSectionID}) => {
     }, [section]);
 
     useEffect(() => {
-        if (playerRef.current) {
-          playerRef.current.seek(0); // reset the track to the beginning
-        }
+        // if (playerRef.current) {
+        //   playerRef.current.seek(0); // reset the track to the beginning
+        // }
       }, [currentTrack]);
 
     const checkItemInsertion = async (section) => {
@@ -235,6 +249,13 @@ export const BlankPage = ({sectionId, setSectionID}) => {
             const response = await fetch(`/api/player/changeSection/${name}/${section.id}`);
         }
         changeSectionPlayer(section, name)
+        if (isCombat){
+            handleEndCombat
+            setNomMusique(nomMusiqueCombat[caudio])
+        }
+        else if (!isCombat){
+            setNomMusique(nomMusique[baudio])
+        }
     }, [section]);
 
     React.useEffect(() => {
@@ -281,6 +302,7 @@ export const BlankPage = ({sectionId, setSectionID}) => {
                     {
                         isChoix ? <ChoicePage setSectionID={setSectionID} liste_choix={section.choix}/> : ""
                     }
+                    <div className="NomMusique"><i class="fa-solid fa-music"></i>  {NomMusique }</div>
                     <ReactHowler
                         src= {playlist[currentTrack]}
                         playing={typeplay}
